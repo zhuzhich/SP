@@ -1,0 +1,7 @@
+reset;
+option randseed 3;
+model ori.mod;
+data ori.dat;
+option solver cplex;
+solve;
+#resdisplay cost;

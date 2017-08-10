@@ -1,0 +1,28 @@
+param NUMSCEN :=2;
+param prob :=
+1 0.4
+2 0.6
+;
+param NMAT :=2;
+param pNPRO :=2;
+param pMatUse: 1 2 :=     
+1 6 10
+2 8 5
+; #(x,y)
+param pMatUseX :=
+1 60
+2 80
+;
+param xMat :=
+1 40
+2 20
+;
+# randomness
+param pMaxPro :=
+1 300
+2 300
+;
+param pCostPerPro :=
+1 -28
+2 -32
+;

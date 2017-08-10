@@ -1,0 +1,14 @@
+#reset the ampl enviroment
+reset;
+
+#load the model
+model 01.mod
+
+#change the solver
+option solver cplex;
+
+#solve
+solve;
+
+#show results
+display x1, x2, z;

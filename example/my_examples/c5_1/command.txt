@@ -1,0 +1,3 @@
+instance.dual[instance.cMatPro[instance.MAT[1]]]
+instance.dual[instance.cMaxPro[instance.sPRO[1]]]
+instance.oSub()

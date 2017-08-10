@@ -1,0 +1,41 @@
+# ==========================================================
+# = Solver Results                                         =
+# ==========================================================
+# ----------------------------------------------------------
+#   Problem Information
+# ----------------------------------------------------------
+Problem: 
+- Lower bound: -inf
+  Upper bound: inf
+  Number of objectives: 1
+  Number of constraints: 3
+  Number of variables: 9
+  Sense: unknown
+# ----------------------------------------------------------
+#   Solver Information
+# ----------------------------------------------------------
+Solver: 
+- Status: ok
+  Message: CBC 2.9.8 optimal, objective 2.81; 0 nodes, 0 iterations, 0.001 seconds
+  Termination condition: optimal
+  Id: 0
+# ----------------------------------------------------------
+#   Solution Information
+# ----------------------------------------------------------
+Solution: 
+- number of solutions: 1
+  number of solutions displayed: 1
+- Gap: None
+  Status: optimal
+  Message: CBC 2.9.8 optimal, objective 2.81; 0 nodes, 0 iterations, 0.001 seconds
+  Objective:
+    Total_Cost:
+      Value: 2.81
+  Variable:
+    Buy['Fries, small']:
+      Value: 1
+    Buy[1% Lowfat Milk]:
+      Value: 1
+    Buy[Filet-O-Fish]:
+      Value: 1
+  Constraint: No values

@@ -1,0 +1,33 @@
+param NUMSCEN :=2;
+param prob :=
+1 0.4
+2 0.6
+;
+param NMAT :=2;
+param pNPRO :=2;
+param TotalMat :=120;
+param MinInput :=
+1 40
+2 20
+;
+param pMatCost :=
+1 100
+2 150
+;
+param pHMatPro :   1   2 :=
+				1  0   0
+				2  0   0
+;
+param pHMaxPro :    1     2 :=
+				1  500   300
+				2  100   300
+;
+param pTMatPro :   1    2 :=
+				1  -60  0
+				2  0   -80
+;
+param pTMaxPro :   1   2 :=
+				1  0   0
+				2  0   0
+;
+

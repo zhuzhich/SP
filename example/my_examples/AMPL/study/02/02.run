@@ -1,0 +1,6 @@
+reset;
+model 02.mod;
+data 02.dat;
+option solver cplex;
+solve;
+display Cut;

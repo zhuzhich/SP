@@ -1,0 +1,140 @@
+# script that handle data for rounded result after relaxation.
+
+for {i in 1..I}# watch out!!!!!!!!!!!!!!!!!!!!
+{
+	for {t in 0..T}
+	{
+		for {r in 1..R}
+		{
+			for {w in 1..W}
+			{
+				let x_1[i,t,r,w] := round(x_1[i,t,r,w]+0.01);
+				let x_2[i,t,w] := round(x_2[i,t,w]+0.01);
+				let z[t,w] := round(z[t,w]+0.01);
+				let x[i] := round(x[i]+0.01);		
+			}
+		}
+	}
+}
+for {w in 1..W}
+{
+	for {i in 1..I}# watch out!!!!!!!!!!!!!!!!!!!!
+	{
+		if violate[w] == 1 then
+		{
+			break;
+		}
+		for {t in 0..T}
+		{
+			if violate[w] == 1 then
+			{
+				break;
+			}
+			for {r in 1..R}
+			{
+				if violate[w] == 1 then
+				{
+					break;
+				}
+				if t!=T && x_1[i,t,r,w]>x_1[i,t+1,r,w] then #b
+				{
+					let violate[w] := 1;
+					display w;
+					display "b";
+				}
+				if t!=T && r!=R && x_1[i,t+1,r+1,w]>x_1[i,t,r,w] then #c
+				{
+					let violate[w] := 1;
+					display w;
+					display "c";
+				}
+				if t!= 0 && x_2[i,t,w] + sum{r_ in 1..R}(x_1[i,t,r_,w]-x_1[i,t-1,r_,w]) >z[t,w] then #d
+				{
+					let violate[w] := 1;
+					display i;
+					display t;
+					display w;
+					display "d";
+				}
+				if x_2[i,0,w] + x_1[i,0,1,w] > z[0,w] then #e
+				{
+					let violate[w] := 1;
+					display w;
+					display "e";
+				}
+				if r!=R && t<=T-LT[i,r+1,w] && x_1[i,t,r,w]>x_1[i,t+LT[i,r+1,w],r+1,w] then #f
+				{
+					let violate[w] := 1;
+					display w;
+					display "f";
+				}
+				if t<=T-LTI[i] && sum{t_ in t+1..t+LTI[i]}x_2[i,t_,w]<x_1[i,t,R,w] then #g
+				{
+					let violate[w] := 1;
+					#if i==1 then
+					#{
+					#display i;
+					#display t;
+					display w;
+					#display x_2[i,t+1,w];
+					#display x_2[i,t+2,w];
+					#display x_2[i,t+3,w];
+					#display x_2[i,t+1,w];
+					#display x_2[i,t+2,w];
+					#display x_2[i,t+3,w];
+					#display sum{t_ in t+1..t+LTI[i]}x_2[i,t_,w];
+					#display x_1[i,t,R,w];
+					display "g";
+					#}
+				}
+				if t!=0 && x_2[i,t,w]>x_1[i,t-1,R,w] then #h
+				{
+					let violate[w] := 1;	
+					display w;
+					display "h";				
+				}			
+				if x_2[i,0,w] != 0 then #i
+				{
+					let violate[w] := 1;
+					display w;
+					display "i";						
+				}
+				if LT[i,1,w]<=T && x_1[i,LT[i,1,w],1,w]!=1 then#j
+				{
+					let violate[w] := 1;	
+					display w;
+					display "j";				
+				}
+				if r!=1 && x_1[i,0,r,w] != 0 then#k
+				{
+					let violate[w] := 1;	
+					display w;
+					display "k";					
+				}
+				if x[i]!=x_1[i,0,1,w] then#L
+				{
+					let violate[w] := 1;
+					display w;
+					display "L";	
+				}
+				if x[i]<kesi[i] then#m
+				{
+					let violate[w] := 1;
+					display w;
+					display "m";	
+				}
+			}
+		}
+	}
+}
+for {w in 1..W}
+{
+	if violate[w] == 0 then
+	{
+		let cost_w[w] := sum{i in 1..I}(sum{r in 1..R}c[i]*x_1[i,T,r,w] + sum{t in 0..T}c[i]*x_2[i,t,w]) + sum{t in 0..T}d*z[t,w];
+	}
+	else
+	{
+		let cost_w[w] := 0;
+	}
+}
