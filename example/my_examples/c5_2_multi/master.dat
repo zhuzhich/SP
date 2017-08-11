@@ -1,0 +1,3 @@
+param NUMSCEN :=3;
+param nX :=1;
+param nY :=2;
