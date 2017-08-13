@@ -22,17 +22,17 @@ model.dual = Suffix(direction=Suffix.IMPORT)
 #Parameters
 #####################################
 # first stage variable
-model.nX = Param(within=PositiveIntegers)
-model.sX = RangeSet(model.nX)
+#model.nX = Param(within=PositiveIntegers)
+#model.sX = RangeSet(1,model.nX)
 #second stage variable
 model.nY = Param(within=PositiveIntegers)
-model.sY = RangeSet(model.nY)
+model.sY = RangeSet(1,model.nY)
 
 #kesi
-model.pKesi = Param();
+model.pKesi = Param(within=PositiveIntegers)
 
 #first stage
-model.x = Param(model.nX, within=NonNegativeReals, mutable=True)
+model.x = Param(within=NonNegativeReals, mutable=True)
 
 ######################################
 #Variables
@@ -42,8 +42,8 @@ model.y =  Var(model.sY, within=NonNegativeReals)
 ######################################
 #Constraints
 ######################################
-def s_c1_rule(model, i):
-	return model.y[model.sY[1]]-model.y[model.sY[1]] = model.pKesi-model.x
+def s_c1_rule(model):
+	return model.y[model.sY[1]]-model.y[model.sY[2]] == model.pKesi-model.x
 model.cY1 = Constraint(rule=s_c1_rule)
 
 ######################################

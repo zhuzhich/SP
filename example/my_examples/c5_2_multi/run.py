@@ -16,6 +16,7 @@ from pyomo.opt import SolverFactory
 from pyomo.opt.base import SolverFactory
 from pyomo.opt.parallel import SolverManagerFactory
 from pyomo.opt.parallel.manager import solve_all_instances
+import numpy
 import pdb
 
 # import the master a
@@ -42,9 +43,8 @@ solver_manager = SolverManagerFactory("serial")
 for i in mstr_inst.Scen:
 	mstr_inst.Min_Stage2_cost[i] = float("-Inf")
 
-gap = float("Inf")
 max_iterations = 50
-
+flag_sita = [0 for i in range(3)]   
 # main benders loop.
 for i in range(1, max_iterations+1):
 	print("\nIteration=%d"%(i))
@@ -58,67 +58,54 @@ for i in range(1, max_iterations+1):
 	
 	mstr_inst.CUTS.add(i)
 	for s, inst in enumerate(sub_insts, 1):
-		for t in mstr_inst.MAT:
-			mstr_inst.dMatPro[t,s,i] = \
-                inst.dual[inst.cMatPro[t]]
-		for p in mstr_inst.sPRO:
-			mstr_inst.dMaxPro[p,s,i] = \
-                inst.dual[inst.cMaxPro[p]]
+		mstr_inst.dSolution[s,i] = \
+                inst.dual[inst.cY1]	
 	#add master cut
-	cut = sum((mstr_inst.prob[s] *\
-				mstr_inst.dMatPro[t,s,i] * \
-                mstr_inst.pHMatPro[t,s])
-               for t in mstr_inst.MAT
-               for s in mstr_inst.SCEN)
-	cut += sum((mstr_inst.prob[s] *\
-				mstr_inst.dMaxPro[t,s,i] * \
-                mstr_inst.pHMaxPro[t,s])
-               for t in mstr_inst.sPRO
-               for s in mstr_inst.SCEN)
-	cut +=	sum(mstr_inst.prob[s] * \
-				(mstr_inst.dMatPro[t,s,i]* mstr_inst.pTMatPro[t,tx] + \
-                 mstr_inst.dMaxPro[p,s,i]* mstr_inst.pTMaxPro[p,tx]) * \
-				 (-mstr_inst.xMat[tx])
-				 for t in mstr_inst.MAT
-				 for tx in mstr_inst.MAT
-				 for s in mstr_inst.SCEN)	
-	mstr_inst.Cut_Defn.add(mstr_inst.Min_Stage2_cost >= cut)
-	Min_Stage2_cost = 0;
 	for s, inst in enumerate(sub_insts, 1):
-		scen = mstr_inst.SCEN[s]
-		Min_Stage2_cost += mstr_inst.prob[scen]*inst.oSub()
-	print("Expected Stage2 cost= "+str(round(Min_Stage2_cost, 4)))
-	print("")			 
-	newgap = round(mstr_inst.Min_Stage2_cost.value - \
-                   Min_Stage2_cost, 6)
-	newgap = abs(newgap)
-	if newgap == 0:
+		scen = mstr_inst.Scen[s]
+		if flag_sita[s-1] == 1:
+			continue
+		cut = (mstr_inst.prob[s] *\
+				mstr_inst.dSolution[s,i] * \
+                mstr_inst.pH[s])
+		cut +=	mstr_inst.prob[s] * \
+				(mstr_inst.dSolution[s,i]* mstr_inst.pT) * \
+				 (-mstr_inst.x)
+		mstr_inst.Cut_Defn.add(mstr_inst.Min_Stage2_cost[s] >= cut)
+		#
+		scen = mstr_inst.Scen[s]
+		Min_Stage2_cost = mstr_inst.prob[scen]*inst.oSub()
+		print("Expected Stage2 cost ["+str(scen)+"]= " \
+                               +str(round(Min_Stage2_cost, 4)))
+		print("")			 
+		newgap = round(mstr_inst.Min_Stage2_cost[scen].value - \
+					Min_Stage2_cost, 6)
+		newgap = abs(newgap)
+		if newgap == 0:
         # get rid -0.0, which makes this script easier
         # to test against a baseline
-		newgap = 0
-	print("New gap= "+str(newgap)+"\n")
+			newgap = 0
+		print("New gap= "+str(newgap)+"\n")
 
-	if newgap > 0.00001:
-		gap = min(gap, newgap)
-	else:
-		print("Benders converged!")
+		if newgap <= 0.00001:
+			flag_sita[s-1] = 1
+			print("scenario["+str(s)+"]converged")
+
+	if flag_sita.count(0) == 0:
+		print("Multicut converged!!")
 		break
-		
 # re-solve the master and update the subproblem inv1 values.
 	solve_all_instances(solver_manager, 'cplex', [mstr_inst])
-
-	print("Master objective cost="+str(mstr_inst.oMaster()))
 ####
 	for instance in sub_insts:
-		for p in mstr_inst.MAT:
-            # the master inventory values might be slightly
-            # less than 0 (within tolerance); threshold here.
-			instance.xMat[p] = max(mstr_inst.xMat[p](),mstr_inst.MinInput[p])
+		instance.x = max(mstr_inst.x(),0)
+
 else:
     # this gets executed when the loop above does not break
-    print("Maximum Iterations Exceeded")
+	print("Maximum Iterations Exceeded")
 
 print("\nConverged master solution values:")
-for p in sorted(mstr_inst.MAT):
-    print("x["+str(p)+"]="+str(round(mstr_inst.xMat[p](), 4)))
-print("objective valule"+str(round(mstr_inst.oMaster(), 4)))
+print("x="+str(round(mstr_inst.x(), 4)))
+for p in mstr_inst.Scen:
+	print("objective valule ["+str(p)+"]"+str(round(mstr_inst.Min_Stage2_cost[p].value, 4)))
+

@@ -1,5 +1,6 @@
-param nX :=1;
+
 param nY :=2;
 
 # randomness
 param pKesi := 2;
+param x := 0;
