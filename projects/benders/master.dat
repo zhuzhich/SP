@@ -1,0 +1,13 @@
+param NUMSCEN :=3;
+param prob :=
+1 0.3333
+2 0.3333
+3 0.3333
+;
+param nY :=2;
+param pH:=
+1 1 
+2 2 
+3 4;
+param pT:= 1;
+		
