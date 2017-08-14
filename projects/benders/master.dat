@@ -1,8 +1,20 @@
 param NUMSCEN :=4; 			#scenarios
 param prob := 0.25;			#probability of scenario.
-param pI := 4;		#Total component number
-param pT := 5;     		# Time horizon
-
+param pI := 4;				#Total component number
+param pT := 5;     			#Time horizon
+param ps := 2;				#Starting time
+param pCPR :=				#PR cost
+1 1
+2 1
+3 1
+4 1
+;
+param pCCR :=				#CR cost
+1 2
+2 4
+3 6
+4 8
+;
 param nY :=2;
 param pH:=
 1 1 

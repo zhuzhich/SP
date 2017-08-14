@@ -19,11 +19,13 @@ model.pI		= Param(default=4)       				#component numbers
 model.sI 		= RangeSet(model.pI)
 model.pT		= Param(default=5)						#time horizon
 model.sT		= RangeSet(model.pT)
+model.ps		= Param(default=2)						#starting time
 model.pR 		= Param(default=model.pTime.value + 1)	#max individuals
 model.sR 		= RangeSet(model.pR)
-# first stage variable
-#model.nX = Param(within=PositiveIntegers)
-#model.sX = RangeSet(1,model.nX)
+model.pCPR		= Param(model.sI)						#PR cost
+model.pCCR		= Param(model.sI)						#CR cost
+model.pKesi		= Param(model.sI)						#failure state 
+
 #second stage variable
 model.nY = Param(within=PositiveIntegers)
 model.sY = RangeSet(model.nY)
