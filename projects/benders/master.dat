@@ -15,6 +15,13 @@ param pCCR :=				#CR cost
 3 6
 4 8
 ;
+param pKesi :=
+1 1
+2 0
+3 0 
+4 0
+;
+param pd := 5;				#set up cost
 param nY :=2;
 param pH:=
 1 1 
