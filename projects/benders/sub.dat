@@ -22,3 +22,21 @@ param pKesi :=
 4 0
 ;
 param pd := 5;				#set up cost
+param x :=
+1 1
+2 0
+3 0
+4 0
+;
+param w_shape :=
+1 6
+2 6
+3 6
+4 6
+;
+param w_scale :=
+1 5
+2 10
+3 15
+4 20
+;

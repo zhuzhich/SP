@@ -31,8 +31,8 @@ model.CUTS = Set(within=PositiveIntegers, ordered=True)
 #dual solution
 model.dSolution = Param(model.Scen, model.CUTS, \
 					default=0.0, mutable=True)
-model.pH 		= Param(model.Scen)
-model.pT 		= Param()
+model.pdH 		= Param(model.Scen)
+model.pdT 		= Param()
 ######################################
 #Variables
 ######################################
@@ -56,8 +56,8 @@ model.Cut_Defn 	= ConstraintList()
 ######################################
 def min_obj_rule(model):
 	return model.pd*model.z+\
-		   sum(model.pCPR*model.x[i] for i in model.sI)+\
-		   sum((model.pCCR-model.pCPR)*model.pKesi[i] for i in model.sI)+\
+		   sum(model.pCPR[i]*model.x[i] for i in model.sI)+\
+		   sum((model.pCCR[i]-model.pCPR[i])*model.pKesi[i] for i in model.sI)+\
 		   sum(model.sita[i] for i in model.Scen)
 model.oMaster 	= Objective(rule=min_obj_rule,sense=minimize)
 	

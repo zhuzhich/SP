@@ -28,3 +28,15 @@ param x :=
 3 0
 4 0
 ;
+param w_shape :=
+1 6
+2 6
+3 6
+4 6
+;
+param w_scale :=
+1 1
+2 2
+3 3
+4 4
+;
