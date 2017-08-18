@@ -12,20 +12,20 @@ model = AbstractModel(name="Master")
 #####################################
 #Parameters
 #####################################
-model.NUMSCEN 	= Param(default=4)						#scenarios
+model.NUMSCEN 	= Param()								#scenarios
 model.Scen		= RangeSet(model.NUMSCEN)				
-model.prob 		= Param(default=1.0/model.NUMSCEN.value)#equal probability
-model.pI		= Param(default=4)       				#component numbers
+model.prob 		= Param(default=1.0/model.NUMSCEN)		#equal probability
+model.pI		= Param()       						#component numbers
 model.sI 		= RangeSet(model.pI)
-model.pT		= Param(default=5)						#time horizon
-model.sT		= range(0,model.pT.value+1)				#time set [0,pT]
-model.ps		= Param(default=2)						#starting time
-model.pR 		= Param(default=model.pT.value + 1)	#max individuals
-model.sR 		= RangeSet(model.pR)
+#model.pT		= Param()								#time horizon
+#model.sT		= RangeSet(0,model.pT)					#time set [0,pT]
+#model.ps		= Param(default=2)						#starting time
+#model.pR 		= Param()								#max individuals
+#model.sR 		= RangeSet(model.pR)
 model.pCPR		= Param(model.sI)						#PR cost
 model.pCCR		= Param(model.sI)						#CR cost
 model.pKesi		= Param(model.sI)						#failure state 
-model.pd		= Param(default=5)						#set-up cost
+model.pd		= Param()								#set-up cost
 model.CUTS = Set(within=PositiveIntegers, ordered=True)
 #Subproblem constraint number, for dual solution.
 #dual solution

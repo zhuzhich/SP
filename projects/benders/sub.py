@@ -23,10 +23,10 @@ model.dual = Suffix(direction=Suffix.IMPORT)
 #####################################
 #Parameters
 #####################################
-model.NUMSCEN 	= Param(default=4)						#scenarios
+model.NUMSCEN 	= Param()								#scenarios
 model.Scen		= RangeSet(model.NUMSCEN)				
-model.prob 		= Param(default=1.0/model.NUMSCEN.value)#equal probability
-model.pI		= Param(default=4)       				#component numbers
+model.prob 		= Param(default=1.0/model.NUMSCEN)		#equal probability
+model.pI		= Param()       						#component numbers
 model.sI 		= RangeSet(model.pI)
 model.pT		= Param()								#time horizon
 model.pT_1		= Param()								#
@@ -51,7 +51,16 @@ model.w_scale	= Param(model.sI)
 model.sTest		= RangeSet(3,1)							#Test......
 
 def pLT_init(model, i, r):
-	return int(round((-math.log(random.uniform(0,1)))**(1.0/model.w_shape[i])*model.w_scale[i]))
+	if r == 1:
+		if model.pKesi[i]==1:
+			return 0
+		else:
+			LT=int(round((-math.log(random.uniform(0,1)))**\
+					(1.0/model.w_shape[i])*model.w_scale[i]))
+			return max(0,LT)
+	else:	
+		return int(round((-math.log(random.uniform(0,1)))**\
+			(1.0/model.w_shape[i])*model.w_scale[i]))
 model.pLT		= Param(model.sI, model.sR, initialize=pLT_init)
 
 def scf_init(model):
