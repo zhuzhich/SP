@@ -7,6 +7,7 @@ from pyomo.opt.parallel.manager import solve_all_instances
 import random
 import math
 import pdb
+import debug
 
 # import the master a
 # initialize the master instance.
@@ -21,20 +22,22 @@ for s in mstr_inst.Scen:
 		sb_mdl.create_instance(name="sub"+str(s), \
                            filename="sub.dat"))
 	print ("instance name = %s" %sub_insts[-1].name)
+	"""
 	for i in sub_insts[-1].sI:
 		for r in sub_insts[-1].sR:
 			#sub_insts[-1].pLT[i,r] = round((-math.log(random.uniform(0,1)))**\
 			#						(1.0/sub_insts[-1].w_shape[i])*sub_insts[-1].w_scale[i])
 			print "(%d,%d)=%d" %(i,r,sub_insts[-1].pLT[i,r]),
+	"""
 # initialize the solver manager.
 solver_manager = SolverManagerFactory("serial")
 # miscellaneous initialization.
 for i in mstr_inst.Scen:
 	mstr_inst.sita[i] = float("-Inf")
 
-max_iterations = 50
+max_iterations = 10
 #indicate each subproblem cut converged or not
-flag_sita = [0 for i in range(0,1)] 
+flag_sita = [0 for i in range(0,mstr_inst.NUMSCEN())] 
 
 # main benders loop.
 for i in range(1, max_iterations+1):
@@ -43,34 +46,46 @@ for i in range(1, max_iterations+1):
 	#solve the subproblem
 	solve_all_instances(solver_manager, 'cplex', sub_insts)
 	for instance in sub_insts:
-		print("cost for scenario="+instance.name+" is"+\
+		print("cost for scenario="+instance.name+" is "+\
 				str(round(instance.oSub(),4)))
-	print("")
+		#debug.instance_info(instance)
+	print ("")
 	
 	mstr_inst.CUTS.add(i)
-	"""
-	for s, inst in enumerate(sub_insts, 1):
-		mstr_inst.dSolution[s,i] = \
-                inst.dual[inst.cY1]	
-	#add master cut
-	"""
+
 	for s, inst in enumerate(sub_insts, 1):
 		scen = mstr_inst.Scen[s]
-		"""
+		print ("scen=%d" %scen)
 		if flag_sita[s-1] == 1:
 			continue
-		cut = (mstr_inst.prob[s] *\
-				mstr_inst.dSolution[s,i] * \
-                mstr_inst.pH[s])
-		cut +=	mstr_inst.prob[s] * \
-				(mstr_inst.dSolution[s,i]* mstr_inst.pT) * \
-				 (-mstr_inst.x)
-		mstr_inst.Cut_Defn.add(mstr_inst.sita[s] >= cut)
-		"""
-		Lbound = mstr_inst.prob[scen]*inst.oSub()
+		cut = 0
+		#constraint g
+		for i in inst.scg:
+			cut += inst.dual[inst.cSg[i]]
+
+		#constraint p
+		for i in inst.sI:
+			for t in inst.sT:
+				cut += inst.dual[inst.cSp[i,t]]*(-1)
+		#constraint q
+		for i in inst.sI:
+			for t in inst.sT:
+				for r in inst.sR:
+					cut += inst.dual[inst.cSq[i,t,r]]
+		print "added cut"
+		print cut,
+		#constraint i
+		for i in inst.sI:
+			print ("+%d*x[%d]" %(inst.dual[inst.cSi[i]],i)),
+			cut += inst.dual[inst.cSi[i]]*(-mstr_inst.x[i])
+		print ""
+		mstr_inst.Cut_Defn.add(mstr_inst.sita[s] >= cut)			
+		Lbound = mstr_inst.prob*inst.oSub()
 		print("Lower bound ["+str(scen)+"]= " \
                                +str(round(Lbound, 4)))
-		print("")			 
+		print("Upper bound ["+str(scen)+"]"\
+			+str(round(mstr_inst.sita[scen].value, 4)))
+			
 		newgap = round(mstr_inst.sita[scen].value - \
 					Lbound, 6)
 		newgap = abs(newgap)
@@ -90,15 +105,19 @@ for i in range(1, max_iterations+1):
 # re-solve the master and update the subproblem inv1 values.
 	solve_all_instances(solver_manager, 'cplex', [mstr_inst])
 ####
+	for i in mstr_inst.sI:
+		print("x["+str(i)+"]="+str(round(mstr_inst.x[i](), 4)))
 	for instance in sub_insts:
-		instance.x = max(mstr_inst.x(),0)
+		for i in instance.sI:
+			instance.x[i] = max(mstr_inst.x[i](),0)
 
 else:
     # this gets executed when the loop above does not break
 	print("Maximum Iterations Exceeded")
 
 print("\nConverged master solution values:")
-print("x="+str(round(mstr_inst.x(), 4)))
+for i in mstr_inst.sI:
+	print("x["+str(i)+"]="+str(round(mstr_inst.x[i](), 4)))
 for p in mstr_inst.Scen:
 	print("objective valule ["+str(p)+"]"+str(round(mstr_inst.sita[p].value, 4)))
 

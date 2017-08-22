@@ -17,27 +17,29 @@ model.Scen		= RangeSet(model.NUMSCEN)
 model.prob 		= Param(default=1.0/model.NUMSCEN)		#equal probability
 model.pI		= Param()       						#component numbers
 model.sI 		= RangeSet(model.pI)
-#model.pT		= Param()								#time horizon
-#model.sT		= RangeSet(0,model.pT)					#time set [0,pT]
-#model.ps		= Param(default=2)						#starting time
-#model.pR 		= Param()								#max individuals
-#model.sR 		= RangeSet(model.pR)
-model.pCPR		= Param(model.sI)						#PR cost
-model.pCCR		= Param(model.sI)						#CR cost
-model.pKesi		= Param(model.sI)						#failure state 
 model.pd		= Param()								#set-up cost
 model.CUTS = Set(within=PositiveIntegers, ordered=True)
-#Subproblem constraint number, for dual solution.
-#dual solution
-model.dSolution = Param(model.Scen, model.CUTS, \
-					default=0.0, mutable=True)
-model.pdH 		= Param(model.Scen)
-model.pdT 		= Param()
+
+#For the large number of components
+#generate parameters.
+def pCPR_init(model, i):
+	return 1
+model.pCPR		= Param(model.sI, initialize=pCPR_init)  #PR cost	
+def pCCR_init(model, i):
+	return i*2					
+model.pCCR		= Param(model.sI, initialize=pCCR_init)	 #CR cost
+def pKesi_init(model, i):
+	if i==1:
+		return 1
+	else:
+		return 0	
+model.pKesi		= Param(model.sI, initialize=pKesi_init) #failure state
+
 ######################################
 #Variables
 ######################################
-model.x 		= Var(model.sI,within=Binary)
-model.z 		= Var(within=Binary)
+model.x 		= Var(model.sI,bounds=(0,1))#within=Binary)
+model.z 		= Var(bounds=(0,1))
 model.sita 		= Var(model.Scen)
 ######################################
 #Constraints
