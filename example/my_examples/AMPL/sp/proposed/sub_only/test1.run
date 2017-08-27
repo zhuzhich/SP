@@ -1,0 +1,15 @@
+let cost_t :=
+sum{w in 1..1}
+(
+sum{i in 1..I}
+(
+c_cm[i]*w_x[i,LT[i,1,w],1,w]+c_pm[i]*(1-w_x[i,LT[i,1,w],1,w])+sum{r in 2..R}
+(
+c_cm[i]*(x_1[i,T,r-1,w]+x_1[i,T,r,w]-sum{t in 0..T}(u[i,t,r,w]+v[i,t,r,w]))/2
++c_pm[i]*0.5*sum{t in 0..T}(u[i,t,r,w]+v[i,t,r,w])
+)
+-0.5*c_pm[i] 
+)
++sum{t in 0..T}d*z[t,w]
+)
+/1;

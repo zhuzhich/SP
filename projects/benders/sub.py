@@ -80,7 +80,7 @@ def pLT_init(model, i, r):
 		if model.pKesi[i]==1:
 			return 0
 	return i #for test only..
-"""
+	"""
 		else:
 			LT=int(round((-math.log(random.uniform(0,1)))**\
 					(1.0/model.w_shape[i])*model.w_scale[i]))-\
@@ -89,12 +89,12 @@ def pLT_init(model, i, r):
 	else:	
 		return int(round((-math.log(random.uniform(0,1)))**\
 			(1.0/model.w_shape[i])*model.w_scale[i]))
-"""	
+	"""
 model.pLT		= Param(model.sI, model.sR, initialize=pLT_init)
 
 #first stage variable
 def x_init(model, i):
-	if i==1:
+	if i==1 or i==2 or i==3 or i==4:
 		return 1
 	else:
 		return 0
@@ -103,24 +103,24 @@ model.x			= Param(model.sI, initialize=x_init,\
 #set of constraint f
 def scf_init(model):
 	return ((i,r,t) for i in model.sI for r in model.sR_End for	t in model.sT\
-			if t<=model.pT.value-model.pLT[i,r+1])
+			if t<=model.pT-model.pLT[i,r+1])
 model.scf		= Set(dimen=3, initialize=scf_init)
 
 #set of constraint g
 def scg_init(model):
-	return ( i for i in model.sI if model.pLT[i,1]<=model.pT.value)
+	return ( i for i in model.sI if model.pLT[i,1]<=model.pT)
 model.scg		= Set(initialize=scg_init)
 
 #set of constraint m
 def scm_init(model):
 	return ((i,r,t) for i in model.sI for r in model.sR for t in model.sT_exT\
-			if t<=model.pT.value+model.pLT[i,r]-1)
+			if t<=model.pT+model.pLT[i,r]-1)
 model.scm		= Set(dimen=3, initialize=scm_init)
 
 #set of constraint n
 def scn_init(model):
 	return ((i,r,t) for i in model.sI for r in model.sR for t in model.sT_exT\
-			if t>=model.pT.value+model.pLT[i,r])
+			if t>=model.pT+model.pLT[i,r])
 model.scn		= Set(dimen=3, initialize=scn_init)
 
 ######################################
@@ -135,12 +135,12 @@ if 0:
 	model.v			= Var(model.sI, model.sT, model.sR, within=Binary)
 else:
 #relax
-	model.xs		= Var(model.sI, model.sT, model.sR, bounds=(0,1))
-	model.ws		= Var(model.sI, model.sT_ex, model.sR, bounds=(0,1))
-	model.zs		= Var(model.sT_0, bounds=(0,1))
-	model.u			= Var(model.sI, model.sT, model.sR, bounds=(0,1))
-	model.v			= Var(model.sI, model.sT, model.sR, bounds=(0,1))
-
+	model.xs		= Var(model.sI, model.sT, model.sR, within=NonNegativeReals)
+	model.ws		= Var(model.sI, model.sT_ex, model.sR, within=NonNegativeReals)
+	model.zs		= Var(model.sT_0, within=NonNegativeReals)
+	model.u			= Var(model.sI, model.sT, model.sR, within=NonNegativeReals)
+	model.v			= Var(model.sI, model.sT, model.sR, within=NonNegativeReals)
+#model.test = Var(bounds=(0,0.5),initialize=1)
 ######################################
 #Constraints
 ######################################
@@ -154,7 +154,8 @@ def s_cc_rule(model, i, t, r):
 model.cSc = Constraint(model.sI, model.sT_End, model.sR_End, rule=s_cc_rule)
 
 def s_cd_rule(model, i, t):
-	return sum(model.xs[i,t,r]-model.xs[i,t-1,r] for r in model.sR)<=model.zs[t]
+	#return sum(model.xs[i,t,r]-model.xs[i,t-1,r] for r in model.sR)<=model.zs[t]
+	return sum(model.ws[i,t,r] for r in model.sR)<=model.zs[t]
 model.cSd = Constraint(model.sI, model.sT_0, rule=s_cd_rule)
 
 #
@@ -165,7 +166,7 @@ def s_cf_rule(model, i, r, t):
 	return model.xs[i,t,r]<=model.xs[i,t+model.pLT[i,r+1],r+1]
 model.cSf = Constraint(model.scf, rule=s_cf_rule)
 
-def s_cg_rule(model, i):## not finish
+def s_cg_rule(model, i):
 	return model.xs[i,model.pLT[i,1],1]==1
 model.cSg = Constraint(model.scg, rule=s_cg_rule)
 
@@ -174,7 +175,7 @@ def s_ch_rule(model, i, r):
 model.cSh = Constraint(model.sI, model.sR_0, rule=s_ch_rule)
 
 def s_ci_rule(model, i):
-	return model.x[i]==model.xs[i,0,1]
+	return model.xs[i,0,1]==model.x[i]
 model.cSi = Constraint(model.sI, rule=s_ci_rule)
 
 #def s_cj_rule(model, i, t):
@@ -189,11 +190,11 @@ def s_cl_rule(model, i, r):
 	return model.ws[i,0,r]==model.xs[i,0,r]
 model.cSl = Constraint(model.sI, model.sR, rule=s_cl_rule)
 
-def s_cm_rule(model, i, r, t):#not finish
+def s_cm_rule(model, i, r, t):
 	return model.ws[i,t,r]==model.ws[i,t-model.pT.value,r]
 model.cSm = Constraint(model.scm, rule=s_cm_rule)
 
-def s_cn_rule(model, i, r, t):#not finish
+def s_cn_rule(model, i, r, t):
 	return model.ws[i,t,r]==0
 model.cSn = Constraint(model.scn, rule=s_cn_rule)
 
@@ -210,20 +211,53 @@ model.cSp = Constraint(model.sI, model.sT, rule=s_cp_rule)
 def s_cq_rule(model, i, t,r):
 	return model.u[i,t,r]+model.v[i,t,r]<=1
 model.cSq = Constraint(model.sI, model.sT, model.sR, rule=s_cq_rule)
+
+
+def s_cr_rule(model, i, t,r):
+	return model.u[i,t,r]<=1 #and model.u[i,t,r]>=0
+model.cSr = Constraint(model.sI, model.sT, model.sR, rule=s_cr_rule)
+
+def s_cs_rule(model, i, t,r):
+	return model.v[i,t,r]<=1 #and model.v[i,t,r]>=0
+model.cSs = Constraint(model.sI, model.sT, model.sR, rule=s_cs_rule)
+
+def s_ct_rule(model, i, t,r):
+	return model.xs[i,t,r]<=1 #and model.xs[i,t,r]>=0
+model.cSt = Constraint(model.sI, model.sT, model.sR, rule=s_ct_rule)
+
+def s_cu_rule(model, t):
+	return model.zs[t]<=1 #and model.zs[t]>=0
+model.cSu = Constraint(model.sT_0, rule=s_cu_rule)
+
+def s_cv_rule(model, i, t,r):
+	return model.ws[i,t,r]<=1 #and model.ws[i,t,r]>=0
+model.cSv = Constraint(model.sI, model.sT_ex, model.sR, rule=s_cv_rule)
 """
 """
 ######################################
 #Objective
 ######################################
 def exp_stage2_rule(model):
-	idr1   = sum(model.pCCR[i]*model.ws[i,model.pLT[i,1],1]+model.pCPR[i]*(1-model.ws[i,model.pLT[i,1],1])\
-			for i in model.sI)
-	stage1 = sum(model.pCPR[i1]*model.x[i1] for i1 in model.sI)+sum((model.pCCR[i2]-model.pCPR[i2])*model.pKesi[i2] for i2 in model.sI)
-	othIdr = sum(sum(model.pCCR[i]*(1-0.5*sum(model.u[i,t,r]+model.v[i,t,r] for t in model.sT))-\
-				model.pCCR[i]*(1-0.5*(model.xs[i,model.pT,r]+model.xs[i,model.pT,r-1]))+\
-				model.pCPR[i]*0.5*sum(model.u[i,t1,r]+model.v[i,t1,r] for t1 in model.sT)\
-				for r in model.sR_0)-0.5*model.pCPR[i]\
-				for i in model.sI)
+	if 0: #full obj
+		idr1   = sum(model.pCCR[i]*model.ws[i,model.pLT[i,1],1]+\
+			 model.pCPR[i]*(1-model.ws[i,model.pLT[i,1],1])\
+			 for i in model.sI)
+		stage1 = sum(model.pCPR[i1]*model.x[i1] for i1 in model.sI)+\
+				sum((model.pCCR[i2]-model.pCPR[i2])*model.pKesi[i2] for i2 in model.sI)
+		othIdr = sum(sum(model.pCCR[i]*(1-0.5*sum(model.u[i,t,r]+model.v[i,t,r] for t in model.sT))-\
+					model.pCCR[i]*(1-0.5*(model.xs[i,model.pT,r]+model.xs[i,model.pT,r-1]))+\
+					model.pCPR[i]*0.5*sum(model.u[i,t1,r]+model.v[i,t1,r] for t1 in model.sT)\
+					for r in model.sR_0)-0.5*model.pCPR[i]\
+					for i in model.sI)
+	else: #remove the constant term
+		idr1   = sum(model.pCCR[i]*model.ws[i,model.pLT[i,1],1]+\
+			 model.pCPR[i]*(-model.ws[i,model.pLT[i,1],1])\
+			 for i in model.sI)
+		stage1 = 0#sum(model.pCPR[i1]*model.x[i1] for i1 in model.sI)
+		othIdr = sum(sum(model.pCCR[i]*(1-0.5*sum(model.u[i,t,r]+model.v[i,t,r] for t in model.sT))-\
+					model.pCCR[i]*(1-0.5*(model.xs[i,model.pT,r]+model.xs[i,model.pT,r-1]))+\
+					model.pCPR[i]*0.5*sum(model.u[i,t1,r]+model.v[i,t1,r] for t1 in model.sT)\
+					for r in model.sR_0) for i in model.sI)	
 	setup  = sum(model.pd*model.zs[t] for t in model.sT_0)
 	return idr1-stage1+othIdr+setup
 model.oSub = Objective(rule=exp_stage2_rule,sense=minimize)

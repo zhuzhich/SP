@@ -1,6 +1,4 @@
 param NUMSCEN :=1; 			#scenarios
 param prob := 1;			#probability of scenario.			
 param pI := 4;				#Total component number
-#param pT := 10;     		#Time horizon
-#param ps := 2;				#Starting time
 param pd := 5;				#set up cost

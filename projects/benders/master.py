@@ -18,7 +18,7 @@ model.prob 		= Param(default=1.0/model.NUMSCEN)		#equal probability
 model.pI		= Param()       						#component numbers
 model.sI 		= RangeSet(model.pI)
 model.pd		= Param()								#set-up cost
-model.CUTS = Set(within=PositiveIntegers, ordered=True)
+#model.CUTS = Set(within=PositiveIntegers, ordered=True)
 
 #For the large number of components
 #generate parameters.
@@ -38,8 +38,8 @@ model.pKesi		= Param(model.sI, initialize=pKesi_init) #failure state
 ######################################
 #Variables
 ######################################
-model.x 		= Var(model.sI,bounds=(0,1))#within=Binary)
-model.z 		= Var(bounds=(0,1))
+model.x 		= Var(model.sI, within=Binary)
+model.z 		= Var(within=Binary)
 model.sita 		= Var(model.Scen)
 ######################################
 #Constraints

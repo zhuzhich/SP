@@ -1,0 +1,8 @@
+reset;
+option randseed 17;
+model pro.mod;
+data pro.dat;
+option solver cplex ;
+#option cplex_options 'crash=0 dual'
+solve;
+#resdisplay cost;
