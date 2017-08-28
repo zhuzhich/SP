@@ -79,17 +79,16 @@ def pLT_init(model, i, r):
 	if r == 1:
 		if model.pKesi[i]==1:
 			return 0
-	return i #for test only..
-	"""
+	#return i #for test only..
 		else:
 			LT=int(round((-math.log(random.uniform(0,1)))**\
 					(1.0/model.w_shape[i])*model.w_scale[i]))-\
 					model.ps
 			return max(1,LT)
 	else:	
-		return int(round((-math.log(random.uniform(0,1)))**\
-			(1.0/model.w_shape[i])*model.w_scale[i]))
-	"""
+		LT=int(round((-math.log(random.uniform(0,1)))**\
+					(1.0/model.w_shape[i])*model.w_scale[i]))
+		return max(1,LT)
 model.pLT		= Param(model.sI, model.sR, initialize=pLT_init)
 
 #first stage variable

@@ -44,3 +44,13 @@ def instance_info(instance):
 				for r in instance.sR_0)-0.5*instance.pCPR[i]			
 	print "\n==================z================="						
 	print sum(instance.pd*instance.zs[t]() for t in instance.sT_0)
+	
+def instance_LT(instance):
+	print "==================LT===================="
+	for i in instance.sI:
+		#print "\n i=%d" %(i)
+		for r in instance.sR:
+			#print "\n r=%d" %(r)
+				print("(%d,%d)=%d" %(i,r,instance.pLT[i,r] )),
+				#print int(instance.xs[i,t,r]()),
+	
