@@ -11,7 +11,7 @@
 
 from pyomo.opt import *
 from pyomo.core import *
-
+from pyomo.environ import *
 import sc
 model = sc.pyomo_create_model()
 
