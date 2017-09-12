@@ -122,11 +122,15 @@ def scn_init(model):
 			if t>=model.pT+model.pLT[i,r])
 model.scn		= Set(dimen=3, initialize=scn_init)
 
+
+model.relax = Param(default=0, mutable=True)
+
 ######################################
 #Variables
 ######################################
 if 0:
 #integer
+	print "Integer sub-problem"
 	model.xs		= Var(model.sI, model.sT, model.sR, within=Binary)
 	model.ws		= Var(model.sI, model.sT_ex, model.sR, within=Binary)
 	model.zs		= Var(model.sT_0, within=Binary)
@@ -134,6 +138,7 @@ if 0:
 	model.v			= Var(model.sI, model.sT, model.sR, within=Binary)
 else:
 #relax
+	print "relaxed sub-problem"
 	model.xs		= Var(model.sI, model.sT, model.sR, within=NonNegativeReals)
 	model.ws		= Var(model.sI, model.sT_ex, model.sR, within=NonNegativeReals)
 	model.zs		= Var(model.sT_0, within=NonNegativeReals)

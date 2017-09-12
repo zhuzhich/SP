@@ -8,3 +8,4 @@ param pR := 12;				#Number of individuals = pT+2
 
 param pd := 5;				#set up cost
 
+param relax :=0;
