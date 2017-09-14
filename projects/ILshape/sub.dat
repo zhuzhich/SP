@@ -1,5 +1,5 @@
-param NUMSCEN :=5; 			#scenarios
-param prob := 0.2	;			#probability of scenario;
+param NUMSCEN :=1; 			#scenarios
+param prob := 1	;			#probability of scenario;
 param pI := 4;				#Total component number
 param pT := 10;     		#Time horizon
 param pT_ex := 30;			#extended time horizon
@@ -7,5 +7,3 @@ param ps := 2;				#Starting time
 param pR := 12;				#Number of individuals = pT+2
 
 param pd := 5;				#set up cost
-
-param relax :=0;

@@ -112,7 +112,7 @@ class BendersLazyConsCallback(LazyConstraintCallback):
         x = self.x
         workerLP = self.workerLP
         numNodes = len(x)
-
+        print ("lazy cutsssss!!!!!!!")
         # Get the current x solution
         sol = []
         for i in range(numNodes):
@@ -124,6 +124,7 @@ class BendersLazyConsCallback(LazyConstraintCallback):
             self.add(constraint=workerLP.cutLhs,
                      sense="G",
                      rhs=workerLP.cutRhs)
+		
 
 
 # The class BendersUserCutCallback
@@ -135,7 +136,7 @@ class BendersUserCutCallback(UserCutCallback):
         x = self.x
         workerLP = self.workerLP
         numNodes = len(x)
-
+        print ("user cutsssss!!!!!!!")
         # Skip the separation if not at the end of the cut loop
         if not self.is_after_cut_loop():
             return
@@ -149,7 +150,7 @@ class BendersUserCutCallback(UserCutCallback):
         # Benders' cut separation
         if workerLP.separate(sol, x):
             self.add(cut=workerLP.cutLhs, sense="G", rhs=workerLP.cutRhs)
-
+  
 
 # Data class to read an ATSP instance from an input file
 class ProbData:
@@ -495,6 +496,7 @@ def usage():
 
 
 if __name__ == "__main__":
+	"""
     if len(sys.argv) != 2 and len(sys.argv) != 3:
         usage()
         sys.exit(-1)
@@ -504,5 +506,9 @@ if __name__ == "__main__":
     if len(sys.argv) == 3:
         filename = sys.argv[2]
     else:
-        filename = "../../../examples/data/atsp.dat"
+        filename = "../data/atsp.dat"
+	
     bendersATSP(sys.argv[1][0], filename)
+	"""
+	filename = "../data/atsp.dat"
+	bendersATSP("1", filename)

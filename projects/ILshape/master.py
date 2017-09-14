@@ -38,9 +38,9 @@ model.pKesi		= Param(model.sI, initialize=pKesi_init) #failure state
 ######################################
 #Variables
 ######################################
-model.x 		= Var(model.sI, within=Binary)
-model.z 		= Var(within=Binary)
-model.sita 		= Var(model.Scen, within=NonNegativeReals)
+model.x 		= Var(model.sI, bounds=(0,1))
+model.z 		= Var(bounds=(0,1))
+model.sita 		= Var(model.Scen)
 ######################################
 #Constraints
 ######################################
