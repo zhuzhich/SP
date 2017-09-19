@@ -1,162 +1,269 @@
+#!/usr/bin/python
+
+from __future__ import print_function
+
+from math import fabs
+import sys
+
+import cplex
+from cplex.callbacks import UserCutCallback, LazyConstraintCallback
+from cplex.exceptions import CplexError
+
 from pyutilib.misc import import_file
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
 from pyomo.opt.base import SolverFactory
 from pyomo.opt.parallel import SolverManagerFactory
 from pyomo.opt.parallel.manager import solve_all_instances
-import random
-import math
-import pdb
-from debug import *
-import master_Int
 
-# import the master a
-# initialize the master instance.
-mstr_mdl = import_file("master.py").model
-mstr_inst = mstr_mdl.create_instance("master.dat")
+# The class BendersLazyConsCallback
+# allows to add Benders' cuts as lazy constraints.
+#
+class BendersLazyConsCallback(LazyConstraintCallback):
 
-mstr_mdl_Int = master_Int.pyomo_create_model()
-mstr_inst_Int = mstr_mdl_Int.create()
-
-test_mdl = import_file("test.py").model
-test_inst = test_mdl.create_instance()
-"""
-# initialize the sub-problem instances.
-sb_mdl = import_file("sub.py").model
-sub_insts = []
-for s in mstr_inst.Scen:
-	sub_insts.append(
-		sb_mdl.create_instance(name="sub"+str(s), \
-                           filename="sub.dat"))
-	#print ("instance name = %s" %sub_insts[-1].name)
-# initialize the solver manager.
-solver_manager = SolverManagerFactory("serial")
-# miscellaneous initialization.
-for i in mstr_inst.Scen:
-	mstr_inst.sita[i] = float("-Inf")
-
-max_iterations = 50
-#indicate each subproblem cut converged or not
-
-
-# main benders loop.
-for ii in range(1, max_iterations+1):
-	flag_sita = [0 for i in range(0,mstr_inst.NUMSCEN())] 
-	print("\nIteration=%d"%(ii))
-	#solve the subproblem
-	solve_all_instances(solver_manager, 'cplex', sub_insts)
-	#start multi-cut
-	for s, inst in enumerate(sub_insts, 1):
-		subObj = round(inst.oSub(),4)
-		print("obj. value for scenario "+str(s)+ " = "+inst.name+" is "+\
-				str(subObj)+"("+str(mstr_inst.prob*subObj)+")")
-		scen = mstr_inst.Scen[s]
-		#print ("scen=%d" %scen)
-		#if flag_sita[s-1] == 1:
-		#	continue
-		cut = 0
-		cut_int = 0
-		#constraint g
-		for i in inst.scg:
-			cut += inst.dual[inst.cSg[i]]
+    def __call__(self):
+		print ("lazy cut!!!")
+		x = self.params.x
+		sita = self.params.sita
+		scen = self.params.numScen
+		subLP = self.subLP
+        # Get the current x solution
+		solX = self.get_values(x)
+		subLP.separate(solX)
+		solMstSita = self.get_values(sita)
+		#solMstSita = float("-Inf")
 		
-		#constraint p
-		for i in inst.sI:
-			for t in inst.sT:
-				cut += inst.dual[inst.cSp[i,t]]*(-1)
+		if self.first == True:
+			self.first = False
+		for s in range(scen):
+			if self.first == True or abs(solMstSita[s]-subLP.subObj[s])>1e-03:
+				self.add(constraint=subLP.cutLhs[s],
+									 sense="G",
+									 rhs=subLP.cutRhs[s])
+
+		xx=1
+		"""
+		"""
+# The class BendersUserCutCallback
+# allows to add Benders' cuts as user cuts.
+#
+class BendersUserCutCallback(UserCutCallback):
+
+    def __call__(self):
+		print ("user cut!!!!")
+		"""
+        x = self.x
+        workerLP = self.workerLP
+        numNodes = len(x)
+        print ("user cutsssss!!!!!!!")
+        # Skip the separation if not at the end of the cut loop
+        if not self.is_after_cut_loop():
+            return
+
+        # Get the current x solution
+        sol = []
+        for i in range(numNodes):
+            sol.append([])
+            sol[i] = self.get_values(x[i])
+
+        # Benders' cut separation
+        if workerLP.separate(sol, x):
+            self.add(cut=workerLP.cutLhs, sense="G", rhs=workerLP.cutRhs)
+"""  
+	
+
+
+
+class subproblemLP:
+    #
+    def __init__(self, params):
+		self.numScen = params.numScen
+		self.mstX = params.x
+		self.mstSita = params.sita
+		sb_mdl = import_file("sub.py").model
+		sub_insts = []
+		for s in range(self.numScen):
+			sub_insts.append(
+				sb_mdl.create_instance(name="sub"+str(s), \
+								   filename="sub.dat"))
+		solver_manager = SolverManagerFactory("serial")
+		self.model = sb_mdl
+		self.instance = sub_insts
+		self.solver_manager = solver_manager
 		
-		#constraint q,r,s,t
-		for i in inst.sI:
-			for t in inst.sT:
-				for r in inst.sR:
-					cut += inst.dual[inst.cSq[i,t,r]]
-					cut += inst.dual[inst.cSr[i,t,r]]
-					cut += inst.dual[inst.cSs[i,t,r]]
-					cut += inst.dual[inst.cSt[i,t,r]]
-		#constraint u
-		for t in inst.sT_0:
-			cut += inst.dual[inst.cSu[t]]	
-		#constraint v
-		for i in inst.sI:
-			for t in inst.sT_ex:
-				for r in inst.sR:
-					cut += inst.dual[inst.cSv[i,t,r]]
-		cut = mstr_inst.prob*cut
-		cut_int = mstr_inst_Int.prob*cut
-		print "added cut"
-		print cut,
-		#constraint i
-		for i in inst.sI:
-			print ("+%f*x[%d]" %(mstr_inst.prob*inst.dual[inst.cSi[i]],i)),
-			cut += mstr_inst.prob*inst.dual[inst.cSi[i]]*mstr_inst.x[i]
-			cut_int += mstr_inst_Int.prob*inst.dual[inst.cSi[i]]*mstr_inst_Int.x[i]
-		print ""
-		mstr_inst.Cut_Defn.add(mstr_inst.sita[s] >= cut)
-		mstr_inst_Int.Cut_Defn.add(mstr_inst_Int.sita[s] >= cut_int)			
-		Lbound = mstr_inst.prob*inst.oSub()
-		print("Lower bound ["+str(scen)+"]= " \
-                               +str(round(Lbound, 4)))
-		print("Upper bound ["+str(scen)+"]"\
-			+str(round(mstr_inst.sita[scen].value, 4)))
+
+    # This method separates Benders' cuts violated by the current x solution.
+    # Violated cuts are found by solving the worker LP
+    #
+    def separate(self, xSol):
+		sub_insts = self.instance
+		for instance in sub_insts:
+			for i in instance.sI:
+				instance.x[i] = max(xSol[i-1],0)
+		solve_all_instances(self.solver_manager, 'cplex', sub_insts)
+		subObj = []
+		cutRhs = []
+		cutLhs = []
+		for s, inst in enumerate(sub_insts, 1):
+			subObj.append(round(inst.oSub(),4))
+			print("obj. value for scenario "+str(s)+ " = "+inst.name+" is "+\
+					str(subObj[s-1])+"("+str(1.0/self.numScen*subObj[s-1])+")")
+			cut = 0
+			#constraint g
+			for i in inst.scg:
+				cut += inst.dual[inst.cSg[i]]
 			
-		newgap = round(mstr_inst.sita[scen].value - \
-					Lbound, 6)
-		newgap = abs(newgap)
-		if newgap == 0:
-        # get rid -0.0, which makes this script easier
-        # to test against a baseline
-			newgap = 0
-		print("New gap= "+str(newgap)+"\n")
+			#constraint p
+			for i in inst.sI:
+				for t in inst.sT:
+					cut += inst.dual[inst.cSp[i,t]]*(-1)
+			
+			#constraint q,r,s,t
+			for i in inst.sI:
+				for t in inst.sT:
+					for r in inst.sR:
+						cut += inst.dual[inst.cSq[i,t,r]]
+						cut += inst.dual[inst.cSr[i,t,r]]
+						cut += inst.dual[inst.cSs[i,t,r]]
+						cut += inst.dual[inst.cSt[i,t,r]]
+			#constraint u
+			for t in inst.sT_0:
+				cut += inst.dual[inst.cSu[t]]	
+			#constraint v
+			for i in inst.sI:
+				for t in inst.sT_ex:
+					for r in inst.sR:
+						cut += inst.dual[inst.cSv[i,t,r]]
+			cut = 1.0/self.numScen*cut		
+			print ("added cut")
+			print (cut)
+			cutRhs.append(cut)
+			#constraint i
+			thecoefs = []
+			for i in inst.sI:
+				print ("+%f*x[%d]" %(1.0/self.numScen*inst.dual[inst.cSi[i]],i)),
+				thecoefs.append(-1.0/self.numScen*inst.dual[inst.cSi[i]])
 
-		if newgap <= 0.00001:
-			flag_sita[s-1] = 1
-			print("scenario["+str(s)+"]converged")
-
-	if flag_sita.count(0) == 0:
-		print("Multicut converged!!")
-		break
-# re-solve the master and update the subproblem inv1 values.
-	solve_all_instances(solver_manager, 'cplex', [mstr_inst])
-	print "solving master problem:"
-	for i in mstr_inst.sI:
-		print("x["+str(i)+"]="+str(round(mstr_inst.x[i](), 4)))
-	print ("objective value=%f"  %mstr_inst.oMaster())
-	for p in mstr_inst.Scen:
-		print("objective valule ["+str(p)+"]"+str(round(mstr_inst.sita[p].value, 4)))
-
-####
-
-	for instance in sub_insts:
-		for i in instance.sI:
-			instance.x[i] = max(mstr_inst.x[i](),0)
-
-else:
-    # this gets executed when the loop above does not break
-	print("Maximum Iterations Exceeded")
-
-print("\nConverged master solution values:")
-for i in mstr_inst.sI:
-	print("x["+str(i)+"]="+str(round(mstr_inst.x[i](), 4)))
-print ("objective value=%f" %mstr_inst.oMaster())
-for p in mstr_inst.Scen:
-	print("objective valule ["+str(p)+"]"+str(round(mstr_inst.sita[p].value, 4)))
+			theind = self.mstX[:]
+			theind.append(self.mstSita[s-1])
+			thecoefs.append(1.0)
+			cutLhs.append(cplex.SparsePair(ind=theind, val=thecoefs))
+			
+		self.cutLhs = cutLhs
+		self.cutRhs = cutRhs
+		self.subObj = subObj
+		
 """
-def solve_callback(solver, test_inst):
-    print "CB-Solve"
-
-def cut_callback(solver, test_inst):
-    print "CB-Cut"
-
-def node_callback(solver, test_inst):
-    print "CB-Node"
+"""
 
 
+# This function creates the master ILP	
+def createMasterILP(cpx,params):
+	cpx.objective.set_sense(cpx.objective.sense.minimize)
+	numComponents = 4
+	numScen = 1
+	params.numScen = numScen
+	setupCost = 5
+	cCR=[]
+	kesi=[]
+	for i in range(numComponents):
+		cCR.append((i+1)*2)
+		kesi.append(0)
+		if i == 0:
+			kesi[i] = 1
+	#variables
+	varNameX=[]
+	x=[]
+	for i in range(numComponents):
+		varNameX.append("x" + str(i))
+		x.append(cpx.variables.get_num())
+		cpx.variables.add(obj=[cCR[i]],
+						  lb=[0.0], ub=[1.0], types=["B"],
+						  names=[varNameX[i]])
+	params.x = x
+	
+	varNameSita=[]
+	sita = []
+	for i in range(numScen):
+		varNameSita.append("sita" + str(i))
+		sita.append(cpx.variables.get_num())
+		cpx.variables.add(obj=[1.0],
+						  lb=[-10000.0],
+						  names=[varNameSita[i]])
+	params.sita = sita
+	
+	varNameZ = "z"    
+	cpx.variables.add(obj=[setupCost],
+					  lb=[0.0],ub=[1.0], types=["B"],
+					  names=[varNameZ])
+    
+	for i in range(numComponents):
+		cpx.linear_constraints.add(
+			lin_expr=[cplex.SparsePair([varNameX[i]],[1.0])],
+			senses=["G"], 
+			range_values=[0.0],
+			rhs=[kesi[i]])
+	for i in range(numComponents):
+		cpx.linear_constraints.add(
+			lin_expr=[cplex.SparsePair([varNameX[i],varNameZ],[-1.0,1.0,])],
+			senses=["G"], 
+			range_values=[0.0],
+			rhs=[0])
+			
+class parameters:
+	def __init__(self):
+		self.numScen = []
+		self.x = []
+		self.sita = []
+def benders_main():
+	# Create master ILP
+	cpx = cplex.Cplex()
+	params = parameters()
+	createMasterILP(cpx,params)
+	subLP = subproblemLP(params)
 
-opt = SolverFactory('_cplex_direct')
+	cpx.parameters.preprocessing.presolve.set(
+		cpx.parameters.preprocessing.presolve.values.off)
+	cpx.parameters.threads.set(1)
 
-opt.set_callback('cut-callback', cut_callback)
-opt.set_callback('node-callback', node_callback)
-opt.set_callback('solve-callback', solve_callback)
+	cpx.parameters.mip.strategy.search.set(
+		cpx.parameters.mip.strategy.search.values.traditional)
 
-results = opt.solve(test_inst, tee=True)
-print results  	
+	lazyBenders = cpx.register_callback(BendersLazyConsCallback)
+	lazyBenders.params = params
+	lazyBenders.subLP = subLP
+	lazyBenders.first = True
+	#userBenders = cpx.register_callback(BendersUserCutCallback)
+
+	# Solve the model
+	cpx.solve()
+
+	solution = cpx.solution
+	print()
+	print("Solution status: ", solution.get_status())
+	print("Objective value: ", solution.get_objective_value())
+	"""	
+	if solution.get_status() == solution.status.MIP_optimal:
+		# Write out the optimal tour
+		succ = [-1] * numNodes
+		for i in range(numNodes):
+			sol = solution.get_values(x[i])
+			for j in range(numNodes):
+				if sol[j] > 1e-03:
+					succ[i] = j
+		print("Optimal tour:")
+		i = 0
+		while succ[i] != 0:
+			print("%d, " % i, end=' ')
+			i = succ[i]
+		print(i)
+	else:
+		print("Solution status is not optimal")
+        """
+
+def usage():
+	print("Usage:     don't use it!!")
+
+
+if __name__ == "__main__":
+	benders_main()

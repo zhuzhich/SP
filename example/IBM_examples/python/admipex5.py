@@ -111,23 +111,22 @@ class MyCut(UserCutCallback):
 
     def __call__(self):
         # loop through our list of cuts and check whether they are violated
-        lhs = self.lhs
-        rhs = self.rhs
-        nCuts = len(rhs)
-        for i in range(nCuts):
-            # calculate activity of cut
-            act = 0
-            cutlen = len(lhs[i].ind)
-            for k in range(cutlen):
-                j = lhs[i].ind[k]
-                a = lhs[i].val[k]
-                act += a * self.get_values(j)
+		lhs = self.lhs
+		rhs = self.rhs
+		nCuts = len(rhs)
+		for i in range(nCuts):
+			# calculate activity of cut
+			act = 0
+			cutlen = len(lhs[i].ind)
+			for k in range(cutlen):
+				j = lhs[i].ind[k]
+				a = lhs[i].val[k]
+				act += a * self.get_values(j)
 
-            # check if cut is violated
-            if act > rhs[i] + 1e-6:
-                self.add(cut=lhs[i], sense="L", rhs=rhs[i])
-
-
+			# check if cut is violated
+			if act > rhs[i] + 1e-6:
+				self.add(cut=lhs[i], sense="L", rhs=rhs[i])
+		xx=1
 #  Add the following constraint to the noswot model via lazy
 #  constraint callback; the optimal solution will be cut off:
 #
@@ -142,10 +141,8 @@ class MyLazy(LazyConstraintCallback):
             act += self.get_values(i)
         if act > 3.01:
             self.add(constraint=cplex.SparsePair(ind=indices, val=[1.0] * 5),
-                     sense="L",
-                     rhs=3.0)
-
-
+                     sense="L",rhs=3.0)
+        xx=1
 def solve_and_report(c):
     # solve problem
     c.solve()
@@ -165,7 +162,7 @@ def solve_and_report(c):
 
 
 def admipex5():
-    c = cplex.Cplex("../../../examples/data/noswot.mps")
+    c = cplex.Cplex("../data/noswot.mps")
 
     # sys.stdout is the default output stream for log and results
     # so these lines may be omitted
