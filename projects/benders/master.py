@@ -57,10 +57,15 @@ model.Cut_Defn 	= ConstraintList()
 #Objective
 ######################################
 def min_obj_rule(model):
-	return model.pd*model.z+\
-		   sum(model.pCPR[i]*model.x[i] for i in model.sI)+\
-		   sum((model.pCCR[i]-model.pCPR[i])*model.pKesi[i] for i in model.sI)+\
-		   sum(model.sita[i] for i in model.Scen)
+	if 0:
+		return model.pd*model.z+\
+			   sum(model.pCPR[i]*model.x[i] for i in model.sI)+\
+			   sum((model.pCCR[i]-model.pCPR[i])*model.pKesi[i] for i in model.sI)+\
+			   sum(model.sita[i] for i in model.Scen)
+	else:
+		return model.pd*model.z+\
+			   sum(model.pCPR[i]*model.x[i] for i in model.sI)+\
+			   sum(model.sita[i] for i in model.Scen)		
 model.oMaster 	= Objective(rule=min_obj_rule,sense=minimize)
 	
 	
