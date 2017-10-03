@@ -22,13 +22,15 @@ from pyomo.opt.parallel.manager import solve_all_instances
 class BendersLazyConsCallback(LazyConstraintCallback):
 
     def __call__(self):
-		print ("lazy cut!!!")
+
 		x = self.params.x
 		sita = self.params.sita
 		scen = self.params.numScen
 		subLP = self.subLP
         # Get the current x solution
 		solX = self.get_values(x)
+		print ("lazy cut!!!solX="),
+		print (solX)
 		subLP.separate(solX)
 		solMstSita = self.get_values(sita)
 		#solMstSita = float("-Inf")
@@ -50,27 +52,28 @@ class BendersLazyConsCallback(LazyConstraintCallback):
 class BendersUserCutCallback(UserCutCallback):
 
     def __call__(self):
-		print ("user cut!!!!")
-		"""
-        x = self.x
-        workerLP = self.workerLP
-        numNodes = len(x)
-        print ("user cutsssss!!!!!!!")
-        # Skip the separation if not at the end of the cut loop
-        if not self.is_after_cut_loop():
-            return
-
+		x = self.params.x
+		sita = self.params.sita
+		scen = self.params.numScen
+		subLP = self.subLP
         # Get the current x solution
-        sol = []
-        for i in range(numNodes):
-            sol.append([])
-            sol[i] = self.get_values(x[i])
-
-        # Benders' cut separation
-        if workerLP.separate(sol, x):
-            self.add(cut=workerLP.cutLhs, sense="G", rhs=workerLP.cutRhs)
-"""  
+		solX = self.get_values(x)
+		print ("user cut!!!solX="),
+		print (solX)
+		subLP.separate(solX)
+		solMstSita = self.get_values(sita)
+		#solMstSita = float("-Inf")
+		if not self.is_after_cut_loop():
+			return		
+		if self.first == True:
+			self.first = False
+		for s in range(scen):
+			if self.first == True or abs(solMstSita[s]-subLP.subObj[s])>1e-03:
+				self.add(constraint=subLP.cutLhs[s],
+									 sense="G",
+									 rhs=subLP.cutRhs[s])
 	
+		xx = 1
 
 
 
@@ -165,9 +168,11 @@ def createMasterILP(cpx,params):
 	params.numScen = numScen
 	setupCost = 5
 	cCR=[]
+	cPR=[]
 	kesi=[]
 	for i in range(numComponents):
 		cCR.append((i+1)*2)
+		cPR.append(1)
 		kesi.append(0)
 		if i == 0:
 			kesi[i] = 1
@@ -177,7 +182,7 @@ def createMasterILP(cpx,params):
 	for i in range(numComponents):
 		varNameX.append("x" + str(i))
 		x.append(cpx.variables.get_num())
-		cpx.variables.add(obj=[cCR[i]],
+		cpx.variables.add(obj=[cPR[i]],
 						  lb=[0.0], ub=[1.0], types=["B"],
 						  names=[varNameX[i]])
 	params.x = x
@@ -209,7 +214,6 @@ def createMasterILP(cpx,params):
 			senses=["G"], 
 			range_values=[0.0],
 			rhs=[0])
-			
 class parameters:
 	def __init__(self):
 		self.numScen = []
@@ -228,19 +232,24 @@ def benders_main():
 
 	cpx.parameters.mip.strategy.search.set(
 		cpx.parameters.mip.strategy.search.values.traditional)
-
+	#lazy constraints
+	
 	lazyBenders = cpx.register_callback(BendersLazyConsCallback)
 	lazyBenders.params = params
 	lazyBenders.subLP = subLP
 	lazyBenders.first = True
-	#userBenders = cpx.register_callback(BendersUserCutCallback)
-
+	#user cut
+	userBenders = cpx.register_callback(BendersUserCutCallback)
+	userBenders.params = params
+	userBenders.subLP = subLP
+	userBenders.first = True
+    
 	# Solve the model
 	cpx.solve()
 
 	solution = cpx.solution
 	print()
-	print("Solution status: ", solution.get_status())
+	print("Solution [x1,x2,x3,x4,sita,Z]: ", solution.get_values())
 	print("Objective value: ", solution.get_objective_value())
 	"""	
 	if solution.get_status() == solution.status.MIP_optimal:

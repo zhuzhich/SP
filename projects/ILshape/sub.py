@@ -94,7 +94,7 @@ model.pLT		= Param(model.sI, model.sR, initialize=pLT_init)
 
 #first stage variable
 def x_init(model, i):
-	if i==1 or i==2 or i==3 or i==4:
+	if i==1:
 		return 1
 	else:
 		return 0
