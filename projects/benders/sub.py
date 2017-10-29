@@ -76,7 +76,7 @@ model.w_scale		= Param(model.sI, initialize=w_scale_init) #weibull scale
 
 #random life time
 def pLT_init(model, i, r):
-	random.seed(i**2+r**2)
+	#random.seed(i**2+r**2)
 	if r == 1:
 		if model.pKesi[i]==1:
 			return 0

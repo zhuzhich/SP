@@ -44,6 +44,27 @@ for ii in range(1, max_iterations+1):
 	solve_all_instances(solver_manager, 'cplex', sub_insts)
 	#start multi-cut
 	for s, inst in enumerate(sub_insts, 1):
+		Lbound = mstr_inst.prob*inst.oSub()
+		#print("Lower bound ["+str(scen)+"]= " \
+        #                       +str(round(Lbound, 4)))
+		#print("Upper bound ["+str(scen)+"]"\
+		#	+str(round(mstr_inst.sita[scen].value, 4)))
+			
+		newgap = round(mstr_inst.sita[s].value - \
+					Lbound, 6)
+		newgap = abs(newgap)
+		if newgap == 0:
+        # get rid -0.0, which makes this script easier
+        # to test against a baseline
+			newgap = 0
+		#print("New gap= "+str(newgap)+"\n")
+
+		if newgap <= 0.00001:
+			flag_sita[s-1] = 1
+			continue
+			#print("scenario["+str(s)+"]converged")
+
+		cut_num	= cut_num + 1		
 		subObj = round(inst.oSub(),4)
 		#print("obj. value for scenario "+str(s)+ " = "+inst.name+" is "+\
 		#		str(subObj)+"("+str(mstr_inst.prob*subObj)+")")
@@ -86,25 +107,8 @@ for ii in range(1, max_iterations+1):
 			cut += mstr_inst.prob*inst.dual[inst.cSi[i]]*mstr_inst.x[i]
 		#print ""
 		mstr_inst.Cut_Defn.add(mstr_inst.sita[s] >= cut)
-		cut_num	= cut_num + 1	
-		Lbound = mstr_inst.prob*inst.oSub()
-		#print("Lower bound ["+str(scen)+"]= " \
-        #                       +str(round(Lbound, 4)))
-		#print("Upper bound ["+str(scen)+"]"\
-		#	+str(round(mstr_inst.sita[scen].value, 4)))
-			
-		newgap = round(mstr_inst.sita[scen].value - \
-					Lbound, 6)
-		newgap = abs(newgap)
-		if newgap == 0:
-        # get rid -0.0, which makes this script easier
-        # to test against a baseline
-			newgap = 0
-		#print("New gap= "+str(newgap)+"\n")
 
-		if newgap <= 0.00001:
-			flag_sita[s-1] = 1
-			#print("scenario["+str(s)+"]converged")
+		
 
 	if flag_sita.count(0) == 0:
 		#print("Multicut converged!!")
@@ -136,7 +140,7 @@ print (ii)
 print ("CPU time="),
 print (CPU_time)
 print ("cut="),
-print (cut)
+print (cut_num)
 for i in mstr_inst.sI:
 	print("x["+str(i)+"]="+str(round(mstr_inst.x[i](), 4)))
 print ("objective value=%f" %mstr_inst.oMaster())

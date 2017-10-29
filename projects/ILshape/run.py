@@ -15,10 +15,12 @@ from pyomo.opt import SolverFactory
 from pyomo.opt.base import SolverFactory
 from pyomo.opt.parallel import SolverManagerFactory
 from pyomo.opt.parallel.manager import solve_all_instances
-
+import time
 # The class BendersLazyConsCallback
 # allows to add Benders' cuts as lazy constraints.
 #
+lazy_cut = 0
+user_cut = 0
 class BendersLazyConsCallback(LazyConstraintCallback):
 
     def __call__(self):
@@ -29,21 +31,21 @@ class BendersLazyConsCallback(LazyConstraintCallback):
 		subLP = self.subLP
         # Get the current x solution
 		solX = self.get_values(x)
-		print ("lazy cut!!!solX="),
-		print (solX)
+		#print ("lazy cut!!!solX="),
+		#print (solX)
 		subLP.separate(solX)
 		solMstSita = self.get_values(sita)
 		#solMstSita = float("-Inf")
 		
-		if self.first == True:
-			self.first = False
 		for s in range(scen):
-			if self.first == True or abs(solMstSita[s]-subLP.subObj[s])>1e-03:
+			if self.first == True or abs(solMstSita[s]-subLP.subObj[s])>1e-02:
+				global lazy_cut
+				lazy_cut += 1
 				self.add(constraint=subLP.cutLhs[s],
 									 sense="G",
 									 rhs=subLP.cutRhs[s])
-
-		xx=1
+		if self.first == True:
+			self.first = False
 		"""
 		"""
 # The class BendersUserCutCallback
@@ -58,22 +60,24 @@ class BendersUserCutCallback(UserCutCallback):
 		subLP = self.subLP
         # Get the current x solution
 		solX = self.get_values(x)
-		print ("user cut!!!solX="),
-		print (solX)
+		#print ("user cut!!!solX="),
+		#print (solX)
 		subLP.separate(solX)
 		solMstSita = self.get_values(sita)
 		#solMstSita = float("-Inf")
 		if not self.is_after_cut_loop():
 			return		
-		if self.first == True:
-			self.first = False
+
 		for s in range(scen):
-			if self.first == True or abs(solMstSita[s]-subLP.subObj[s])>1e-03:
-				self.add(constraint=subLP.cutLhs[s],
+			if self.first == True or abs(solMstSita[s]-subLP.subObj[s])>1e-02:
+				global user_cut
+				user_cut += 1
+				self.add(cut=subLP.cutLhs[s],
 									 sense="G",
 									 rhs=subLP.cutRhs[s])
-	
-		xx = 1
+		if self.first == True:
+			self.first = False	
+		#xx = 1
 
 
 
@@ -109,8 +113,8 @@ class subproblemLP:
 		cutLhs = []
 		for s, inst in enumerate(sub_insts, 1):
 			subObj.append(round(inst.oSub(),4))
-			print("obj. value for scenario "+str(s)+ " = "+inst.name+" is "+\
-					str(subObj[s-1])+"("+str(1.0/self.numScen*subObj[s-1])+")")
+			#print("obj. value for scenario "+str(s)+ " = "+inst.name+" is "+\
+			#		str(subObj[s-1])+"("+str(1.0/self.numScen*subObj[s-1])+")")
 			cut = 0
 			#constraint g
 			for i in inst.scg:
@@ -138,13 +142,13 @@ class subproblemLP:
 					for r in inst.sR:
 						cut += inst.dual[inst.cSv[i,t,r]]
 			cut = 1.0/self.numScen*cut		
-			print ("added cut")
-			print (cut)
+			#print ("added cut")
+			#print (cut)
 			cutRhs.append(cut)
 			#constraint i
 			thecoefs = []
 			for i in inst.sI:
-				print ("+%f*x[%d]" %(1.0/self.numScen*inst.dual[inst.cSi[i]],i)),
+				#print ("+%f*x[%d]" %(1.0/self.numScen*inst.dual[inst.cSi[i]],i)),
 				thecoefs.append(-1.0/self.numScen*inst.dual[inst.cSi[i]])
 
 			theind = self.mstX[:]
@@ -163,8 +167,8 @@ class subproblemLP:
 # This function creates the master ILP	
 def createMasterILP(cpx,params):
 	cpx.objective.set_sense(cpx.objective.sense.minimize)
-	numComponents = 4
-	numScen = 1
+	numComponents = 15
+	numScen = 20
 	params.numScen = numScen
 	setupCost = 5
 	cCR=[]
@@ -193,7 +197,7 @@ def createMasterILP(cpx,params):
 		varNameSita.append("sita" + str(i))
 		sita.append(cpx.variables.get_num())
 		cpx.variables.add(obj=[1.0],
-						  lb=[-10000.0],
+						  lb=[-100000.0],
 						  names=[varNameSita[i]])
 	params.sita = sita
 	
@@ -225,7 +229,8 @@ def benders_main():
 	params = parameters()
 	createMasterILP(cpx,params)
 	subLP = subproblemLP(params)
-
+	
+	start_time = time.clock()
 	cpx.parameters.preprocessing.presolve.set(
 		cpx.parameters.preprocessing.presolve.values.off)
 	cpx.parameters.threads.set(1)
@@ -246,11 +251,17 @@ def benders_main():
     
 	# Solve the model
 	cpx.solve()
-
+	end_time = time.clock()
 	solution = cpx.solution
 	print()
-	print("Solution [x1,x2,x3,x4,sita,Z]: ", solution.get_values())
+	#print("Solution [x1,x2,x3,x4,sita,Z]: ", solution.get_values())
 	print("Objective value: ", solution.get_objective_value())
+	print ("time = "),
+	print (start_time-end_time)
+	print ("lazy cut"),
+	print (lazy_cut)
+	print ("user cut"),
+	print (user_cut)
 	"""	
 	if solution.get_status() == solution.status.MIP_optimal:
 		# Write out the optimal tour
