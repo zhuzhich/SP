@@ -167,8 +167,8 @@ class subproblemLP:
 # This function creates the master ILP	
 def createMasterILP(cpx,params):
 	cpx.objective.set_sense(cpx.objective.sense.minimize)
-	numComponents = 15
-	numScen = 20
+	numComponents = 8
+	numScen = 100
 	params.numScen = numScen
 	setupCost = 5
 	cCR=[]
