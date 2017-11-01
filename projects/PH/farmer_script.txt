@@ -1,0 +1,2 @@
+cd C:\Users\zzhu3\Documents\codes\SP\example\pysp\farmer
+runph --model-directory=models --instance-directory=scenariodata --default-rho=1.0 --solver=cplex
