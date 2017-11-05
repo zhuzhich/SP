@@ -1,0 +1,6 @@
+#!/bin/bash
+#PBS -N benders
+#PBS -l nodes=1:ppn=1,walltime=00:10:00
+. /home/zzhu3/.bashrc
+cd $PBS_O_WORKDIR
+/home/zzhu3/programs/pyomo_5_2/pyomo/bin/python run.py > result.txt
