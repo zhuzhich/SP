@@ -228,7 +228,7 @@ model.cSs = Constraint(model.sI, model.sT, model.sR, rule=s_cs_rule)
 
 def s_cs1_rule(model, i, r): #new constraints. 
 	return sum(model.u[i,t,r]+model.v[i,t,r] for t in model.sT)<=2
-model.cSs1 = Constraint(model.sI, model.sR, rule=s_cs1_rule)
+model.cSs1 = Constraint(model.sI, model.sR_0, rule=s_cs1_rule)
 
 def s_ct_rule(model, i, t,r):
 	return model.xs[i,t,r]<=1 #and model.xs[i,t,r]>=0
