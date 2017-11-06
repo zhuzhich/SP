@@ -133,6 +133,10 @@ class subproblemLP:
 						cut += inst.dual[inst.cSr[i,t,r]]
 						cut += inst.dual[inst.cSs[i,t,r]]
 						cut += inst.dual[inst.cSt[i,t,r]]
+			#constraint s1
+			for i in inst.sI:
+				for r in inst.sR_0:
+					cut += 2*inst.dual[inst.cSs1[i,r]]
 			#constraint u
 			for t in inst.sT_0:
 				cut += inst.dual[inst.cSu[t]]	
@@ -167,8 +171,8 @@ class subproblemLP:
 # This function creates the master ILP	
 def createMasterILP(cpx,params):
 	cpx.objective.set_sense(cpx.objective.sense.minimize)
-	numComponents = 8
-	numScen = 100
+	numComponents = 1
+	numScen = 1
 	params.numScen = numScen
 	setupCost = 5
 	cCR=[]
