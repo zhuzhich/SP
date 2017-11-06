@@ -39,16 +39,16 @@ print ("loading time = ",str(end_time1-start_time1))
 start_time = time.clock()
 for ii in range(1, max_iterations+1):
 	flag_sita = [0 for i in range(0,mstr_inst.NUMSCEN())] 
-	#print("\nIteration=%d"%(ii))
+	print("\nIteration=%d"%(ii))
 	#solve the subproblem
 	solve_all_instances(solver_manager, 'cplex', sub_insts)
 	#start multi-cut
 	for s, inst in enumerate(sub_insts, 1):
 		Lbound = mstr_inst.prob*inst.oSub()
-		#print("Lower bound ["+str(scen)+"]= " \
-        #                       +str(round(Lbound, 4)))
-		#print("Upper bound ["+str(scen)+"]"\
-		#	+str(round(mstr_inst.sita[scen].value, 4)))
+		print("Lower bound ["+str(s)+"]= " \
+                               +str(round(Lbound, 4)))
+		print("Upper bound ["+str(s)+"]"\
+			+str(round(mstr_inst.sita[s].value, 4)))
 			
 		newgap = round(mstr_inst.sita[s].value - \
 					Lbound, 6)
@@ -57,7 +57,7 @@ for ii in range(1, max_iterations+1):
         # get rid -0.0, which makes this script easier
         # to test against a baseline
 			newgap = 0
-		#print("New gap= "+str(newgap)+"\n")
+		print("New gap= "+str(newgap)+"\n")
 
 		if newgap <= 0.00001:
 			flag_sita[s-1] = 1
@@ -66,8 +66,8 @@ for ii in range(1, max_iterations+1):
 
 		cut_num	= cut_num + 1		
 		subObj = round(inst.oSub(),4)
-		#print("obj. value for scenario "+str(s)+ " = "+inst.name+" is "+\
-		#		str(subObj)+"("+str(mstr_inst.prob*subObj)+")")
+		print("obj. value for scenario "+str(s)+ " = "+inst.name+" is "+\
+				str(subObj)+"("+str(mstr_inst.prob*subObj)+")")
 		scen = mstr_inst.Scen[s]
 		#print ("scen=%d" %scen)
 		#if flag_sita[s-1] == 1:
@@ -90,6 +90,10 @@ for ii in range(1, max_iterations+1):
 					cut += inst.dual[inst.cSr[i,t,r]]
 					cut += inst.dual[inst.cSs[i,t,r]]
 					cut += inst.dual[inst.cSt[i,t,r]]
+		#constraint s1
+		for i in inst.sI:
+			for r in inst.sR_0:
+				cut += 2*inst.dual[inst.cSs1[i,r]]
 		#constraint u
 		for t in inst.sT_0:
 			cut += inst.dual[inst.cSu[t]]	
@@ -99,13 +103,13 @@ for ii in range(1, max_iterations+1):
 				for r in inst.sR:
 					cut += inst.dual[inst.cSv[i,t,r]]
 		cut = mstr_inst.prob*cut
-		#print "added cut"
-		#print cut,
+		print "added cut"
+		print cut,
 		#constraint i
 		for i in inst.sI:
-			#print ("+%f*x[%d]" %(mstr_inst.prob*inst.dual[inst.cSi[i]],i)),
+			print ("+%f*x[%d]" %(mstr_inst.prob*inst.dual[inst.cSi[i]],i)),
 			cut += mstr_inst.prob*inst.dual[inst.cSi[i]]*mstr_inst.x[i]
-		#print ""
+		print ""
 		mstr_inst.Cut_Defn.add(mstr_inst.sita[s] >= cut)
 
 		
@@ -115,12 +119,12 @@ for ii in range(1, max_iterations+1):
 		break
 # re-solve the master and update the subproblem inv1 values.
 	solve_all_instances(solver_manager, 'cplex', [mstr_inst])
-	#print "solving master problem:"
-	#for i in mstr_inst.sI:
-		#print("x["+str(i)+"]="+str(round(mstr_inst.x[i](), 4)))
-	#print ("objective value=%f"  %mstr_inst.oMaster())
-	#for p in mstr_inst.Scen:
-		#print("objective valule ["+str(p)+"]"+str(round(mstr_inst.sita[p].value, 4)))
+	print "solving master problem:"
+	for i in mstr_inst.sI:
+		print("x["+str(i)+"]="+str(round(mstr_inst.x[i](), 4)))
+	print ("objective value=%f"  %mstr_inst.oMaster())
+	for p in mstr_inst.Scen:
+		print("objective valule ["+str(p)+"]"+str(round(mstr_inst.sita[p].value, 4)))
 
 ####
 

@@ -76,7 +76,7 @@ model.w_scale		= Param(model.sI, initialize=w_scale_init) #weibull scale
 
 #random life time
 def pLT_init(model, i, r):
-	#random.seed(i**2+r**2)
+	random.seed(i**2+r**2)
 	if r == 1:
 		if model.pKesi[i]==1:
 			return 0
@@ -243,25 +243,25 @@ model.cSv = Constraint(model.sI, model.sT_ex, model.sR, rule=s_cv_rule)
 ######################################
 def exp_stage2_rule(model):
 	if 0: #full obj
-		idr1   = sum(model.pCCR[i]*model.ws[i,model.pLT[i,1],1]+\
+		model.idr1   = sum(model.pCCR[i]*model.ws[i,model.pLT[i,1],1]+\
 			 model.pCPR[i]*(1-model.ws[i,model.pLT[i,1],1])\
 			 for i in model.sI)
-		stage1 = sum(model.pCPR[i1]*model.x[i1] for i1 in model.sI)+\
+		model.stage1 = sum(model.pCPR[i1]*model.x[i1] for i1 in model.sI)+\
 				sum((model.pCCR[i2]-model.pCPR[i2])*model.pKesi[i2] for i2 in model.sI)
-		othIdr = sum(sum(model.pCCR[i]*(1-0.5*sum(model.u[i,t,r]+model.v[i,t,r] for t in model.sT))-\
+		model.othIdr = sum(sum(model.pCCR[i]*(1-0.5*sum(model.u[i,t,r]+model.v[i,t,r] for t in model.sT))-\
 					model.pCCR[i]*(1-0.5*(model.xs[i,model.pT,r]+model.xs[i,model.pT,r-1]))+\
 					model.pCPR[i]*0.5*sum(model.u[i,t1,r]+model.v[i,t1,r] for t1 in model.sT)\
 					for r in model.sR_0)-0.5*model.pCPR[i]\
 					for i in model.sI)
 	else: #remove the constant term
-		idr1   = sum(model.pCCR[i]*model.ws[i,model.pLT[i,1],1]+\
+		model.idr1   = sum(model.pCCR[i]*model.ws[i,model.pLT[i,1],1]+\
 			 model.pCPR[i]*(-model.ws[i,model.pLT[i,1],1])\
 			 for i in model.sI)
-		stage1 = 0#sum(model.pCPR[i1]*model.x[i1] for i1 in model.sI)
-		othIdr = sum(sum(model.pCCR[i]*(1-0.5*sum(model.u[i,t,r]+model.v[i,t,r] for t in model.sT))-\
+		model.stage1 = 0#sum(model.pCPR[i1]*model.x[i1] for i1 in model.sI)
+		model.othIdr = sum(sum(model.pCCR[i]*(1-0.5*sum(model.u[i,t,r]+model.v[i,t,r] for t in model.sT))-\
 					model.pCCR[i]*(1-0.5*(model.xs[i,model.pT,r]+model.xs[i,model.pT,r-1]))+\
 					model.pCPR[i]*0.5*sum(model.u[i,t1,r]+model.v[i,t1,r] for t1 in model.sT)\
 					for r in model.sR_0) for i in model.sI)	
-	setup  = sum(model.pd*model.zs[t] for t in model.sT_0)
-	return idr1-stage1+othIdr+setup
+	model.setup  = sum(model.pd*model.zs[t] for t in model.sT_0)
+	return model.idr1-model.stage1+model.othIdr+model.setup
 model.oSub = Objective(rule=exp_stage2_rule,sense=minimize)
