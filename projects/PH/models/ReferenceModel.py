@@ -94,7 +94,10 @@ def pLT_init(model, i, r):
 					(1.0/model.w_shape[i])*model.w_scale[i]))
 		return max(1,LT)
 model.pLT		= Param(model.sI, model.sR, initialize=pLT_init)
-
+if 0:
+	for i in model.sI:
+		for r in model.sR:
+			print ("(%d,%d)=%d" %(i,r,model.pLT[i,r]()))
 #set of constraint f
 def scf_init(model):
 	return ((i,r,t) for i in model.sI for r in model.sR_End for t in model.sT\
