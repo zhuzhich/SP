@@ -23,9 +23,11 @@ model.dual = Suffix(direction=Suffix.IMPORT)
 #####################################
 #Parameters
 #####################################
+"""
 model.NUMSCEN 	= Param()								#scenarios
 model.Scen		= RangeSet(model.NUMSCEN)				
 model.prob 		= Param(default=1.0/model.NUMSCEN)		#equal probability
+"""
 model.pI		= Param()       						#component numbers
 model.sI 		= RangeSet(model.pI)
 model.pT		= Param()								#time horizon
@@ -77,7 +79,7 @@ model.w_scale		= Param(model.sI, initialize=w_scale_init) #weibull scale
 
 #random life time
 def pLT_init(model, i, r):
-	random.seed(i**2+r**2)
+	#random.seed(i**2+r**2)
 	if r == 1:
 		if model.pKesi[i]==1:
 			return 0
@@ -122,17 +124,19 @@ model.scn		= Set(dimen=3, initialize=scn_init)
 if 1:
 #integer
 	model.x 		= Var(model.sI, within=Binary)
+	model.z 		= Var(within=Binary)	
 	model.xs		= Var(model.sI, model.sT, model.sR, within=Binary)
 	model.ws		= Var(model.sI, model.sT_ex, model.sR, within=Binary)
-	model.zs		= Var(model.sT,  within=Binary)
+	model.zs		= Var(model.sT, within=Binary)
 	model.u			= Var(model.sI, model.sT, model.sR, within=Binary)
 	model.v			= Var(model.sI, model.sT, model.sR, within=Binary)
 else:
 #relax
 	model.x 		= Var(model.sI, within=NonNegativeReals)
+	model.z 		= Var(within=NonNegativeReals)
 	model.xs		= Var(model.sI, model.sT, model.sR, within=NonNegativeReals)
 	model.ws		= Var(model.sI, model.sT_ex, model.sR, within=NonNegativeReals)
-	model.zs		= Var(model.sT,  within=NonNegativeReals)
+	model.zs		= Var(model.sT, within=NonNegativeReals)
 	model.u			= Var(model.sI, model.sT, model.sR, within=NonNegativeReals)
 	model.v			= Var(model.sI, model.sT, model.sR, within=NonNegativeReals)
 #model.test = Var(bounds=(0,0.5),initialize=1)
@@ -238,15 +242,27 @@ model.cSw = Constraint(model.sI, rule=s_cw_rule)
 ######################################
 #Objective
 ######################################
-def exp_cost_rule(model):
+def computeFirstStageObj_rule(model):
+		return model.pd*model.z+\
+			   sum(model.pCPR[i]*model.x[i] for i in model.sI)+\
+			   sum((model.pCCR[i]-model.pCPR[i])*model.pKesi[i] for i in model.sI)
+model.firstStageObj = Expression(rule=computeFirstStageObj_rule)	
+	
+def computeSecondStageObj_rule(model):
 	model.idr1   = sum(model.pCCR[i]*model.ws[i,model.pLT[i,1],1]+\
-			 model.pCPR[i]*(1-model.ws[i,model.pLT[i,1],1])\
-			 for i in model.sI)
+					model.pCPR[i]*(1-model.ws[i,model.pLT[i,1],1])\
+					for i in model.sI)
+	model.stage1 = sum(model.pCPR[i1]*model.x[i1] for i1 in model.sI)+\
+				sum((model.pCCR[i2]-model.pCPR[i2])*model.pKesi[i2] for i2 in model.sI)
 	model.othIdr = sum(sum(model.pCCR[i]*(1-0.5*sum(model.u[i,t,r]+model.v[i,t,r] for t in model.sT))-\
 					model.pCCR[i]*(1-0.5*(model.xs[i,model.pT,r]+model.xs[i,model.pT,r-1]))+\
 					model.pCPR[i]*0.5*sum(model.u[i,t1,r]+model.v[i,t1,r] for t1 in model.sT)\
 					for r in model.sR_0)-0.5*model.pCPR[i]\
 					for i in model.sI)
-	model.setup  = sum(model.pd*model.zs[t] for t in model.sT  )
-	return (model.idr1+model.othIdr+model.setup)/model.NUMSCEN
-model.objCost = Objective(rule=exp_cost_rule,sense=minimize)
+	model.setup  = sum(model.pd*model.zs[t] for t in model.sT_0)
+	return model.idr1 - model.stage1 + model.othIdr + model.setup
+model.secondStageObj = Expression(rule=computeSecondStageObj_rule)
+
+def totalObj_rule(model):
+	return model.firstStageObj + model.secondStageObj
+model.totalObj = Objective(rule=totalObj_rule,sense=minimize)

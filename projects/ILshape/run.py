@@ -171,8 +171,8 @@ class subproblemLP:
 # This function creates the master ILP	
 def createMasterILP(cpx,params):
 	cpx.objective.set_sense(cpx.objective.sense.minimize)
-	numComponents = 1
-	numScen = 1
+	numComponents = 4
+	numScen = 100
 	params.numScen = numScen
 	setupCost = 5
 	cCR=[]
@@ -261,7 +261,7 @@ def benders_main():
 	#print("Solution [x1,x2,x3,x4,sita,Z]: ", solution.get_values())
 	print("Objective value: ", solution.get_objective_value())
 	print ("time = "),
-	print (start_time-end_time)
+	print (end_time-start_time)
 	print ("lazy cut"),
 	print (lazy_cut)
 	print ("user cut"),
