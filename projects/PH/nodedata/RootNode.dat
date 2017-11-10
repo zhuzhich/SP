@@ -1,9 +1,59 @@
-#param NUMSCEN :=1; 		#scenarios
-#param prob := 1;			#probability of scenario;
-param pI := 1;				#Total component number
-param pT := 5;     			#Time horizon
-param pT_ex := 10;			#extended time horizon
-param ps := 2;				#Starting time
-param pR := 7;				#Number of individuals = pT+2
+#Total component number
+param pI := 4;
 
-param pd := 5;				#set up cost
+#Time horizon
+param pT := 10;
+
+#Number of Scenarios
+param NUMSCEN := 10;
+
+#Probablity of each Scenario. Equally distributed
+param prob := 0.1;
+
+#Extended time horizon
+param pT_ex := 30;
+
+#Starting time
+param ps := 2;
+
+#Number of individuals. R=T+2
+param pR := 12;
+
+#Setup cost
+param pd := 5;
+
+param pCPR := 
+1 1
+2 1
+3 1
+4 1
+;
+
+param pCCR := 
+1 2
+2 4
+3 6
+4 8
+;
+
+param pKesi := 
+1 1
+2 0
+3 0
+4 0
+;
+
+param w_shape := 
+1 6
+2 6
+3 6
+4 6
+;
+
+param w_scale := 
+1 1
+2 2
+3 3
+4 4
+;
+

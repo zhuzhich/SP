@@ -23,11 +23,9 @@ model.dual = Suffix(direction=Suffix.IMPORT)
 #####################################
 #Parameters
 #####################################
-"""
 model.NUMSCEN 	= Param()								#scenarios
 model.Scen		= RangeSet(model.NUMSCEN)				
 model.prob 		= Param(default=1.0/model.NUMSCEN)		#equal probability
-"""
 model.pI		= Param()       						#component numbers
 model.sI 		= RangeSet(model.pI)
 model.pT		= Param()								#time horizon
@@ -45,9 +43,16 @@ model.sR_End	= RangeSet(1,model.pR-1)
 model.sR_0		= RangeSet(2,model.pR)
 model.pd		= Param(default=5)						#set-up cost
 
+model.pCPR		= Param(model.sI)  #PR cost	
+model.pCCR		= Param(model.sI)	 #CR cost
+model.pKesi		= Param(model.sI)  #failure state
+model.w_shape	= Param(model.sI) #weibull shape
+model.w_scale	= Param(model.sI) #weibull scale
+model.pLT		= Param(model.sI, model.sR)
+
 #For the large number of components
 #generate parameters.
-
+"""
 #PR cost
 def pCPR_init(model, i):
 	return 1
@@ -98,6 +103,7 @@ if 0:
 	for i in model.sI:
 		for r in model.sR:
 			print ("(%d,%d)=%d" %(i,r,model.pLT[i,r]()))
+"""
 #set of constraint f
 def scf_init(model):
 	return ((i,r,t) for i in model.sI for r in model.sR_End for t in model.sT\
