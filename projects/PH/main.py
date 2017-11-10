@@ -113,7 +113,7 @@ def create_lifeTime():
 			f.write("\n["+str(i)+",*]\n")
 			for idx2 in range(0,R_Lo):
 				r = idx2 + 1
-				#random.seed(i**2+r**2) ###control the seed
+				random.seed(i+r+idx+1) ###control the seed
 				if r == 1:
 					if pKesi_Lo[idx1] == 1:
 						LT = 0

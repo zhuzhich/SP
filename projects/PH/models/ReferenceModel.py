@@ -169,6 +169,10 @@ def s_ce_rule(model, i):
 	return model.xs[i,0,1]<=model.zs[0]
 model.cSe = Constraint(model.sI, rule=s_ce_rule)
 
+def s_ce1_rule(model):
+	return model.z == model.zs[0]
+model.cSe1 = Constraint(rule=s_ce1_rule)
+
 def s_cf_rule(model, i, r, t):
 	return model.xs[i,t,r]<=model.xs[i,t+model.pLT[i,r+1],r+1]
 model.cSf = Constraint(model.scf, rule=s_cf_rule)
