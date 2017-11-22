@@ -1,4 +1,4 @@
 param NUMSCEN :=100; 			#scenarios
 param prob := 0.01;			#probability of scenario.			
-param pI := 4;				#Total component number
+param pI := 8;				#Total component number
 param pd := 5;				#set up cost

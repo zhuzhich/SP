@@ -1,23 +1,23 @@
 #Total component number
-param pI := 4;
+param pI := 8;
 
 #Time horizon
-param pT := 10;
+param pT := 30;
 
 #Number of Scenarios
-param NUMSCEN := 10;
+param NUMSCEN := 100;
 
 #Probablity of each Scenario. Equally distributed
-param prob := 0.1;
+param prob := 0.01;
 
 #Extended time horizon
-param pT_ex := 30;
+param pT_ex := 70;
 
 #Starting time
 param ps := 2;
 
 #Number of individuals. R=T+2
-param pR := 12;
+param pR := 32;
 
 #Setup cost
 param pd := 5;
@@ -27,13 +27,21 @@ param pCPR :=
 2 1
 3 1
 4 1
+5 1
+6 1
+7 1
+8 1
 ;
 
 param pCCR := 
-1 2
-2 4
-3 6
-4 8
+1 11.4
+2 9.1
+3 8.0
+4 11.1
+5 14.2
+6 7.4
+7 9.8
+8 14.6
 ;
 
 param pKesi := 
@@ -41,19 +49,31 @@ param pKesi :=
 2 0
 3 0
 4 0
+5 0
+6 0
+7 0
+8 0
 ;
 
 param w_shape := 
-1 6
-2 6
-3 6
-4 6
+1 5.7
+2 6.7
+3 5.6
+4 5.4
+5 5.5
+6 4.9
+7 6.7
+8 4.8
 ;
 
 param w_scale := 
-1 1
-2 2
-3 3
-4 4
+1 7.3
+2 4.2
+3 3.2
+4 2.9
+5 2.0
+6 4.6
+7 6.4
+8 1.9
 ;
 

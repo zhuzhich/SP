@@ -117,13 +117,17 @@ def create_lifeTime():
 				if r == 1:
 					if pKesi_Lo[idx1] == 1:
 						LT = 0
-					else:               
-						LT1 = int(round((-math.log(random.uniform(0,1)))**\
-								(1.0/w_shape_Lo[idx1])*w_scale_Lo[idx1]))-s_Lo
+					else:    
+						ran_num = random.uniform(0,1)
+						ran_num_log = -math.log(ran_num)
+						s_inv = 1.0/w_shape_Lo[idx1]	
+						LT1 = int((ran_num_log**s_inv)*w_scale_Lo[idx1]) - s_Lo					
 						LT = max(1,LT1)
 				else:
-					LT1 = int(round((-math.log(random.uniform(0,1)))**\
-							 1.0/w_shape_Lo[idx1])*w_scale_Lo[idx1])
+					ran_num = random.uniform(0,1)
+					ran_num_log = -math.log(ran_num)
+					s_inv = 1.0/w_shape_Lo[idx1]
+					LT1 = int((ran_num_log**s_inv)*w_scale_Lo[idx1])
 					LT = max(1,LT1)
 				f.write(str(r)+ " " + " "*(2-len(str(r))) + str(LT)+ "    ")
 				#f.write(str(r)+ " " + str(LT)+ "   ")
@@ -215,6 +219,43 @@ def create_rootNode():
 	f.writelines(text5)
 	f.close()
 
+#cost of PR
+def pCPR_init(pCPR):
+	global I
+	for i in range(0, I):
+		pCPR.append(1)
+#cost of CR: pCCR[i]=i*2, i=1...I
+def pCCR_init(pCCR):
+	global I
+	for i in range(0, I):
+		random.seed((i+1)*30) ###control the seed     
+		temp = random.uniform(6,16)
+		pCCR.append(round(temp,1))
+		#pCCR.append((i+1)*2)
+#kesi. Only the first component fails at current time
+def pKesi_init(pKesi):
+	global I
+	for i in range(0, I):
+		if i+1 == 1:
+			pKesi.append(1)
+		else:
+			pKesi.append(0)		
+#weibull shape parameter: w_shape[i]=6
+#u(4,7)
+def w_shape_init(w_shape):
+	global I
+	for i in range(0, I):
+		random.seed((i+1)*10) ###control the seed     
+		temp = random.uniform(4,7)
+		w_shape.append(round(temp,1))
+#weibull scale parameter: w_scale[i]=i, i=1...I
+#u(1,8)
+def w_scale_init(w_scale):
+	global I
+	for i in range(0, I):
+		random.seed((i+1)*20) ###control the seed     
+		temp = random.uniform(1,8)
+		w_scale.append(round(temp,1))
 
 #############################
 #Step 1: set up parameters
@@ -223,70 +264,55 @@ directory = "C:\\Users\\zzhu3\\Documents\\codes\\SP\\projects\\PH"
 # ./main.ph
 # ./models
 # ./nodedata
-I = 4 			#number of components
-T = 10			#time horizon
-w = 10			#number of scenarios
+comp_list = [4,6,8]
+time_list = [10,20,30]
+scen_list = [100]
+counter = 0
+for I in comp_list:
+	for T in time_list:
+		for w in scen_list:
+			counter += 1
+			#if w == 100:
+			#	continue
+			#if T == 30:
+			#	continue
+			#I = 6 			#number of components
+			#T = 10			#time horizon
+			#w = 50			#number of scenarios
 
-T_ex = T + 20	#extended time horizon
-s = 2			#starting time
-R = T + 2		#number of individuals
-d = 5			#setup cost
-#cost of PR
-def pCPR_init(pCPR):
-	global I
-	for i in range(0, I):
-		pCPR.append(1)
-pCPR = []
-pCPR_init(pCPR)
+			T_ex = T + 40	#extended time horizon
+			s = 2			#starting time
+			R = T + 2		#number of individuals
+			d = 5			#setup cost
+
+			pCPR = []
+			pCPR_init(pCPR)
+
+			pCCR = []
+			pCCR_init(pCCR)
 
 
-#cost of CR: pCCR[i]=i*2, i=1...I
-def pCCR_init(pCCR):
-	global I
-	for i in range(0, I):
-		pCCR.append((i+1)*2)
-pCCR = []
-pCCR_init(pCCR)
+			pKesi = []
+			pKesi_init(pKesi)
 
-#kesi. Only the first component fails at current time
-def pKesi_init(pKesi):
-	global I
-	for i in range(0, I):
-		if i+1 == 1:
-			pKesi.append(1)
-		else:
-			pKesi.append(0)
-pKesi = []
-pKesi_init(pKesi)
+			w_shape = []
+			w_shape_init(w_shape)	
 
-			
-#weibull shape parameter: w_shape[i]=6
-def w_shape_init(w_shape):
-	global I
-	for i in range(0, I):
-		w_shape.append(6)
-w_shape = []
-w_shape_init(w_shape)	
+			w_scale = []
+			w_scale_init(w_scale)	
 
-#weibull scale parameter: w_scale[i]=i, i=1...I
-def w_scale_init(w_scale):
-	global I
-	for i in range(0, I):
-		w_scale.append(i+1)
-w_scale = []
-w_scale_init(w_scale)	
+			create_scenarioStructure() 
+			create_rootNode()
+			create_lifeTime()
 
-create_scenarioStructure() 
-create_rootNode()
-create_lifeTime()
-
-#############################
-#Use command line for runph
-############################# 
-
-#runph --model-directory=models --instance-directory=nodedata --default-rho=1.0 --solver=cplex
-#cd C:\Users\zzhu3\Documents\codes\SP\projects\PH
-#runef --model-directory=models --instance-directory=nodedata --solve --solver=cplex --traceback
+			#############################
+			#Use command line for runph
+			############################# 
+			res_filename = str(counter) + "_" + str(I) + "_" + str(T) + "_" + str(w) + ".txt"
+			excmd = "runph --model-directory=models --instance-directory=nodedata --default-rho=1.0 --solver=cplex > " + res_filename
+			os.system(excmd)
+			#cd C:\Users\zzhu3\Documents\codes\SP\projects\PH
+			#runef --model-directory=models --instance-directory=nodedata --solve --solver=cplex --traceback
 
 
 
