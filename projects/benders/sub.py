@@ -43,9 +43,17 @@ model.sR_End	= RangeSet(1,model.pR-1)
 model.sR_0		= RangeSet(2,model.pR)
 model.pd		= Param(default=5)						#set-up cost
 
+model.pCPR		= Param(model.sI)  						#PR cost	
+model.pCCR		= Param(model.sI)	 					#CR cost
+model.pKesi		= Param(model.sI)  						#failure state
+model.w_shape	= Param(model.sI) 						#weibull shape
+model.w_scale	= Param(model.sI) 						#weibull scale
+model.pLT		= Param(model.sI, model.sR)				#Life time
+model.x			= Param(model.sI,within=NonNegativeReals, mutable=True)
+														#init first stage
 #For the large number of components
 #generate parameters.
-
+"""
 #PR cost
 def pCPR_init(model, i):
 	return 1
@@ -98,8 +106,10 @@ def x_init(model, i):
 		return 1
 	else:
 		return 0
+
 model.x			= Param(model.sI, initialize=x_init,\
 					within=NonNegativeReals, mutable=True)
+"""
 #set of constraint f
 def scf_init(model):
 	return ((i,r,t) for i in model.sI for r in model.sR_End for	t in model.sT\

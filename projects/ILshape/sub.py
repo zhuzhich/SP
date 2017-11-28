@@ -43,9 +43,17 @@ model.sR_End	= RangeSet(1,model.pR-1)
 model.sR_0		= RangeSet(2,model.pR)
 model.pd		= Param(default=5)						#set-up cost
 
+model.pCPR		= Param(model.sI)  						#PR cost	
+model.pCCR		= Param(model.sI)	 					#CR cost
+model.pKesi		= Param(model.sI)  						#failure state
+model.w_shape	= Param(model.sI) 						#weibull shape
+model.w_scale	= Param(model.sI) 						#weibull scale
+model.pLT		= Param(model.sI, model.sR)				#Life time
+model.x			= Param(model.sI,within=NonNegativeReals, mutable=True)
+														#init first stage
 #For the large number of components
 #generate parameters.
-
+"""
 #PR cost
 def pCPR_init(model, i):
 	return 1
@@ -98,8 +106,10 @@ def x_init(model, i):
 		return 1
 	else:
 		return 0
+
 model.x			= Param(model.sI, initialize=x_init,\
 					within=NonNegativeReals, mutable=True)
+"""
 #set of constraint f
 def scf_init(model):
 	return ((i,r,t) for i in model.sI for r in model.sR_End for	t in model.sT\
@@ -123,15 +133,11 @@ def scn_init(model):
 			if t>=model.pT+model.pLT[i,r])
 model.scn		= Set(dimen=3, initialize=scn_init)
 
-
-model.relax = Param(default=0, mutable=True)
-
 ######################################
 #Variables
 ######################################
 if 0:
 #integer
-	print "Integer sub-problem"
 	model.xs		= Var(model.sI, model.sT, model.sR, within=Binary)
 	model.ws		= Var(model.sI, model.sT_ex, model.sR, within=Binary)
 	model.zs		= Var(model.sT_0, within=Binary)
@@ -139,7 +145,6 @@ if 0:
 	model.v			= Var(model.sI, model.sT, model.sR, within=Binary)
 else:
 #relax
-	print "relaxed sub-problem"
 	model.xs		= Var(model.sI, model.sT, model.sR, within=NonNegativeReals)
 	model.ws		= Var(model.sI, model.sT_ex, model.sR, within=NonNegativeReals)
 	model.zs		= Var(model.sT_0, within=NonNegativeReals)
@@ -216,7 +221,6 @@ model.cSp = Constraint(model.sI, model.sT, rule=s_cp_rule)
 def s_cq_rule(model, i, t,r):
 	return model.u[i,t,r]+model.v[i,t,r]<=1
 model.cSq = Constraint(model.sI, model.sT, model.sR, rule=s_cq_rule)
-
 
 def s_cr_rule(model, i, t,r):
 	return model.u[i,t,r]<=1 #and model.u[i,t,r]>=0

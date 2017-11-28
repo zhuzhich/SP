@@ -1,0 +1,11 @@
+
+Log for 'c:\users\zzhu3\appdata\local\temp\tmpsq7srz.pyomo.lp' Clone_2 (V12.7.1.0) Mon Nov 27 12:13:58 2017
+
+
+Iteration log . . .
+Iteration:     1    Infeasibility =            10.000000
+Switched to devex.
+Iteration:    35    Objective     =          -179.000000
+
+Dual simplex solved model.
+

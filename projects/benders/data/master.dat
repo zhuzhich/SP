@@ -1,0 +1,12 @@
+#Total component number
+param pI := 8;
+
+#Number of Scenarios
+param NUMSCEN := 100;
+
+#Probablity of each Scenario. Equally distributed
+param prob := 0.01;
+
+#Setup cost
+param pd := 5;
+
