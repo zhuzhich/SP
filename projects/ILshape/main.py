@@ -39,7 +39,11 @@ class BendersLazyConsCallback(LazyConstraintCallback):
 		#solMstSita = float("-Inf")
 		
 		for s in range(scen):
-			if self.first == True or abs(solMstSita[s]-subLP.subObj[s])>1e-02:
+			#print("Lower bound ["+str(s+1)+"]= " \
+			#		+str(round(1.0/scen*subLP.subObj[s], 4)))
+			#print("Upper bound ["+str(s+1)+"]"\
+			#		+str(round(solMstSita[s], 4)))
+			if self.first == True or abs(solMstSita[s]-1.0/scen*subLP.subObj[s])>1e-02:
 				global lazy_cut
 				lazy_cut += 1
 				self.add(constraint=subLP.cutLhs[s],
@@ -70,7 +74,11 @@ class BendersUserCutCallback(UserCutCallback):
 			return		
 
 		for s in range(scen):
-			if self.first == True or abs(solMstSita[s]-subLP.subObj[s])>1e-02:
+			#print("Lower bound ["+str(s+1)+"]= " \
+			#		+str(round(1.0/scen*subLP.subObj[s], 4)))
+			#print("Upper bound ["+str(s+1)+"]"\
+			#		+str(round(solMstSita[s], 4)))
+			if self.first == True or abs(solMstSita[s]-1.0/scen*subLP.subObj[s])>1e-02:
 				global user_cut
 				user_cut += 1
 				self.add(cut=subLP.cutLhs[s],
@@ -239,6 +247,8 @@ class parameters:
 		self.kesi = kesi		
 		self.x = []
 		self.sita = []
+		
+		
 def benders_main(I_in,w_in,d_in,PR_cost,CR_cost,kesi):
 	# Create master ILP
 	cpx = cplex.Cplex()
@@ -301,10 +311,11 @@ def usage():
 	print("Usage:     don't use it!!")
 
 #############################################################	
-comp_list = [4,6,8]
+comp_list = [6,8]
 time_list = [10,20,30]
 scen_list = [20,50,100]
 d = 5 #setup cost
+counter = 9
 directory = "C:\\Users\\zzhu3\\Documents\\codes\\SP\\projects\\ILshape" 
 for I in comp_list:
 	for T in time_list:
@@ -312,6 +323,8 @@ for I in comp_list:
 			PR_cost = []
 			CR_cost = []
 			kesi = []
+			counter += 1
+			print (str(counter) + "_" + str(I) + "_" + str(T) + "_" + str(w))
 			genFile.create_allFiles(I,T,w,d,directory,PR_cost,CR_cost,kesi)
 			benders_main(I,w,d,PR_cost,CR_cost,kesi)
 """

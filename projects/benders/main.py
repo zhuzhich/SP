@@ -122,7 +122,7 @@ for I in comp_list:
 					#print cut,
 					#constraint i
 					for i in inst.sI:
-						#print ("+%f*x[%d]" %(mstr_inst.prob*inst.dual[inst.cSi[i]],i)),
+					#	print ("+%f*x[%d]" %(mstr_inst.prob*inst.dual[inst.cSi[i]],i)),
 						cut += mstr_inst.prob*inst.dual[inst.cSi[i]]*mstr_inst.x[i]
 					#print ""
 					mstr_inst.Cut_Defn.add(mstr_inst.sita[s] >= cut)

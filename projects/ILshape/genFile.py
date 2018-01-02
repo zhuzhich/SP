@@ -72,8 +72,8 @@ def create_subDataFile():
 	w_scale_Lo = w_scale
 	x_Lo = x
 	dir_local = directory	
-	for idx in range(0,w_Lo):
-		file_name = dir_local + "\\data\\ScenNode"+str(idx+1)+".dat"
+	for idx_w in range(0,w_Lo):
+		file_name = dir_local + "\\data\\ScenNode"+str(idx_w+1)+".dat"
 		f = open(file_name,"w")	
 
 		f.write("#Total component number\n")
@@ -135,7 +135,7 @@ def create_subDataFile():
 			f.write("\n["+str(i)+",*]\n")
 			for idx2 in range(0,R_Lo):
 				r = idx2 + 1
-				random.seed(i+r+idx+1) ###control the seed
+				random.seed(i+r+idx_w+1) ###control the seed
 				if r == 1:
 					if pKesi_Lo[idx1] == 1:
 						LT = 0
