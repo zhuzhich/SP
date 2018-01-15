@@ -30,27 +30,35 @@ class BendersLazyConsCallback(LazyConstraintCallback):
 		sita = self.params.sita
 		scen = self.params.numScen
 		subLP = self.subLP
+		subIP = self.subIP
         # Get the current x solution
 		solX = self.get_values(x)
 		#print ("lazy cut!!!solX="),
 		#print (solX)
-		subLP.separate(solX)
+
 		solMstSita = self.get_values(sita)
 		#solMstSita = float("-Inf")
-		
-		for s in range(scen):
-			#print("Lower bound ["+str(s+1)+"]= " \
-			#		+str(round(1.0/scen*subLP.subObj[s], 4)))
-			#print("Upper bound ["+str(s+1)+"]"\
-			#		+str(round(solMstSita[s], 4)))
-			if self.first == True or abs(solMstSita[s]-1.0/scen*subLP.subObj[s])>1e-02:
-				global lazy_cut
-				lazy_cut += 1
-				self.add(constraint=subLP.cutLhs[s],
-									 sense="G",
-									 rhs=subLP.cutRhs[s])
-		if self.first == True:
-			self.first = False
+		global lazy_cut		
+		if solX not in self.params.LazyX:
+			self.params.LazyX.append(solX)
+			subLP.separate(solX)
+			subIP.separate(solX)
+			lazy_cut += 1
+			self.add(constraint=subIP.cutLhs[0],
+					sense="G",
+					rhs=subIP.cutRhs[0])
+			for s in range(scen):
+				#print("Lower bound ["+str(s+1)+"]= " \
+				#		+str(round(1.0/scen*subLP.subObj[s], 4)))
+				#print("Upper bound ["+str(s+1)+"]"\
+				#		+str(round(solMstSita[s], 4)))
+				if self.first == True or abs(solMstSita[s]-1.0/scen*subLP.subObj[s])>1e-02:
+					lazy_cut += 1
+					self.add(constraint=subLP.cutLhs[s],
+										 sense="G",
+										 rhs=subLP.cutRhs[s])
+			if self.first == True:
+				self.first = False
 		"""
 		"""
 # The class BendersUserCutCallback
@@ -72,24 +80,89 @@ class BendersUserCutCallback(UserCutCallback):
 		#solMstSita = float("-Inf")
 		if not self.is_after_cut_loop():
 			return		
-
-		for s in range(scen):
-			#print("Lower bound ["+str(s+1)+"]= " \
-			#		+str(round(1.0/scen*subLP.subObj[s], 4)))
-			#print("Upper bound ["+str(s+1)+"]"\
-			#		+str(round(solMstSita[s], 4)))
-			if self.first == True or abs(solMstSita[s]-1.0/scen*subLP.subObj[s])>1e-02:
-				global user_cut
-				user_cut += 1
-				self.add(cut=subLP.cutLhs[s],
-									 sense="G",
-									 rhs=subLP.cutRhs[s])
-		if self.first == True:
-			self.first = False	
+		if solX not in self.params.UserX:
+			self.params.UserX.append(solX)			
+			for s in range(scen):
+				#print("Lower bound ["+str(s+1)+"]= " \
+				#		+str(round(1.0/scen*subLP.subObj[s], 4)))
+				#print("Upper bound ["+str(s+1)+"]"\
+				#		+str(round(solMstSita[s], 4)))
+				if self.first == True or abs(solMstSita[s]-1.0/scen*subLP.subObj[s])>1e-02:
+					global user_cut
+					user_cut += 1
+					self.add(cut=subLP.cutLhs[s],
+										 sense="G",
+										 rhs=subLP.cutRhs[s])
+			if self.first == True:
+				self.first = False	
 		#xx = 1
 
+#provide integer L-shaped cut to lazy constraint.
+class subproblemIP:
+    #
+    def __init__(self, params):
+		self.numScen = params.numScen
+		self.mstX = params.x
+		self.mstSita = params.sita
+		sb_mdl = import_file("subIP.py").model
+		sub_insts = []
+		global directory
+		for s in range(self.numScen):
+			sub_path = directory + "\\data\\ScenNode" + str(s+1) + ".dat"
+			sub_insts.append(
+				sb_mdl.create_instance(name="subIP"+str(s+1), \
+								   filename=sub_path))
+		solver_manager = SolverManagerFactory("serial")
+		self.model = sb_mdl
+		self.instance = sub_insts
+		self.solver_manager = solver_manager
+		self.L = 0	#L, global minimum.
 
+    # This method separates integer L-shaped cuts violated by the current x solution.
+    # Violated cuts are found by solving the integer sub-problems
+    #
+    def separate(self, xSol):
+		sub_insts = self.instance
+		for instance in sub_insts:
+			for i in instance.sI:
+				instance.x[i] = max(xSol[i-1],0)
+		
+		solve_all_instances(self.solver_manager, 'cplex', sub_insts)
+		subObj = []
+		cutRhs = []
+		cutLhs = []
+		q_x = 0
+		s_x_e1 = int(sum(xSol[i] for i in range(len(xSol))))		#abs(s), integer L-shaped
+		
+		for s, inst in enumerate(sub_insts, 0):
+			subObj.append(round(inst.oSub(),4))
+			q_x += 1.0/self.numScen*inst.oSub()
+		
+		#get right-hand-side
+		tmp = -(q_x - self.L)*(s_x_e1 - 1) + self.L
+		cutRhs.append(tmp)
+		#get index and coefficient of x
+		thecoefs = []
+		for i in range(len(xSol)):
+			tmp = q_x - self.L
+			if xSol[i] == 1.0:
+				thecoefs.append(-tmp)	#negative is because of LHS
+			else:
+				thecoefs.append(tmp)				
+		theind = self.mstX[:]
+		
+		#get index and coefficient of sita
+		for s in range(self.numScen):
+			theind.append(self.mstSita[s])		
+			thecoefs.append(1.0)
 
+		cutLhs.append(cplex.SparsePair(ind=theind, val=thecoefs))
+
+		self.cutLhs = cutLhs
+		self.cutRhs = cutRhs
+		self.subObj = subObj
+
+		
 class subproblemLP:
     #
     def __init__(self, params):
@@ -247,7 +320,8 @@ class parameters:
 		self.kesi = kesi		
 		self.x = []
 		self.sita = []
-		
+		self.LazyX = []				#note history of x that pass to lazy constraint
+		self.UserX = []				#note history of x that pass to user cuts
 		
 def benders_main(I_in,w_in,d_in,PR_cost,CR_cost,kesi):
 	# Create master ILP
@@ -255,6 +329,7 @@ def benders_main(I_in,w_in,d_in,PR_cost,CR_cost,kesi):
 	params = parameters(I_in,w_in,d_in,PR_cost,CR_cost,kesi)
 	createMasterILP(cpx,params)
 	subLP = subproblemLP(params)
+	subIP = subproblemIP(params)
 
 	start_time = time.clock()
 	cpx.parameters.preprocessing.presolve.set(
@@ -263,11 +338,12 @@ def benders_main(I_in,w_in,d_in,PR_cost,CR_cost,kesi):
 
 	cpx.parameters.mip.strategy.search.set(
 		cpx.parameters.mip.strategy.search.values.traditional)
+		
 	#lazy constraints
-	
 	lazyBenders = cpx.register_callback(BendersLazyConsCallback)
 	lazyBenders.params = params
 	lazyBenders.subLP = subLP
+	lazyBenders.subIP = subIP
 	lazyBenders.first = True
 	#user cut
 	userBenders = cpx.register_callback(BendersUserCutCallback)
@@ -311,9 +387,9 @@ def usage():
 	print("Usage:     don't use it!!")
 
 #############################################################	
-comp_list = [6,8]
-time_list = [10,20,30]
-scen_list = [20,50,100]
+comp_list = [4]
+time_list = [10]
+scen_list = [20]
 d = 5 #setup cost
 counter = 9
 directory = "C:\\Users\\zzhu3\\Documents\\codes\\SP\\projects\\ILshape" 
