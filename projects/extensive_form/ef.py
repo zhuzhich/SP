@@ -53,7 +53,9 @@ model.pCPR		= Param(model.sI, initialize=pCPR_init)  #PR cost
 
 #CR cost
 def pCCR_init(model, i):
-	return i*2					
+	random.seed(i*30)
+	temp = random.uniform(6,16)
+	return round(temp,1)				
 model.pCCR		= Param(model.sI, initialize=pCCR_init)	 #CR cost
 
 #kesi
@@ -66,29 +68,38 @@ model.pKesi		= Param(model.sI, initialize=pKesi_init)  #failure state
 
 #weibull shape parameter
 def w_shape_init(model, i):
-	return 6
+	random.seed(i*10) ###control the seed     
+	temp = random.uniform(4,7)
+	return round(temp,1)
 model.w_shape		= Param(model.sI, initialize=w_shape_init) #weibull shape
 
 #weibull scale parameter
 def w_scale_init(model, i):
-	return i
+	random.seed(i*20) ###control the seed     
+	temp = random.uniform(1,8)#(4,11)
+	return round(temp,1)
 model.w_scale		= Param(model.sI, initialize=w_scale_init) #weibull scale
 
 #random life time
 def pLT_init(model, i, r, w):
-	random.seed(i**2+r**2)
+	random.seed(i+r+w)
 	if r == 1:
 		if model.pKesi[i]==1:
 			return 0
 	#return i #for test only..
 		else:
-			LT=int(round((-math.log(random.uniform(0,1)))**\
-					(1.0/model.w_shape[i])*model.w_scale[i]))-\
-					model.ps
-			return max(1,LT)
+			ran_num = random.uniform(0,1)
+			ran_num_log = -math.log(ran_num)
+			s_inv = 1.0/model.w_shape[i]	
+			LT1 = int((ran_num_log**s_inv)*model.w_scale[i]) - model.ps					
+			LT = max(1,LT1)
+			return LT
 	else:	
-		LT=int(round((-math.log(random.uniform(0,1)))**\
-					(1.0/model.w_shape[i])*model.w_scale[i]))
+		ran_num = random.uniform(0,1)
+		ran_num_log = -math.log(ran_num)
+		s_inv = 1.0/model.w_shape[i]	
+		LT1 = int((ran_num_log**s_inv)*model.w_scale[i])				
+		LT = max(1,LT1)
 		return max(1,LT)
 model.pLT		= Param(model.sI, model.sR, model.Scen, initialize=pLT_init)
 
@@ -155,6 +166,10 @@ model.cSd = Constraint(model.sI, model.sT_0, model.Scen, rule=s_cd_rule)
 def s_ce_rule(model, i, w):
 	return model.xs[i,0,1,w]<=model.zs[0,w]
 model.cSe = Constraint(model.sI,model.Scen, rule=s_ce_rule)
+
+#def s_ce1_rule(model):
+#	return model.z == model.zs[0]
+#model.cSe1 = Constraint(rule=s_ce1_rule)
 
 def s_cf_rule(model, i, r, t,w):
 	return model.xs[i,t,r,w]<=model.xs[i,t+model.pLT[i,r+1,w],r+1,w]
