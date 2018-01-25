@@ -38,15 +38,28 @@ class BendersLazyConsCallback(LazyConstraintCallback):
 
 		solMstSita = self.get_values(sita)
 		#solMstSita = float("-Inf")
-		global lazy_cut		
+		global lazy_cut
+		for i in range(len(solX)):
+			solX[i] = int(round(solX[i], 0))		
 		if solX not in self.params.LazyX:
 			self.params.LazyX.append(solX)
 			subLP.separate(solX)
 			subIP.separate(solX)
 			lazy_cut += 1
+			"""
+			print("Lazy cut!!!!"),
+			print ("x="),
+			print(solX)
+			print ("Lshape "),
+			print ("LHS="),
+			print (subIP.cutLhs[0])
+			print ("RHS="),
+			print (subIP.cutRhs[0])
+			"""
 			self.add(constraint=subIP.cutLhs[0],
 					sense="G",
 					rhs=subIP.cutRhs[0])
+			
 			for s in range(scen):
 				#print("Lower bound ["+str(s+1)+"]= " \
 				#		+str(round(1.0/scen*subLP.subObj[s], 4)))
@@ -54,11 +67,19 @@ class BendersLazyConsCallback(LazyConstraintCallback):
 				#		+str(round(solMstSita[s], 4)))
 				if self.first == True or abs(solMstSita[s]-1.0/scen*subLP.subObj[s])>1e-02:
 					lazy_cut += 1
+					"""
+					print ("Benders scen=%d",s),
+					print ("LHS="),
+					print (subLP.cutLhs[s])
+					print ("RHS="),
+					print (subLP.cutRhs[s])		
+					"""
 					self.add(constraint=subLP.cutLhs[s],
 										 sense="G",
 										 rhs=subLP.cutRhs[s])
 			if self.first == True:
 				self.first = False
+			
 		"""
 		"""
 # The class BendersUserCutCallback
@@ -80,6 +101,8 @@ class BendersUserCutCallback(UserCutCallback):
 		#solMstSita = float("-Inf")
 		if not self.is_after_cut_loop():
 			return		
+		for i in range(len(solX)):
+			solX[i] = round(solX[i],2)
 		if solX not in self.params.UserX:
 			self.params.UserX.append(solX)			
 			for s in range(scen):
@@ -89,6 +112,15 @@ class BendersUserCutCallback(UserCutCallback):
 				#		+str(round(solMstSita[s], 4)))
 				if self.first == True or abs(solMstSita[s]-1.0/scen*subLP.subObj[s])>1e-02:
 					global user_cut
+					"""
+					print("Benders cut!!!!"),
+					print ("x="),
+					print(solX)
+					print ("LHS="),
+					print (subLP.cutLhs[s])
+					print ("RHS="),
+					print (subLP.cutRhs[s])
+					"""
 					user_cut += 1
 					self.add(cut=subLP.cutLhs[s],
 										 sense="G",
@@ -356,7 +388,7 @@ def benders_main(I_in,w_in,d_in,PR_cost,CR_cost,kesi):
 	end_time = time.clock()
 	solution = cpx.solution
 	print()
-	#print("Solution [x1,x2,x3,x4,sita,Z]: ", solution.get_values())
+	print("Solution: ", solution.get_values())
 	print("Objective value: ", solution.get_objective_value())
 	print ("time = "),
 	print (end_time-start_time)
@@ -388,10 +420,10 @@ def usage():
 
 #############################################################	
 comp_list = [4]
-time_list = [10]
-scen_list = [20]
+time_list = [10]#[10,20,30]
+scen_list = [20]#[20,50,100]
 d = 5 #setup cost
-counter = 9
+counter = 0
 directory = "C:\\Users\\zzhu3\\Documents\\codes\\SP\\projects\\ILshape" 
 for I in comp_list:
 	for T in time_list:
