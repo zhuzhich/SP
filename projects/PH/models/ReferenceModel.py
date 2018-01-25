@@ -11,7 +11,7 @@ from pyomo.core import *
 import math
 import random
 
-model = AbstractModel(name="extensive form")
+model = AbstractModel(name="progressive hedging")
 
 #
 model.rc = Suffix(direction=Suffix.IMPORT)
