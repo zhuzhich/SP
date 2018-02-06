@@ -1,0 +1,486 @@
+================(1,4,10,20)=============
+x_agr = 
+[ 1.    0.75  1.    1.  ]
+average cost= 106.000000
+x_agr = 
+[ 1.  1.  1.  1.]
+average cost= 106.655000
+converge distance = 0.000000
+converge at iter_ = 1
+time=1
+================(2,4,10,50)=============
+x_agr = 
+[ 1.    0.76  0.98  1.  ]
+average cost= 100.262000
+x_agr = 
+[ 1.  1.  1.  1.]
+average cost= 101.046000
+converge distance = 0.000000
+converge at iter_ = 1
+time=4
+================(3,4,10,100)=============
+x_agr = 
+[ 1.    0.81  0.99  1.  ]
+average cost= 96.138000
+x_agr = 
+[ 1.  1.  1.  1.]
+average cost= 96.831000
+converge distance = 0.000000
+converge at iter_ = 1
+time=9
+================(4,4,20,20)=============
+x_agr = 
+[ 1.   0.7  1.   1. ]
+average cost= 189.865000
+x_agr = 
+[ 1.    0.85  1.    1.  ]
+average cost= 192.165000
+converge distance = 0.255000
+x_agr = 
+[ 1.  1.  1.  1.]
+average cost= 191.815000
+converge distance = 0.000000
+converge at iter_ = 2
+time=8
+================(5,4,20,50)=============
+x_agr = 
+[ 1.    0.7   0.98  1.  ]
+average cost= 184.346000
+x_agr = 
+[ 1.   0.9  1.   1. ]
+average cost= 187.072000
+converge distance = 0.180000
+x_agr = 
+[ 1.  1.  1.  1.]
+average cost= 186.832000
+converge distance = 0.000000
+converge at iter_ = 2
+time=19
+================(6,4,20,100)=============
+x_agr = 
+[ 1.    0.77  0.99  1.  ]
+average cost= 176.886000
+x_agr = 
+[ 1.  1.  1.  1.]
+average cost= 178.549000
+converge distance = 0.000000
+converge at iter_ = 1
+time=25
+================(7,4,30,20)=============
+x_agr = 
+[ 1.    0.75  1.    1.  ]
+average cost= 264.100000
+x_agr = 
+[ 1.  1.  1.  1.]
+average cost= 265.300000
+converge distance = 0.000000
+converge at iter_ = 1
+time=10
+================(8,4,30,50)=============
+x_agr = 
+[ 1.    0.74  0.98  1.  ]
+average cost= 266.252000
+x_agr = 
+[ 1.    0.94  1.    1.  ]
+average cost= 268.918000
+converge distance = 0.112800
+x_agr = 
+[ 1.  1.  1.  1.]
+average cost= 268.858000
+converge distance = 0.000000
+converge at iter_ = 2
+time=37
+================(9,4,30,100)=============
+x_agr = 
+[ 1.    0.77  0.99  1.  ]
+average cost= 258.099000
+x_agr = 
+[ 1.  1.  1.  1.]
+average cost= 260.297000
+converge distance = 0.000000
+converge at iter_ = 1
+time=48
+================(10,6,10,20)=============
+x_agr = 
+[ 1.    0.45  1.    1.    1.    0.4 ]
+average cost= 213.860000
+x_agr = 
+[ 1.   1.   1.   1.   1.   0.9]
+average cost= 219.645000
+converge distance = 0.180000
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.]
+average cost= 222.160000
+converge distance = 0.000000
+converge at iter_ = 2
+time=9
+================(11,6,10,50)=============
+x_agr = 
+[ 1.    0.5   0.98  1.    1.    0.32]
+average cost= 203.984000
+x_agr = 
+[ 1.    0.98  1.    1.    1.    0.86]
+average cost= 208.320000
+converge distance = 0.259025
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.]
+average cost= 211.250000
+converge distance = 0.000000
+converge at iter_ = 2
+time=23
+================(12,6,10,100)=============
+x_agr = 
+[ 1.    0.45  0.99  1.    1.    0.31]
+average cost= 197.313000
+x_agr = 
+[ 1.    0.99  1.    1.    1.    0.75]
+average cost= 201.483000
+converge distance = 0.382875
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.]
+average cost= 205.241000
+converge distance = 0.000000
+converge at iter_ = 2
+time=44
+================(13,6,20,20)=============
+x_agr = 
+[ 1.    0.45  1.    1.    1.    0.4 ]
+average cost= 406.735000
+x_agr = 
+[ 1.   1.   1.   1.   1.   0.9]
+average cost= 413.745000
+converge distance = 0.180000
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.]
+average cost= 416.145000
+converge distance = 0.000000
+converge at iter_ = 2
+time=28
+================(14,6,20,50)=============
+x_agr = 
+[ 1.    0.5   0.98  1.    1.    0.32]
+average cost= 388.210000
+x_agr = 
+[ 1.    1.    1.    1.    1.    0.72]
+average cost= 394.582000
+converge distance = 0.403200
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.]
+average cost= 399.350000
+converge distance = 0.000000
+converge at iter_ = 2
+time=67
+================(15,6,20,100)=============
+x_agr = 
+[ 1.    0.45  0.99  1.    1.    0.31]
+average cost= 375.922000
+x_agr = 
+[ 1.    0.94  1.    1.    1.    0.64]
+average cost= 381.490000
+converge distance = 0.499068
+x_agr = 
+[ 1.    1.    1.    1.    1.    0.97]
+average cost= 389.154000
+converge distance = 0.058200
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.]
+average cost= 389.807000
+converge distance = 0.000000
+converge at iter_ = 3
+time=176
+================(16,6,30,20)=============
+x_agr = 
+[ 1.    0.45  1.    1.    1.    0.4 ]
+average cost= 579.020000
+x_agr = 
+[ 1.    0.95  1.    1.    1.    0.85]
+average cost= 586.420000
+converge distance = 0.302300
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.]
+average cost= 591.980000
+converge distance = 0.000000
+converge at iter_ = 2
+time=53
+================(17,6,30,50)=============
+x_agr = 
+[ 1.    0.5   0.98  1.    1.    0.32]
+average cost= 566.952000
+x_agr = 
+[ 1.    0.96  1.    1.    1.    0.62]
+average cost= 573.682000
+converge distance = 0.493852
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.]
+average cost= 583.722000
+converge distance = 0.000000
+converge at iter_ = 2
+time=132
+================(18,6,30,100)=============
+x_agr = 
+[ 1.    0.45  0.99  1.    1.    0.31]
+average cost= 554.544000
+x_agr = 
+[ 1.    0.85  1.    1.    1.    0.56]
+average cost= 560.260000
+converge distance = 0.585463
+x_agr = 
+[ 1.    1.    1.    1.    1.    0.93]
+average cost= 572.463000
+converge distance = 0.130200
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.]
+average cost= 576.443000
+converge distance = 0.000000
+converge at iter_ = 3
+time=345
+================(19,8,10,20)=============
+x_agr = 
+[ 1.    0.45  1.    1.    1.    0.4   0.1   1.  ]
+average cost= 327.170000
+x_agr = 
+[ 1.    1.    1.    1.    1.    0.9   0.15  1.  ]
+average cost= 331.520000
+converge distance = 0.337326
+x_agr = 
+[ 1.    0.95  1.    1.    1.    1.    0.15  1.  ]
+average cost= 332.825000
+converge distance = 0.302300
+x_agr = 
+[ 1.    1.    1.    1.    1.    1.    0.35  1.  ]
+average cost= 333.075000
+converge distance = 0.455000
+x_agr = 
+[ 1.    1.    1.    1.    1.    1.    0.85  1.  ]
+average cost= 338.730000
+converge distance = 0.255000
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.  1.  1.]
+average cost= 338.830000
+converge distance = 0.000000
+converge at iter_ = 5
+time=47
+================(20,8,10,50)=============
+x_agr = 
+[ 1.    0.5   0.98  1.    1.    0.32  0.08  1.  ]
+average cost= 314.640000
+x_agr = 
+[ 1.    1.    1.    1.    1.    0.8   0.16  1.  ]
+average cost= 318.082000
+converge distance = 0.454718
+x_agr = 
+[ 1.    0.94  1.    1.    1.    1.    0.18  1.  ]
+average cost= 320.126000
+converge distance = 0.349619
+x_agr = 
+[ 1.    0.98  1.    1.    1.    0.98  0.54  1.  ]
+average cost= 320.906000
+converge distance = 0.516543
+x_agr = 
+[ 1.    1.    1.    1.    1.    1.    0.68  1.  ]
+average cost= 325.274000
+converge distance = 0.435200
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.  1.  1.]
+average cost= 325.974000
+converge distance = 0.000000
+converge at iter_ = 5
+time=113
+================(21,8,10,100)=============
+x_agr = 
+[ 1.    0.45  0.99  1.    1.    0.31  0.06  1.  ]
+average cost= 304.285000
+x_agr = 
+[ 1.    0.94  1.    1.    1.    0.73  0.08  1.  ]
+average cost= 307.286000
+converge distance = 0.495165
+x_agr = 
+[ 1.    0.98  1.    1.    1.    0.98  0.2   1.  ]
+average cost= 310.281000
+converge distance = 0.345658
+x_agr = 
+[ 1.    1.    1.    1.    1.    1.    0.33  1.  ]
+average cost= 310.311000
+converge distance = 0.442200
+x_agr = 
+[ 1.    1.    1.    1.    1.    0.92  0.8   1.  ]
+average cost= 315.385000
+converge distance = 0.366338
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.  1.  1.]
+average cost= 316.286000
+converge distance = 0.000000
+converge at iter_ = 5
+time=220
+================(22,8,20,20)=============
+x_agr = 
+[ 1.    0.45  1.    1.    1.    0.4   0.1   1.  ]
+average cost= 633.035000
+x_agr = 
+[ 1.    0.95  1.    1.    1.    0.75  0.1   1.  ]
+average cost= 637.590000
+converge distance = 0.472077
+x_agr = 
+[ 1.    1.    1.    1.    1.    1.    0.25  1.  ]
+average cost= 641.590000
+converge distance = 0.375000
+x_agr = 
+[ 1.    1.    1.    1.    1.    1.    0.35  1.  ]
+average cost= 643.245000
+converge distance = 0.455000
+x_agr = 
+[ 1.    1.    1.    1.    1.    1.    0.75  1.  ]
+average cost= 650.995000
+converge distance = 0.375000
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.  1.  1.]
+average cost= 653.190000
+converge distance = 0.000000
+converge at iter_ = 5
+time=143
+================(23,8,20,50)=============
+x_agr = 
+[ 1.    0.5   0.98  1.    1.    0.32  0.08  1.  ]
+average cost= 609.610000
+x_agr = 
+[ 1.    0.98  1.    1.    1.    0.76  0.14  1.  ]
+average cost= 614.456000
+converge distance = 0.483694
+x_agr = 
+[ 1.    0.94  1.    1.    1.    0.98  0.22  1.  ]
+average cost= 616.974000
+converge distance = 0.403116
+x_agr = 
+[ 1.    1.    1.    1.    1.    1.    0.38  1.  ]
+average cost= 618.296000
+converge distance = 0.471200
+x_agr = 
+[ 1.    1.    1.    1.    1.    0.96  0.76  1.  ]
+average cost= 626.120000
+converge distance = 0.386103
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.  1.  1.]
+average cost= 627.598000
+converge distance = 0.000000
+converge at iter_ = 5
+time=354
+================(24,8,20,100)=============
+x_agr = 
+[ 1.    0.45  0.99  1.    1.    0.31  0.06  1.  ]
+average cost= 587.838000
+x_agr = 
+[ 1.    0.91  1.    1.    1.    0.66  0.07  1.  ]
+average cost= 592.768000
+converge distance = 0.554675
+x_agr = 
+[ 1.    0.99  1.    1.    1.    0.99  0.22  1.  ]
+average cost= 598.073000
+converge distance = 0.355550
+x_agr = 
+[ 1.    1.    1.    1.    1.    1.    0.35  1.  ]
+average cost= 597.898000
+converge distance = 0.455000
+x_agr = 
+[ 1.    1.    1.    1.    1.    0.94  0.75  1.  ]
+average cost= 605.558000
+converge distance = 0.407932
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.  1.  1.]
+average cost= 607.412000
+converge distance = 0.000000
+converge at iter_ = 5
+time=678
+================(25,8,30,20)=============
+x_agr = 
+[ 1.    0.45  1.    1.    1.    0.4   0.1   1.  ]
+average cost= 912.870000
+x_agr = 
+[ 1.    0.95  1.    1.    1.    0.8   0.1   1.  ]
+average cost= 918.270000
+converge distance = 0.421942
+x_agr = 
+[ 1.   1.   1.   1.   1.   1.   0.2  1. ]
+average cost= 923.725000
+converge distance = 0.320000
+x_agr = 
+[ 1.   1.   1.   1.   1.   1.   0.2  1. ]
+average cost= 923.725000
+converge distance = 0.320000
+x_agr = 
+[ 1.    0.95  1.    1.    1.    0.95  0.3   1.  ]
+average cost= 923.825000
+converge distance = 0.495751
+x_agr = 
+[ 1.    1.    1.    1.    1.    1.    0.65  1.  ]
+average cost= 935.025000
+converge distance = 0.455000
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.  1.  1.]
+average cost= 943.030000
+converge distance = 0.000000
+converge at iter_ = 6
+time=330
+================(26,8,30,50)=============
+x_agr = 
+[ 1.    0.5   0.98  1.    1.    0.32  0.08  1.  ]
+average cost= 896.084000
+x_agr = 
+[ 1.    0.98  1.    1.    1.    0.68  0.14  1.  ]
+average cost= 901.308000
+converge distance = 0.543526
+x_agr = 
+[ 1.    0.94  1.    1.    1.    0.96  0.2   1.  ]
+average cost= 906.936000
+converge distance = 0.391548
+x_agr = 
+[ 1.    1.    1.    1.    1.    0.98  0.28  1.  ]
+average cost= 907.294000
+converge distance = 0.418561
+x_agr = 
+[ 1.    0.98  1.    1.    1.    0.94  0.54  1.  ]
+average cost= 912.618000
+converge distance = 0.544805
+x_agr = 
+[ 1.    1.    1.    1.    1.    1.    0.76  1.  ]
+average cost= 918.140000
+converge distance = 0.364800
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.  1.  1.]
+average cost= 922.840000
+converge distance = 0.000000
+converge at iter_ = 6
+time=818
+================(27,8,30,100)=============
+x_agr = 
+[ 1.    0.45  0.99  1.    1.    0.31  0.06  1.  ]
+average cost= 872.752000
+x_agr = 
+[ 1.    0.86  1.    1.    1.    0.57  0.06  1.  ]
+average cost= 877.345000
+converge distance = 0.611178
+x_agr = 
+[ 1.    1.    1.    1.    1.    0.95  0.22  1.  ]
+average cost= 886.527000
+converge distance = 0.385405
+x_agr = 
+[ 1.    1.    1.    1.    1.    0.95  0.24  1.  ]
+average cost= 886.917000
+converge distance = 0.405845
+x_agr = 
+[ 1.    0.96  1.    1.    1.    0.98  0.43  1.  ]
+average cost= 890.221000
+converge distance = 0.529838
+x_agr = 
+[ 1.    0.99  1.    1.    1.    1.    0.69  1.  ]
+average cost= 898.793000
+converge distance = 0.433100
+x_agr = 
+[ 1.    1.    1.    1.    1.    1.    0.97  1.  ]
+average cost= 902.383000
+converge distance = 0.058200
+x_agr = 
+[ 1.  1.  1.  1.  1.  1.  1.  1.]
+average cost= 902.241000
+converge distance = 0.000000
+converge at iter_ = 7
+time=1820
