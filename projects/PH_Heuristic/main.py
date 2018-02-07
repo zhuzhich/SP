@@ -178,7 +178,7 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 	global I
 	global T
 	t1_v = [0,1]
-	t2_v = range(0,8)
+	t2_v = range(1,8)
 	A_opt = []
 	cost_opt = 10000000;
 	for t1 in t1_v:
@@ -234,8 +234,9 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 					A_tenta = copy.deepcopy(A)
 					cost_tenta = 0
 					#init cost
+					j_start = pole_i
 					for i in range(pole_i+1, I):	#component that trying to move.
-						for j in range(pole_i, i):	#available moving opportunity
+						for j in range(j_start, i):	#available moving opportunity
 							if B[i][0] - B[j][0] <= t2 and D_tenta[j] == 0:
 								com_i = B[i][1]
 								com_j = B[j][1]
@@ -248,6 +249,8 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 										A_tenta[com_i][t_tenta[com_i]] = 1	
 										A_tenta[com_j][t_tenta[com_j]] = 1									
 									break
+							else:
+								j_start = j
 					D1_tenta[0] = 1
 					t_tenta[B[0][1]] = B[0][0]
 					if t_tenta[B[0][1]] <= T:
@@ -314,7 +317,7 @@ def PH_alg(LT):
 	global R
 	global w
 	
-	rho = 1.0
+	rho = 50.0
 	max_iter = 100
 	w_pr = np.zeros((max_iter, w, I))#array type	
 	x_agr = np.zeros(I)  #array type
@@ -372,9 +375,9 @@ global w_scale
 global x
 global directory
 
-comp_list = [4,6,8]#[4,6,8]
-time_list = [10,20,30]
-scen_list = [20,50,100]
+comp_list = [20]#[4,6,8]
+time_list = [30]
+scen_list = [1000]
 counter = 0
 for idxI in comp_list:
 	for idxT in time_list:
