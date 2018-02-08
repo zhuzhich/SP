@@ -56,27 +56,22 @@ class BendersLazyConsCallback(LazyConstraintCallback):
 			print ("RHS="),
 			print (subIP.cutRhs[0])
 			"""
-			self.add(constraint=subIP.cutLhs[0],
+			self.add(constraint=subIP.cutLhs,
 					sense="G",
-					rhs=subIP.cutRhs[0])
-			
-			for s in range(scen):
-				#print("Lower bound ["+str(s+1)+"]= " \
-				#		+str(round(1.0/scen*subLP.subObj[s], 4)))
-				#print("Upper bound ["+str(s+1)+"]"\
-				#		+str(round(solMstSita[s], 4)))
-				if self.first == True or abs(solMstSita[s]-1.0/scen*subLP.subObj[s])>1e-02:
-					lazy_cut += 1
-					"""
-					print ("Benders scen=%d",s),
-					print ("LHS="),
-					print (subLP.cutLhs[s])
-					print ("RHS="),
-					print (subLP.cutRhs[s])		
-					"""
-					self.add(constraint=subLP.cutLhs[s],
-										 sense="G",
-										 rhs=subLP.cutRhs[s])
+					rhs=subIP.cutRhs)
+
+			if self.first == True or abs(solMstSita - 1.0/scen*subLP.subObj)>1e-02:
+				lazy_cut += 1
+				"""
+				print ("Benders scen=%d",s),
+				print ("LHS="),
+				print (subLP.cutLhs[s])
+				print ("RHS="),
+				print (subLP.cutRhs[s])		
+				"""
+				self.add(constraint=subLP.cutLhs,
+									 sense="G",
+									 rhs=subLP.cutRhs)
 			if self.first == True:
 				self.first = False
 			
@@ -105,26 +100,21 @@ class BendersUserCutCallback(UserCutCallback):
 			solX[i] = round(solX[i],2)
 		if solX not in self.params.UserX:
 			self.params.UserX.append(solX)			
-			for s in range(scen):
-				#print("Lower bound ["+str(s+1)+"]= " \
-				#		+str(round(1.0/scen*subLP.subObj[s], 4)))
-				#print("Upper bound ["+str(s+1)+"]"\
-				#		+str(round(solMstSita[s], 4)))
-				if self.first == True or abs(solMstSita[s]-1.0/scen*subLP.subObj[s])>1e-02:
-					global user_cut
-					"""
-					print("Benders cut!!!!"),
-					print ("x="),
-					print(solX)
-					print ("LHS="),
-					print (subLP.cutLhs[s])
-					print ("RHS="),
-					print (subLP.cutRhs[s])
-					"""
-					user_cut += 1
-					self.add(cut=subLP.cutLhs[s],
-										 sense="G",
-										 rhs=subLP.cutRhs[s])
+			if self.first == True or abs(solMstSita-1.0/scen*subLP.subObj)>1e-02:
+				global user_cut
+				"""
+				print("Benders cut!!!!"),
+				print ("x="),
+				print(solX)
+				print ("LHS="),
+				print (subLP.cutLhs[s])
+				print ("RHS="),
+				print (subLP.cutRhs[s])
+				"""
+				user_cut += 1
+				self.add(cut=subLP.cutLhs,
+									 sense="G",
+									 rhs=subLP.cutRhs)
 			if self.first == True:
 				self.first = False	
 		#xx = 1
@@ -160,19 +150,19 @@ class subproblemIP:
 				instance.x[i] = max(xSol[i-1],0)
 		
 		solve_all_instances(self.solver_manager, 'cplex', sub_insts)
-		subObj = []
-		cutRhs = []
-		cutLhs = []
+		subObj = 0
+		cutRhs = 0
+		cutLhs = 0
 		q_x = 0
 		s_x_e1 = int(sum(xSol[i] for i in range(len(xSol))))		#abs(s), integer L-shaped
 		
 		for s, inst in enumerate(sub_insts, 0):
-			subObj.append(round(inst.oSub(),4))
+			subObj += round(inst.oSub(),4)
 			q_x += 1.0/self.numScen*inst.oSub()
 		
 		#get right-hand-side
 		tmp = -(q_x - self.L)*(s_x_e1 - 1) + self.L
-		cutRhs.append(tmp)
+		cutRhs = tmp
 		#get index and coefficient of x
 		thecoefs = []
 		for i in range(len(xSol)):
@@ -184,11 +174,10 @@ class subproblemIP:
 		theind = self.mstX[:]
 		
 		#get index and coefficient of sita
-		for s in range(self.numScen):
-			theind.append(self.mstSita[s])		
-			thecoefs.append(1.0)
+		theind.append(self.mstSita)		
+		thecoefs.append(1.0)
 
-		cutLhs.append(cplex.SparsePair(ind=theind, val=thecoefs))
+		cutLhs = cplex.SparsePair(ind=theind, val=thecoefs)
 
 		self.cutLhs = cutLhs
 		self.cutRhs = cutRhs
@@ -224,11 +213,12 @@ class subproblemLP:
 			for i in instance.sI:
 				instance.x[i] = max(xSol[i-1],0)
 		solve_all_instances(self.solver_manager, 'cplex', sub_insts)
-		subObj = []
-		cutRhs = []
-		cutLhs = []
+		subObj = 0
+		cutRhs = 0
+		cutLhs = 0
+		thecoefs = [0]*len(xSol)
 		for s, inst in enumerate(sub_insts, 1):
-			subObj.append(round(inst.oSub(),4))
+			subObj += round(inst.oSub(),4)
 			#print("obj. value for scenario "+str(s)+ " = "+inst.name+" is "+\
 			#		str(subObj[s-1])+"("+str(1.0/self.numScen*subObj[s-1])+")")
 			cut = 0
@@ -264,17 +254,16 @@ class subproblemLP:
 			cut = 1.0/self.numScen*cut		
 			#print ("added cut")
 			#print (cut)
-			cutRhs.append(cut)
+			cutRhs += cut
 			#constraint i
-			thecoefs = []
 			for i in inst.sI:
 				#print ("+%f*x[%d]" %(1.0/self.numScen*inst.dual[inst.cSi[i]],i)),
-				thecoefs.append(-1.0/self.numScen*inst.dual[inst.cSi[i]])
+				thecoefs[i-1] = 1.0/self.numScen*inst.dual[inst.cSi[i]]
 
-			theind = self.mstX[:]
-			theind.append(self.mstSita[s-1])
-			thecoefs.append(1.0)
-			cutLhs.append(cplex.SparsePair(ind=theind, val=thecoefs))
+		theind = self.mstX[:]
+		theind.append(self.mstSita)
+		thecoefs.append(1.0)
+		cutLhs = cplex.SparsePair(ind=theind, val=thecoefs)
 			
 		self.cutLhs = cutLhs
 		self.cutRhs = cutRhs
@@ -305,6 +294,7 @@ def createMasterILP(cpx,params):
 			kesi[i] = 1
 	"""
 	#variables
+	#for x
 	varNameX=[]
 	x=[]
 	for i in range(numComponents):
@@ -314,22 +304,20 @@ def createMasterILP(cpx,params):
 						  lb=[0.0], ub=[1.0], types=["B"],
 						  names=[varNameX[i]])
 	params.x = x
-	
-	varNameSita=[]
-	sita = []
-	for i in range(numScen):
-		varNameSita.append("sita" + str(i))
-		sita.append(cpx.variables.get_num())
-		cpx.variables.add(obj=[1.0],
-						  lb=[-100000.0],
-						  names=[varNameSita[i]])
+	#for sita
+	varNameSita = "sita"
+	sita = cpx.variables.get_num()
+	cpx.variables.add(obj=[1.0],
+					  lb=[-100000.0],
+					  names=[varNameSita])
 	params.sita = sita
-	
+	#for z
 	varNameZ = "z"    
 	cpx.variables.add(obj=[setupCost],
 					  lb=[0.0],ub=[1.0], types=["B"],
 					  names=[varNameZ])
     
+	#constraints
 	for i in range(numComponents):
 		cpx.linear_constraints.add(
 			lin_expr=[cplex.SparsePair([varNameX[i]],[1.0])],
@@ -419,9 +407,9 @@ def usage():
 	print("Usage:     don't use it!!")
 
 #############################################################	
-comp_list = [4]
-time_list = [10]#[10,20,30]
-scen_list = [20]#[20,50,100]
+comp_list = [8]
+time_list = [10,20]#[10,20,30]
+scen_list = [20,50,100]#[20,50,100]
 d = 5 #setup cost
 counter = 0
 directory = "C:\\Users\\zzhu3\\Documents\\codes\\SP\\projects\\ILshape" 

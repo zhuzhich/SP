@@ -1,0 +1,298 @@
+1_6_10_20
+CPXPARAM_Preprocessing_Presolve                  0
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Threads                                 1
+CPXPARAM_Read_APIEncoding                        "UTF-8"
+CPXPARAM_MIP_Strategy_CallbackReducedLP          0
+CPXPARAM_MIP_Strategy_Search                     1
+Lazy constraint(s) or lazy constraint callback is present.
+    Disabling dual reductions (CPX_PARAM_REDUCE) in presolve.
+    Disabling non-linear reductions (CPX_PARAM_PRELINEAR) in presolve.
+Clique table members: 5.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: traditional branch-and-cut.
+Parallel mode: none, using 1 thread.
+Root relaxation solution time = 0.02 sec. (0.00 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap         Variable B NodeID Parent  Depth
+
+      0     0     -260.1235     1                 -99994.0000        0         
+*     0+    0                          216.3600     -260.1235           220.23%
+*     0+    0                          212.1250     -260.1235           222.63%
+      0     0     -258.6040     3      212.1250      Fract: 2        3  221.91%
+*     0+    0                          211.3600     -258.6040           222.35%
+      0     0     -254.8921     3      211.3600      Fract: 1        6  220.60%
+      0     0     -244.9443     5      211.3600       User: 1        6  215.89%
+*     0+    0                          207.0100     -244.9443           218.32%
+      0     0     -244.8040     5      207.0100       User: 1        6  218.26%
+      0     0     -244.5013     5      207.0100       User: 1        6  218.11%
+      0     2     -244.5013     5      207.0100     -244.5013        6  218.11%                        0             0
+Elapsed time = 533.28 sec. (1.24 ticks, tree = 0.01 MB, solutions = 4)
+
+Gomory fractional cuts applied:  1
+User cuts applied:  88
+
+Root node processing (before b&c):
+  Real time             =  533.30 sec. (1.24 ticks)
+Sequential b&c:
+  Real time             = 1286.09 sec. (3.40 ticks)
+                          ------------
+Total (root+branch&cut) = 1819.39 sec. (4.65 ticks)
+
+Solution:  [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 196.01000000000002, 1.0]
+Objective value:  207.01
+time = 
+1819.40441709
+lazy cut
+64
+user cut
+24
+2_6_10_50
+CPXPARAM_Preprocessing_Presolve                  0
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Threads                                 1
+CPXPARAM_Read_APIEncoding                        "UTF-8"
+CPXPARAM_MIP_Strategy_CallbackReducedLP          0
+CPXPARAM_MIP_Strategy_Search                     1
+Lazy constraint(s) or lazy constraint callback is present.
+    Disabling dual reductions (CPX_PARAM_REDUCE) in presolve.
+    Disabling non-linear reductions (CPX_PARAM_PRELINEAR) in presolve.
+Clique table members: 5.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: traditional branch-and-cut.
+Parallel mode: none, using 1 thread.
+Root relaxation solution time = 0.00 sec. (0.00 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap         Variable B NodeID Parent  Depth
+
+      0     0     -268.2448     1                 -99994.0000        0         
+*     0+    0                          206.9460     -268.2448           229.62%
+*     0+    0                          206.6220     -268.2448           229.82%
+      0     0     -267.6686     3      206.6220      Fract: 2        3  229.55%
+*     0+    0                          197.6520     -267.6686           235.42%
+      0     0     -260.6833     3      197.6520      Fract: 1        6  231.89%
+      0     0     -243.9734     5      197.6520       User: 1        6  223.44%
+*     0+    0                          197.0040     -243.9734           223.84%
+      0     0     -243.8997     5      197.0040       User: 1        6  223.80%
+      0     0     -243.7522     5      197.0040       User: 1        6  223.73%
+      0     2     -243.7522     5      197.0040     -243.7522        6  223.73%                        0             0
+Elapsed time = 1420.22 sec. (1.31 ticks, tree = 0.01 MB, solutions = 4)
+
+Gomory fractional cuts applied:  2
+User cuts applied:  88
+
+Root node processing (before b&c):
+  Real time             = 1420.22 sec. (1.31 ticks)
+Sequential b&c:
+  Real time             = 3189.63 sec. (3.26 ticks)
+                          ------------
+Total (root+branch&cut) = 4609.84 sec. (4.58 ticks)
+
+Solution:  [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 186.00399999999996, 1.0]
+Objective value:  197.004
+time = 
+4609.85255644
+lazy cut
+128
+user cut
+48
+3_6_10_100
+CPXPARAM_Preprocessing_Presolve                  0
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Threads                                 1
+CPXPARAM_Read_APIEncoding                        "UTF-8"
+CPXPARAM_MIP_Strategy_CallbackReducedLP          0
+CPXPARAM_MIP_Strategy_Search                     1
+Lazy constraint(s) or lazy constraint callback is present.
+    Disabling dual reductions (CPX_PARAM_REDUCE) in presolve.
+    Disabling non-linear reductions (CPX_PARAM_PRELINEAR) in presolve.
+Clique table members: 5.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: traditional branch-and-cut.
+Parallel mode: none, using 1 thread.
+Root relaxation solution time = 0.00 sec. (0.00 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap         Variable B NodeID Parent  Depth
+
+      0     0     -273.0059     1                 -99994.0000        0         
+*     0+    0                          197.5670     -273.0059           238.18%
+      0     0     -272.7388     3      197.5670      Fract: 2        3  238.05%
+*     0+    0                          190.3250     -272.7388           243.30%
+      0     0     -269.3919     3      190.3250      Fract: 1        4  241.54%
+      0     0     -244.2282     5      190.3250       User: 1        4  228.32%
+*     0+    0                          189.7910     -244.2282           228.68%
+      0     0     -243.5125     5      189.7910       User: 1        4  228.31%
+      0     2     -241.8990     5      189.7910     -218.9156        4  215.35%                        0             0
+Elapsed time = 2231.44 sec. (1.03 ticks, tree = 0.01 MB, solutions = 3)
+
+Gomory fractional cuts applied:  2
+User cuts applied:  89
+
+Root node processing (before b&c):
+  Real time             = 2231.44 sec. (1.03 ticks)
+Sequential b&c:
+  Real time             = 7222.70 sec. (3.71 ticks)
+                          ------------
+Total (root+branch&cut) = 9454.14 sec. (4.74 ticks)
+
+Solution:  [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 178.79099999999997, 1.0]
+Objective value:  189.791
+time = 
+9454.14373366
+lazy cut
+192
+user cut
+73
+4_6_20_20
+CPXPARAM_Preprocessing_Presolve                  0
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Threads                                 1
+CPXPARAM_Read_APIEncoding                        "UTF-8"
+CPXPARAM_MIP_Strategy_CallbackReducedLP          0
+CPXPARAM_MIP_Strategy_Search                     1
+Lazy constraint(s) or lazy constraint callback is present.
+    Disabling dual reductions (CPX_PARAM_REDUCE) in presolve.
+    Disabling non-linear reductions (CPX_PARAM_PRELINEAR) in presolve.
+Clique table members: 5.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: traditional branch-and-cut.
+Parallel mode: none, using 1 thread.
+Root relaxation solution time = 0.00 sec. (0.00 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap         Variable B NodeID Parent  Depth
+
+      0     0     -500.6805     1                 -99994.0000        0         
+*     0+    0                          401.2100     -500.6805           224.79%
+      0     0     -498.0728     3      401.2100      Fract: 2        3  224.14%
+*     0+    0                          399.0950     -498.0728           224.80%
+      0     0     -495.6469     4      399.0950      Fract: 3        5  224.19%
+*     0+    0                          397.9900     -495.6469           224.54%
+      0     0     -478.0777     5      397.9900       User: 1        5  220.12%
+      0     0     -474.6537     5      397.9900       User: 1        5  219.26%
+      0     2     -474.6537     5      397.9900     -474.6537        5  219.26%                        0             0
+Elapsed time = 1553.89 sec. (1.06 ticks, tree = 0.01 MB, solutions = 3)
+
+Gomory fractional cuts applied:  1
+User cuts applied:  83
+
+Root node processing (before b&c):
+  Real time             = 1553.89 sec. (1.07 ticks)
+Sequential b&c:
+  Real time             = 3817.51 sec. (2.69 ticks)
+                          ------------
+Total (root+branch&cut) = 5371.41 sec. (3.75 ticks)
+
+Solution:  [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 386.99, 1.0]
+Objective value:  397.99
+time = 
+5371.41319051
+lazy cut
+256
+user cut
+92
+5_6_20_50
+CPXPARAM_Preprocessing_Presolve                  0
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Threads                                 1
+CPXPARAM_Read_APIEncoding                        "UTF-8"
+CPXPARAM_MIP_Strategy_CallbackReducedLP          0
+CPXPARAM_MIP_Strategy_Search                     1
+Lazy constraint(s) or lazy constraint callback is present.
+    Disabling dual reductions (CPX_PARAM_REDUCE) in presolve.
+    Disabling non-linear reductions (CPX_PARAM_PRELINEAR) in presolve.
+Clique table members: 5.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: traditional branch-and-cut.
+Parallel mode: none, using 1 thread.
+Root relaxation solution time = 0.00 sec. (0.00 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap         Variable B NodeID Parent  Depth
+
+      0     0     -518.3447     1                 -99994.0000        0         
+*     0+    0                          388.6540     -518.3447           233.37%
+*     0+    0                          388.2920     -518.3447           233.49%
+      0     0     -517.1856     3      388.2920      Fract: 2        3  233.20%
+*     0+    0                          378.7300     -517.1856           236.56%
+      0     0     -505.2134     3      378.7300      Fract: 1        6  233.40%
+      0     0     -475.1110     5      378.7300       User: 1        6  225.45%
+*     0+    0                          378.2240     -475.1110           225.62%
+      0     0     -475.0495     5      378.2240       User: 1        6  225.60%
+      0     0     -474.9258     5      378.2240       User: 1        6  225.57%
+      0     2     -474.9258     5      378.2240     -445.6744        6  217.83%                        0             0
+Elapsed time = 4593.63 sec. (1.33 ticks, tree = 0.01 MB, solutions = 4)
+
+Gomory fractional cuts applied:  2
+User cuts applied:  87
+
+Root node processing (before b&c):
+  Real time             = 4593.63 sec. (1.33 ticks)
+Sequential b&c:
+  Real time             = 9348.34 sec. (3.27 ticks)
+                          ------------
+Total (root+branch&cut) = 13941.97 sec. (4.60 ticks)
+
+Solution:  [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 367.22399999999993, 1.0]
+Objective value:  378.224
+time = 
+13941.9607722
+lazy cut
+320
+user cut
+115
+6_6_20_100
+CPXPARAM_Preprocessing_Presolve                  0
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Threads                                 1
+CPXPARAM_Read_APIEncoding                        "UTF-8"
+CPXPARAM_MIP_Strategy_CallbackReducedLP          0
+CPXPARAM_MIP_Strategy_Search                     1
+Lazy constraint(s) or lazy constraint callback is present.
+    Disabling dual reductions (CPX_PARAM_REDUCE) in presolve.
+    Disabling non-linear reductions (CPX_PARAM_PRELINEAR) in presolve.
+Clique table members: 5.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: traditional branch-and-cut.
+Parallel mode: none, using 1 thread.
+Root relaxation solution time = 0.00 sec. (0.00 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap         Variable B NodeID Parent  Depth
+
+      0     0     -531.2804     1                 -99994.0000        0         
+*     0+    0                          370.0790     -531.2804           243.56%
+      0     0     -530.6790     3      370.0790      Fract: 2        3  243.40%
+*     0+    0                          365.9020     -530.6790           245.03%
+      0     0     -506.4784     4      365.9020      Fract: 1        6  238.42%
+      0     0     -480.5464     5      365.9020       User: 1        6  231.33%
+*     0+    0                          365.4090     -480.5464           231.51%
+      0     0     -473.6019     5      365.4090       User: 1        6  229.61%
+      0     0     -473.4072     5      365.4090       User: 1        6  229.56%
+      0     0     -473.4065     5      365.4090       User: 1        6  229.56%
+      0     0     -473.3411     5      365.4090       User: 1        6  229.54%
+      0     0     -473.2109     5      365.4090       User: 1        6  229.50%
+      0     2     -473.2109     5      365.4090     -436.4206        6  219.43%                        0             0
+Elapsed time = 11781.28 sec. (1.86 ticks, tree = 0.01 MB, solutions = 3)
+
+Gomory fractional cuts applied:  2
+User cuts applied:  87
+
+Root node processing (before b&c):
+  Real time             = 11781.28 sec. (1.86 ticks)
+Sequential b&c:
+  Real time             = 16677.59 sec. (2.93 ticks)
+                          ------------
+Total (root+branch&cut) = 28458.88 sec. (4.79 ticks)
+
+Solution:  [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 354.4089999999999, 1.0]
+Objective value:  365.409
+time = 
+28458.8710534
+lazy cut
+384
+user cut
+138
