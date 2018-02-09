@@ -97,7 +97,7 @@ def w_scale_init(w_scale):
 	global I
 	for i in range(0, I):
 		random.seed((i+1)*20) ###control the seed     
-		temp = random.uniform(4,25)#(4,11)(1,8)
+		temp = random.uniform(1,8)#(4,11)(1,8)
 		w_scale.append(round(temp,1))
 		
 def cost_f(A,LT, w_pr, x_agr, rho):
@@ -178,7 +178,7 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 	global I
 	global T
 	t1_v = [0,1]
-	t2_v = range(0,25)
+	t2_v = range(0,8)
 	A_opt = []
 	cost_opt = 10000000;
 	for t1 in t1_v:
@@ -204,54 +204,34 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 				D = [0]*I		# = 1 if component has been moved before.
 				D1 = D[:]		# = 1 if component should be replaced in this mx window
 				#shift procedure
-				"""
-				#old one
-				for i in range(1,I):
-					for j in range(i):
-						if B[i][0] - B[j][0] <= t2 and D[j] == 0:
-							com_i = B[i][1]
-							com_j = B[j][1]
-							if t[com_i] < B[j][0] and B[j][0] <= T:
-								D[i] = 1
-								D1[j] = 1
-								t[com_i] = B[j][0]
-								t[com_j] = B[j][0]
-								if t[com_i] <= T:
-									A[com_i][t[com_i]] = 1	
-									A[com_j][t[com_j]] = 1									
-								break
-				"""
 				D_opt = copy.deepcopy(D)	
-				D1_opt = copy.deepcopy(D1)		
 				t_opt = copy.deepcopy(t)	
 				A_opt_L = copy.deepcopy(A)	
 				cost_opt_L = 10000000	
 				pole_i_opt = -1				
 				for pole_i in range(I-1):			#the smallest opportunity.
 					D_tenta = copy.deepcopy(D)
-					D1_tenta = copy.deepcopy(D1)
 					t_tenta = copy.deepcopy(t)
 					A_tenta = copy.deepcopy(A)
 					cost_tenta = 0
 					#init cost
-					j_start = pole_i
+					j = pole_i
 					for i in range(pole_i+1, I):	#component that trying to move.
-						for j in range(j_start, i):	#available moving opportunity
-							if B[i][0] - B[j][0] <= t2 and D_tenta[j] == 0:
-								com_i = B[i][1]
-								com_j = B[j][1]
-								if t_tenta[com_i] < B[j][0] and B[j][0] <= T:
-									D_tenta[i] = 1
-									D1_tenta[j] = 1
-									t_tenta[com_i] = B[j][0]
-									t_tenta[com_j] = B[j][0]
-									if t_tenta[com_i] <= T:
-										A_tenta[com_i][t_tenta[com_i]] = 1	
-										A_tenta[com_j][t_tenta[com_j]] = 1									
-									break
-							else:
-								j_start = j
-					D1_tenta[0] = 1
+						if B[i][0] - B[j][0] <= t2:
+							com_i = B[i][1]
+							com_j = B[j][1]
+							if t_tenta[com_i] < B[j][0] and B[j][0] <= T:
+								D_tenta[i] = 1
+								D_tenta[j] = 1
+								t_tenta[com_i] = B[j][0]
+								t_tenta[com_j] = B[j][0]
+								if t_tenta[com_i] <= T:
+									A_tenta[com_i][t_tenta[com_i]] = 1	
+									A_tenta[com_j][t_tenta[com_j]] = 1									
+								break
+						else:
+							j = i
+					D_tenta[0] = 1
 					t_tenta[B[0][1]] = B[0][0]
 					if t_tenta[B[0][1]] <= T:
 						A_tenta[B[0][1]][B[0][0]] = 1									
@@ -260,13 +240,11 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 					if cost_tenta < cost_opt_L:
 						pole_i_opt = pole_i
 						D_opt = copy.deepcopy(D_tenta)
-						D1_opt = copy.deepcopy(D1_tenta)
 						t_opt = copy.deepcopy(t_tenta)
 						A_opt_L = copy.deepcopy(A_tenta)
 						cost_opt_L = cost_tenta	
 				#update from optimal
 				D = copy.deepcopy(D_opt)
-				D1 = copy.deepcopy(D1_opt)
 				t = copy.deepcopy(t_opt)
 				A = copy.deepcopy(A_opt_L)
 				
@@ -278,34 +256,18 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 				"""
 				#update some parameters
 				for i in range(I):
-					if D[i] == 1 or D1[i] == 1:
+					if D[i] == 1:
 						com = B[i][1]
 						next_ind = sum(A[com][ii] for ii in range(T+1))
-						#if com == 15 and t2 == 5 and next_ind == 21:
-						#	aaa = 1
 						B[i][0] = max(LT[com][next_ind]-t1, 1) + t[com]
-						#if com == 15:
-						#	print ("t[%d]=%d,LT[%d][%d]=%d" %(com,t[com],com,next_ind,LT[com][next_ind]))
-				#print ("D=",D)
-				#print ("D1=",D1)
 				B = sort_B(B)
 			
-			#print ("converge for t1=%d,t2=%d" %(t1,t2))
-			#print ("A=",A)
-			#print ("B=",B)
-			#print ("t=",t)
 			cost = cost_f(A, LT, w_pr, x_agr, rho)
-			#print ("cost=",cost)	
 			if cost < cost_opt:
 				A_opt = copy.deepcopy(A)
 				cost_opt = cost
 				t1_opt = t1
 				t2_opt = t2
-				#print ("(%d,%d)" %(t1,t2))
-				#print ("optimal A=", A_opt)
-				#print ("optimal cost=",cost_opt)		
-	#print ("(%d,%d)" %(t1_opt,t2_opt))
-	#print ("optimal A=", A_opt)
 	print ("optimal (t1,t2,cost)=(%d,%d,%d)" %(t1_opt, t2_opt,cost_opt))
 	return A_opt
 
@@ -375,9 +337,9 @@ global w_scale
 global x
 global directory
 
-comp_list = [4,6,8]#[4,6,8]
-time_list = [10,20,30]
-scen_list = [20,50,100]
+comp_list = [6]#[4,6,8]
+time_list = [20]
+scen_list = [50]
 counter = 0
 for idxI in comp_list:
 	for idxT in time_list:
