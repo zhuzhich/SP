@@ -51,6 +51,8 @@ class system_parameter():
 		self.cCrBound = bound
 	def set_cPrBound(self, bound):
 		self.cPrBound = bound
+	def set_ranSeed(self, rs):
+		self.ranSeed = rs
 	def __init__(self,I, TInt, TRoll, d):
 		#system parameters.
 		#I, TInt, TRoll, W, d can be changed for "for" loop
@@ -59,7 +61,7 @@ class system_parameter():
 		#not fixed parameters
 		self.I = I				#number of components
 		self.TInt = TInt		#time interval. 
-		#self.T = TInt			#time horizon. currentTime + TInt = T
+		self.T = TInt			#time horizon. currentTime + TInt = T
 		self.TRoll = TRoll		#time points for rolling
 		self.d = d				#setup cost
 
@@ -74,6 +76,9 @@ class system_parameter():
 		self.wScale = []
 		self.cCr = []
 		self.cPr = []
+		
+		#extra random seed for residual life
+		self.ranSeed = 0
 
 #########################################################################	
 class component_parameters():
@@ -116,6 +121,9 @@ class component_parameters():
 	#h() function for component i	
 	def func_h1(self, d_t):
 		t = self.optInterval
+		T = self.T
+		if (t+d_t) > T or (t-d_t) < 0:
+			return np.inf
 		result = self.cost(t+d_t) + self.cost(t-d_t) - 2*self.cost(t)
 		return result
 	def find_optInterval(self):
@@ -159,6 +167,8 @@ class component_parameters():
 		self.cCr = sysInfo.cCr[i]			#cost of cr
 		self.cPr = sysInfo.cPr[i]			#cost of pr
 		self.d = sysInfo.d					#setup cost
+		self.T = sysInfo.T
+		self.ranSeed = sysInfo.ranSeed
 		#optimal age-based mx interval
 		self.optInterval = self.find_optInterval()
 		#interval of moving window, which has a cost-saving > 0
@@ -201,7 +211,9 @@ class component_running():
 	def generate_residualLife(self, currentTime):
 		wShape = self.params.wShape
 		wScale = self.params.wScale
-		random.seed(currentTime+self.index)
+		extraSeed = self.params.ranSeed
+		ranSeed = currentTime+self.index + (extraSeed + 1)**2
+		random.seed(ranSeed)
 		ran_num = random.uniform(0,1)
 		part1 = math.log(ran_num)
 		s_inv = 1.0/wShape
