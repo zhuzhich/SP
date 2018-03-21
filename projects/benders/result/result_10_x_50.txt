@@ -1,0 +1,134 @@
+1_10_10_50
+('loading time = ', '19.0844897166')
+Maximum Iterations Exceeded
+iterations= 50
+CPU time= 3230.9893853
+cut= 2289
+x[1]=1.0
+x[2]=0.0
+x[3]=1.0
+x[4]=1.0
+x[5]=1.0
+x[6]=0.0
+x[7]=0.0
+x[8]=1.0
+x[9]=1.0
+x[10]=0.0
+objective value=-415.098000
+objective valule [1]-9.529
+objective valule [2]-9.367
+objective valule [3]-9.077
+objective valule [4]-9.239
+objective valule [5]-9.271
+objective valule [6]-8.941
+objective valule [7]-8.159
+objective valule [8]-8.079
+objective valule [9]-8.003
+objective valule [10]-7.991
+objective valule [11]-7.761
+objective valule [12]-6.801
+objective valule [13]-7.317
+objective valule [14]-7.035
+objective valule [15]-7.691
+objective valule [16]-7.651
+objective valule [17]-7.941
+objective valule [18]-8.897
+objective valule [19]-8.087
+objective valule [20]-8.269
+objective valule [21]-8.645
+objective valule [22]-8.645
+objective valule [23]-8.547
+objective valule [24]-8.351
+objective valule [25]-8.967
+objective valule [26]-8.211
+objective valule [27]-8.119
+objective valule [28]-8.573
+objective valule [29]-8.917
+objective valule [30]-8.213
+objective valule [31]-8.497
+objective valule [32]-9.227
+objective valule [33]-9.239
+objective valule [34]-9.367
+objective valule [35]-8.969
+objective valule [36]-9.251
+objective valule [37]-8.947
+objective valule [38]-9.301
+objective valule [39]-8.949
+objective valule [40]-8.897
+objective valule [41]-9.119
+objective valule [42]-9.259
+objective valule [43]-9.239
+objective valule [44]-8.627
+objective valule [45]-8.567
+objective valule [46]-8.127
+objective valule [47]-7.927
+objective valule [48]-8.263
+objective valule [49]-8.087
+objective valule [50]-7.945
+2_10_20_50
+('loading time = ', '54.8710176102')
+Maximum Iterations Exceeded
+iterations= 50
+CPU time= 8668.63557485
+cut= 2353
+x[1]=1.0
+x[2]=1.0
+x[3]=0.0
+x[4]=0.0
+x[5]=1.0
+x[6]=0.0
+x[7]=0.0
+x[8]=0.0
+x[9]=0.0
+x[10]=0.0
+objective value=-768.452000
+objective valule [1]-15.963
+objective valule [2]-15.939
+objective valule [3]-15.795
+objective valule [4]-15.371
+objective valule [5]-15.079
+objective valule [6]-15.167
+objective valule [7]-15.485
+objective valule [8]-14.645
+objective valule [9]-14.725
+objective valule [10]-14.189
+objective valule [11]-14.091
+objective valule [12]-13.517
+objective valule [13]-13.759
+objective valule [14]-14.189
+objective valule [15]-14.483
+objective valule [16]-14.483
+objective valule [17]-14.581
+objective valule [18]-15.317
+objective valule [19]-15.479
+objective valule [20]-15.675
+objective valule [21]-16.243
+objective valule [22]-16.003
+objective valule [23]-15.713
+objective valule [24]-15.923
+objective valule [25]-15.949
+objective valule [26]-15.839
+objective valule [27]-16.249
+objective valule [28]-16.191
+objective valule [29]-16.073
+objective valule [30]-15.635
+objective valule [31]-16.547
+objective valule [32]-16.821
+objective valule [33]-16.437
+objective valule [34]-16.611
+objective valule [35]-16.399
+objective valule [36]-16.527
+objective valule [37]-16.527
+objective valule [38]-16.533
+objective valule [39]-16.439
+objective valule [40]-16.181
+objective valule [41]-15.413
+objective valule [42]-15.413
+objective valule [43]-15.511
+objective valule [44]-15.387
+objective valule [45]-15.241
+objective valule [46]-15.279
+objective valule [47]-15.381
+objective valule [48]-15.213
+objective valule [49]-15.743
+objective valule [50]-15.099

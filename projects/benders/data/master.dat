@@ -1,5 +1,5 @@
 #Total component number
-param pI := 8;
+param pI := 10;
 
 #Number of Scenarios
 param NUMSCEN := 100;

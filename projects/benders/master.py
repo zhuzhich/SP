@@ -1,4 +1,3 @@
-#  Implemention of bender's decomposition of SORP considering PM
 #  Author: Zhicheng Zhu
 #  Email: zzhu3@lamar.edu
 
@@ -51,6 +50,7 @@ def m_c2_rule(model,i):
 	return model.z >= model.x[i]
 model.c_x_2 	= Constraint(model.sI, rule=m_c2_rule)
 
+#dynamic constraint list for benders cuts
 model.Cut_Defn 	= ConstraintList()
 
 ######################################
@@ -62,7 +62,7 @@ def min_obj_rule(model):
 			   sum(model.pCPR[i]*model.x[i] for i in model.sI)+\
 			   sum((model.pCCR[i]-model.pCPR[i])*model.pKesi[i] for i in model.sI)+\
 			   sum(model.sita[i] for i in model.Scen)
-	else:
+	else:#no constant
 		return model.pd*model.z+\
 			   sum(model.pCPR[i]*model.x[i] for i in model.sI)+\
 			   sum(model.sita[i] for i in model.Scen)		

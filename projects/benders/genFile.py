@@ -205,6 +205,10 @@ def x_init(x):
 			temp = 1
 		x.append(temp)
 
+#
+#Just for convience sake to use global variable. 
+#Luckily not out of control in this project.
+#		
 global I
 global T
 global w
@@ -219,6 +223,8 @@ global w_shape
 global w_scale
 global x
 global directory
+
+#entry function, called by main.py
 def create_allFiles(I_in, T_in, w_in, dir):		 	
 #############################
 #Step 1: set up parameters
@@ -239,15 +245,9 @@ def create_allFiles(I_in, T_in, w_in, dir):
 	global directory
 	
 	directory = dir    
-	# ./main.ph
-	# ./models
-	# ./nodedata
-	#print ("111111111111111111")
-	#counter += 1
-	#if w == 100:
-	#	continue
-	#if T == 30:
-	#	continue
+	# ./main.py
+	# ./data
+	
 	I = I_in			#number of components
 	T = T_in			#time horizon
 	w = w_in			#number of scenarios
@@ -257,12 +257,12 @@ def create_allFiles(I_in, T_in, w_in, dir):
 	R = T + 2		#number of individuals
 	d = 5			#setup cost
 
+	#init for PR cost, CR cost, kesi, shape & scale parameters, initial fist-stage variable x.
 	pCPR = []
 	pCPR_init(pCPR)
 
 	pCCR = []
 	pCCR_init(pCCR)
-
 
 	pKesi = []
 	pKesi_init(pKesi)
@@ -276,6 +276,7 @@ def create_allFiles(I_in, T_in, w_in, dir):
 	x = []
 	x_init(x)
 	
+	#call function to create master data file and scenario-specific data files.
 	create_masterDataFile() 
 	create_subDataFile()
 

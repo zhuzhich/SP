@@ -1,0 +1,116 @@
+1_10_10_100
+('loading time = ', '39.0497535997')
+iterations= 48
+CPU time= 6321.26447476
+cut= 4324
+x[1]=1.0
+x[2]=0.0
+x[3]=1.0
+x[4]=1.0
+x[5]=1.0
+x[6]=0.0
+x[7]=0.0
+x[8]=1.0
+x[9]=1.0
+x[10]=0.0
+objective value=-423.735000
+objective valule [1]-4.7645
+objective valule [2]-4.6835
+objective valule [3]-4.5385
+objective valule [4]-4.6195
+objective valule [5]-4.6355
+objective valule [6]-4.4705
+objective valule [7]-4.0795
+objective valule [8]-4.0395
+objective valule [9]-4.0015
+objective valule [10]-3.9955
+objective valule [11]-3.8805
+objective valule [12]-3.4005
+objective valule [13]-3.6585
+objective valule [14]-3.5175
+objective valule [15]-3.8455
+objective valule [16]-3.8255
+objective valule [17]-3.9705
+objective valule [18]-4.4485
+objective valule [19]-4.0435
+objective valule [20]-4.1345
+objective valule [21]-4.3225
+objective valule [22]-4.3225
+objective valule [23]-4.2735
+objective valule [24]-4.1755
+objective valule [25]-4.4835
+objective valule [26]-4.1055
+objective valule [27]-4.0595
+objective valule [28]-4.2865
+objective valule [29]-4.4585
+objective valule [30]-4.1065
+objective valule [31]-4.2485
+objective valule [32]-4.6135
+objective valule [33]-4.6195
+objective valule [34]-4.6835
+objective valule [35]-4.4845
+objective valule [36]-4.6255
+objective valule [37]-4.4735
+objective valule [38]-4.6505
+objective valule [39]-4.4745
+objective valule [40]-4.4485
+objective valule [41]-4.5595
+objective valule [42]-4.6295
+objective valule [43]-4.6195
+objective valule [44]-4.3135
+objective valule [45]-4.2835
+objective valule [46]-4.0635
+objective valule [47]-3.9635
+objective valule [48]-4.1315
+objective valule [49]-4.0435
+objective valule [50]-3.9725
+objective valule [51]-4.0255
+objective valule [52]-4.1365
+objective valule [53]-4.2815
+objective valule [54]-4.2205
+objective valule [55]-4.3665
+objective valule [56]-4.4305
+objective valule [57]-4.4125
+objective valule [58]-4.3045
+objective valule [59]-4.3985
+objective valule [60]-4.4055
+objective valule [61]-4.1445
+objective valule [62]-4.2185
+objective valule [63]-4.1945
+objective valule [64]-4.3225
+objective valule [65]-4.4475
+objective valule [66]-4.4245
+objective valule [67]-4.3325
+objective valule [68]-4.6535
+objective valule [69]-4.6855
+objective valule [70]-4.4755
+objective valule [71]-4.4045
+objective valule [72]-4.6915
+objective valule [73]-4.8155
+objective valule [74]-4.7355
+objective valule [75]-4.8295
+objective valule [76]-4.8305
+objective valule [77]-4.8435
+objective valule [78]-4.6105
+objective valule [79]-4.6275
+objective valule [80]-4.7645
+objective valule [81]-4.4425
+objective valule [82]-4.6685
+objective valule [83]-4.5875
+objective valule [84]-4.4735
+objective valule [85]-4.4475
+objective valule [86]-4.5095
+objective valule [87]-4.4285
+objective valule [88]-4.1035
+objective valule [89]-4.4545
+objective valule [90]-4.5765
+objective valule [91]-4.5585
+objective valule [92]-4.4065
+objective valule [93]-4.5475
+objective valule [94]-4.2105
+objective valule [95]-3.8315
+objective valule [96]-4.1695
+objective valule [97]-4.3485
+objective valule [98]-4.1125
+objective valule [99]-4.2485
+objective valule [100]-4.5265

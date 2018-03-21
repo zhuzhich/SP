@@ -1,3 +1,10 @@
+#Author: Zhicheng Zhu
+#zzhu3@lamar.edu
+#
+#Description:
+#  main file script for basic Benders decomposition using Pyomo.
+#
+#
 from pyutilib.misc import import_file
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
@@ -9,9 +16,9 @@ import time
 import genFile
 import os
 
-comp_list = [4,6,8]
-time_list = [10,20,30]
-scen_list = [20,50,100]
+comp_list = [10]
+time_list = [10]
+scen_list = [100]
 counter = 0
 directory = "C:\\Users\\zzhu3\\Documents\\codes\\SP\\projects\\benders" 
 for I in comp_list:
@@ -21,16 +28,20 @@ for I in comp_list:
 			#os.system(excmd)
 			counter += 1
 			print (str(counter) + "_" + str(I) + "_" + str(T) + "_" + str(w))
+			#
+			#generate .dat files for master problem and sub-problems in $directory/data folder
+			#
 			genFile.create_allFiles(I,T,w,directory)
-			# import the master a
-			# initialize the master instance.
 			start_time1 = time.clock()
+			# import the master model
 			master_path = directory + "\\data\\master.dat"
 			mstr_mdl = import_file("master.py").model
+			# initialize the master instance.
 			mstr_inst = mstr_mdl.create_instance(master_path)
-
-			# initialize the sub-problem instances.
+			
+			# import sub-problem model
 			sb_mdl = import_file("sub.py").model
+			# initialize the sub-problem instances.
 			sub_insts = []
 			for s in mstr_inst.Scen:
 				sub_path = directory + "\\data\\ScenNode" + str(s) + ".dat"
@@ -40,7 +51,7 @@ for I in comp_list:
 				#print ("instance name = %s" %sub_insts[-1].name)
 			# initialize the solver manager.
 			solver_manager = SolverManagerFactory("serial")
-			# miscellaneous initialization.
+			# initialize sita of in master problem
 			for i in mstr_inst.Scen:
 				mstr_inst.sita[i] = float("-Inf")
 
@@ -59,7 +70,7 @@ for I in comp_list:
 				solve_all_instances(solver_manager, 'cplex', sub_insts)
 				#start multi-cut
 				for s, inst in enumerate(sub_insts, 1):
-					Lbound = mstr_inst.prob*inst.oSub()
+					Lbound = mstr_inst.prob*inst.oSub()					#get lower bound from second-stage obj. 
 					#print("Lower bound ["+str(s)+"]= " \
 					#                       +str(round(Lbound, 4)))
 					#print("Upper bound ["+str(s)+"]"\
@@ -68,25 +79,17 @@ for I in comp_list:
 					newgap = round(mstr_inst.sita[s].value - \
 								Lbound, 6)
 					newgap = abs(newgap)
-					if newgap == 0:
-					# get rid -0.0, which makes this script easier
-					# to test against a baseline
-						newgap = 0
-					#print("New gap= "+str(newgap)+"\n")
 
 					if newgap <= 0.00001:
-						flag_sita[s-1] = 1
+						#flag_sita == 1 means convergence for this scenario, no benders cut is needed
+						flag_sita[s-1] = 1								
 						continue
 						#print("scenario["+str(s)+"]converged")
 
 					cut_num	= cut_num + 1		
-					subObj = round(inst.oSub(),4)
-					#print("obj. value for scenario "+str(s)+ " = "+inst.name+" is "+\
-					#		str(subObj)+"("+str(mstr_inst.prob*subObj)+")")
-					scen = mstr_inst.Scen[s]
-					#print ("scen=%d" %scen)
-					#if flag_sita[s-1] == 1:
-					#	continue
+					#
+					#start to generate benders cut
+					#
 					cut = 0
 					#constraint g
 					for i in inst.scg:
@@ -126,13 +129,12 @@ for I in comp_list:
 						cut += mstr_inst.prob*inst.dual[inst.cSi[i]]*mstr_inst.x[i]
 					#print ""
 					mstr_inst.Cut_Defn.add(mstr_inst.sita[s] >= cut)
-
-					
-
+				
 				if flag_sita.count(0) == 0:
+					#all scenarios are converged
 					#print("Multicut converged!!")
 					break
-			# re-solve the master and update the subproblem inv1 values.
+				# re-solve the master and update the subproblem inv1 values.
 				solve_all_instances(solver_manager, 'cplex', [mstr_inst])
 				#print "solving master problem:"
 				#for i in mstr_inst.sI:
@@ -140,8 +142,6 @@ for I in comp_list:
 				#print ("objective value=%f"  %mstr_inst.oMaster())
 				#for p in mstr_inst.Scen:
 				#	print("objective valule ["+str(p)+"]"+str(round(mstr_inst.sita[p].value, 4)))
-
-			####
 
 				for instance in sub_insts:
 					for i in instance.sI:
