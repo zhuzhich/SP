@@ -2,7 +2,9 @@
 #  Email: zzhu3@lamar.edu
 
 #  Implemention of extensive form. Whole problem.
-
+#
+#Last Update: 03/21/2018
+#
 
 from pyomo.core import *
 import math

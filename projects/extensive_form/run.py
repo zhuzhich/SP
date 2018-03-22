@@ -8,6 +8,9 @@
 # ef.py:  extensive form model
 # ef.dat: extensive form data.
 
+#
+#Last Update: 03/21/2018
+#
 from pyutilib.misc import import_file
 from pyomo.environ import *
 from pyomo.opt import SolverFactory
