@@ -1,3 +1,11 @@
+#Author: Zhicheng Zhu
+#Email: zzhu3@lamar.edu
+#
+#class information
+#
+#Last Update: 03/21/2018
+#
+
 import math
 import random
 import numpy as np

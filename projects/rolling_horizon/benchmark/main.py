@@ -4,6 +4,7 @@
 #paper:
 #A dynamic policy for grouping maintenance activities
 #EJOR 1997, Wildeman et al.
+#Last Update: 03/21/2018
 
 
 import class_info as myClass
@@ -123,11 +124,11 @@ def main(wScaleBound, setUpCost, crBound, ranSeed ):
 
 wScaleH = [9, 20]
 wScaleL = [1, 8]
-wScaleVector = [wScaleH]#[wScaleH, wScaleL]
+wScaleVector = [wScaleL]#[wScaleH, wScaleL]
 dVector = [100, 5]
 cCrH = [17, 27]
 cCrL = [6, 16]
-cCrVector = [cCrH]#[cCrH, cCrL]
+cCrVector = [cCrH, cCrL]
 
 counter = 0
 print ("=============Benchmark=====================")

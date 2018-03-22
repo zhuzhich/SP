@@ -1,6 +1,7 @@
 #Author: Zhicheng Zhu
 #Email: zzhu3@lamar.edu
-#A heuristic algorithm for multi-unit system maintenance problem.
+#Rolling horizon version of Algorithm 4: PH_Heuristic.
+#Last Update: 03/21/2018
 
 import os
 import math
