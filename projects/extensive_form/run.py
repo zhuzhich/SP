@@ -1,3 +1,13 @@
+# Author Zhicheng Zhu
+# Email: zzhu3@lamar.edu
+
+# solve extensive form model using Pyomo
+# 
+# Structure:
+# run.py: main script file
+# ef.py:  extensive form model
+# ef.dat: extensive form data.
+
 from pyutilib.misc import import_file
 from pyomo.environ import *
 from pyomo.opt import SolverFactory

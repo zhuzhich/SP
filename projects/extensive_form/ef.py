@@ -1,11 +1,8 @@
-#  Implemention of extensive form. Solving the problem directly.
 #  Author: Zhicheng Zhu
 #  Email: zzhu3@lamar.edu
 
+#  Implemention of extensive form. Whole problem.
 
-#Subproblem
-##
-##
 
 from pyomo.core import *
 import math
