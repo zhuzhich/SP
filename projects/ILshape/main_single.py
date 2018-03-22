@@ -8,7 +8,9 @@
 #	2.1 lazy constraints: when solution is integer feasible. Both benders cut and integer L-shaped cut
 #	2.2 user cuts: when solution is not integer feasible. Benders cut only
 #3. Best incumbent solution until no cuts can be found in 2.
-
+#
+#Last Update: 03/21/2018
+#
 #!/usr/bin/python
 
 from __future__ import print_function

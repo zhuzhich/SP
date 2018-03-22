@@ -1,9 +1,10 @@
 This code trys to implement integer L-shape method to solve stochastic grouping problem in multi-component system.
-Which is the algorithm 2 in paper:
+Which is the Algorithm 2 in paper:
 xxxxxxxxx
-Code author: Zhicheng Zhu
-Email: zzhu3@lamar.edu, Zhich.zhu@gmail.com
 
+Code author: Zhicheng Zhu
+Email: zzhu3@lamar.edu, zhich.zhu@gmail.com
+Last Update: 03/21/2018
 
 Code structure:
 ===============

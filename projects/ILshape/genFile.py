@@ -5,6 +5,9 @@
 # Files generated:
 # ScenNodex.dat: subproblem x data file
 
+#
+#Last Update: 03/21/2018
+#
 import os
 import math
 import random
