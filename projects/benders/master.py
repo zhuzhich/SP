@@ -3,7 +3,8 @@
 
 # Master Problem
 ##
-##
+#Last Update: 03/21/2018
+#
 
 from pyomo.core import *
 model = AbstractModel(name="Master")

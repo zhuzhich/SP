@@ -5,6 +5,9 @@
 # Files generated
 # 1. master.dat: generate master.dat file
 # 2. ScenNodex.dat: subproblem x data file
+#
+#Last Update: 03/21/2018
+#
 
 import os
 import math
