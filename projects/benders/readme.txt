@@ -32,8 +32,6 @@ Code structure:
 
 Notice:
 =======
-1. We are using python-CPLEX to solve master problem by using branch-and-cut.
-2. master problem is built by python-CPLEX.
-3. B&C is embeded in CPLEX. So master problem is solved as integer problem.
-4. Sub-problem is solved via Pyomo package, solver is CPLEX
+1. Using Pyomo + CPLEX here.
+
  
