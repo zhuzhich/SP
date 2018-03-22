@@ -264,9 +264,9 @@ directory = "C:\\Users\\zzhu3\\Documents\\codes\\SP\\projects\\PH"
 # ./main.ph
 # ./models
 # ./nodedata
-comp_list = [4,6,8]
-time_list = [10,20,30]
-scen_list = [100]
+comp_list = [4,6,8,10]
+time_list = [10]
+scen_list = [1000]
 counter = 0
 for I in comp_list:
 	for T in time_list:
@@ -308,7 +308,8 @@ for I in comp_list:
 			#############################
 			#Use command line for runph
 			############################# 
-			res_filename = str(counter) + "_" + str(I) + "_" + str(T) + "_" + str(w) + ".txt"
+			#res_filename = str(counter) + "_" + str(I) + "_" + str(T) + "_" + str(w) + ".txt"
+			res_filename = str(I) + "_" + str(T) + "_" + str(w) + ".txt"
 			excmd = "runph --model-directory=models --instance-directory=nodedata --default-rho=1.0 --solver=cplex > " + res_filename
 			os.system(excmd)
 			#cd C:\Users\zzhu3\Documents\codes\SP\projects\PH
