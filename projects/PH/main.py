@@ -7,6 +7,9 @@
 # 2. RootNode.dat: contains the fix info that doesn't change across scenarios
 # 3. ScenNode1.dat - ScenNodew.dat, where w is the number of scenarios.
 #	 These files contain the scenario specific data, which is the random life times
+#
+#Last Update: 03/21/2018
+#
 import os
 import math
 import random

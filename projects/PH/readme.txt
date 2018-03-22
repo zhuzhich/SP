@@ -4,6 +4,7 @@ xxxxxxxxx
 
 Code author: Zhicheng Zhu
 Email: zzhu3@lamar.edu, zhich.zhu@gmail.com
+Last Update: 03/21/2018
 
 
 Code structure:
