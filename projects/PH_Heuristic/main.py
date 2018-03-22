@@ -1,6 +1,8 @@
 #Author: Zhicheng Zhu
 #Email: zzhu3@lamar.edu
 #A heuristic algorithm for multi-unit system maintenance problem.
+#Last Update: 03/21/2018
+
 
 import os
 import math
