@@ -1,9 +1,8 @@
-#  Implemention of bender's decomposition of SORP considering PM
 #  Author: Zhicheng Zhu
 #  Email: zzhu3@lamar.edu
 
 
-#Subproblem
+#Subproblem. Relaxation
 ##
 ##
 

@@ -1,10 +1,9 @@
 # Author Zhicheng Zhu
 # Email: zzhu3@lamar.edu
 
-# For files generation for Algorithm 1 or Algorithm 2
-# Files generated
-# 1. master.dat: generate master.dat file
-# 2. ScenNodex.dat: subproblem x data file
+# For files generation Algorithm 2
+# Files generated:
+# ScenNodex.dat: subproblem x data file
 
 import os
 import math

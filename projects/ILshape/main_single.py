@@ -1,3 +1,14 @@
+#Author: Zhicheng Zhu
+#Email: zzhu3@lamar.edu
+#
+#Description:
+#main file for single-cut implementation
+#1. send integer master problem into CPLEX
+#2. add cuts in callback functions:
+#	2.1 lazy constraints: when solution is integer feasible. Both benders cut and integer L-shaped cut
+#	2.2 user cuts: when solution is not integer feasible. Benders cut only
+#3. Best incumbent solution until no cuts can be found in 2.
+
 #!/usr/bin/python
 
 from __future__ import print_function
@@ -407,9 +418,9 @@ def usage():
 	print("Usage:     don't use it!!")
 
 #############################################################	
-comp_list = [8]
-time_list = [10,20]#[10,20,30]
-scen_list = [20,50,100]#[20,50,100]
+comp_list = [10]
+time_list = [10,20,30]#[10,20,30]
+scen_list = [50]#[20,50,100]
 d = 5 #setup cost
 counter = 0
 directory = "C:\\Users\\zzhu3\\Documents\\codes\\SP\\projects\\ILshape" 

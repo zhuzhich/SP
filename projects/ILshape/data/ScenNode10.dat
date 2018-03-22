@@ -1,14 +1,14 @@
 #Total component number
-param pI := 4;
+param pI := 10;
 
 #Time horizon
 param pT := 10;
 
 #Number of Scenarios
-param NUMSCEN := 20;
+param NUMSCEN := 50;
 
 #Probablity of each Scenario. Equally distributed
-param prob := 0.05;
+param prob := 0.02;
 
 #Extended time horizon
 param pT_ex := 50;
@@ -27,6 +27,12 @@ param pCPR :=
 2 1
 3 1
 4 1
+5 1
+6 1
+7 1
+8 1
+9 1
+10 1
 ;
 
 param pCCR := 
@@ -34,6 +40,12 @@ param pCCR :=
 2 9.1
 3 8.0
 4 11.1
+5 14.2
+6 7.4
+7 9.8
+8 14.6
+9 14.5
+10 12.0
 ;
 
 param pKesi := 
@@ -41,6 +53,12 @@ param pKesi :=
 2 0
 3 0
 4 0
+5 0
+6 0
+7 0
+8 0
+9 0
+10 0
 ;
 
 param w_shape := 
@@ -48,6 +66,12 @@ param w_shape :=
 2 6.7
 3 5.6
 4 5.4
+5 5.5
+6 4.9
+7 6.7
+8 4.8
+9 4.6
+10 4.4
 ;
 
 param w_scale := 
@@ -55,6 +79,12 @@ param w_scale :=
 2 4.2
 3 3.2
 4 2.9
+5 2.0
+6 4.6
+7 6.4
+8 1.9
+9 2.0
+10 1.3
 ;
 
 param x := 
@@ -62,6 +92,12 @@ param x :=
 2 1
 3 1
 4 0
+5 0
+6 0
+7 0
+8 0
+9 0
+10 0
 ;
 
 #pLT is two-dimensional [i,r]=[component, individual]
@@ -83,4 +119,28 @@ param pLT :=
 [4,*]
 1  1    2  2    3  2    4  3    5  2    6  1    7  3    8  1    9  1    10 2    
 11 2    12 2    
+
+[5,*]
+1  1    2  1    3  2    4  1    5  1    6  2    7  1    8  1    9  1    10 1    
+11 1    12 1    
+
+[6,*]
+1  2    2  5    3  3    4  2    5  5    6  2    7  2    8  3    9  4    10 3    
+11 3    12 5    
+
+[7,*]
+1  4    2  5    3  4    4  6    5  3    6  4    7  5    8  6    9  5    10 5    
+11 7    12 5    
+
+[8,*]
+1  1    2  1    3  2    4  1    5  1    6  1    7  1    8  1    9  1    10 2    
+11 1    12 1    
+
+[9,*]
+1  1    2  2    3  1    4  1    5  1    6  1    7  1    8  1    9  2    10 1    
+11 1    12 2    
+
+[10,*]
+1  1    2  1    3  1    4  1    5  1    6  1    7  1    8  1    9  1    10 1    
+11 1    12 1    
 ;

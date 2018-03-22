@@ -1,0 +1,40 @@
+1_10_10_50
+CPXPARAM_Preprocessing_Presolve                  0
+CPXPARAM_Read_DataCheck                          1
+CPXPARAM_Threads                                 1
+CPXPARAM_Read_APIEncoding                        "UTF-8"
+CPXPARAM_MIP_Strategy_CallbackReducedLP          0
+CPXPARAM_MIP_Strategy_Search                     1
+Lazy constraint(s) or lazy constraint callback is present.
+    Disabling dual reductions (CPX_PARAM_REDUCE) in presolve.
+    Disabling non-linear reductions (CPX_PARAM_PRELINEAR) in presolve.
+Clique table members: 9.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: traditional branch-and-cut.
+Parallel mode: none, using 1 thread.
+Root relaxation solution time = 0.02 sec. (0.01 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap         Variable B NodeID Parent  Depth
+
+      0     0     -397.6647     1                 -99994.0000        0         
+*     0+    0                          551.6700     -397.6647           172.08%
+*     0+    0                          546.1540     -397.6647           172.81%
+      0     0     -397.4937     3      546.1540      Fract: 2        3  172.78%
+*     0+    0                          544.9680     -397.4937           172.94%
+      0     0     -397.4033     3      544.9680      Fract: 2        6  172.92%
+      0     0     -397.4028     4      544.9680       User: 1        6  172.92%
+      0     0     -397.4023     4      544.9680       User: 1        6  172.92%
+*     0+    0                          543.7420     -397.4023           173.09%
+      0     2     -397.4022     5      543.7420     -397.3983        6  173.09%                        0             0
+Elapsed time = 2417.51 sec. (1.70 ticks, tree = 0.01 MB, solutions = 4)
+*    30+   16                          539.9440     -397.0394           173.53%
+*    54    23      integral     0      539.1400     -396.8866      100  173.61%
+*    59    24      integral     0      538.5200     -396.8784      107  173.70%
+*    75    24      integral     0      536.5520     -396.6180      136  173.92%
+*   100+   33                          535.3680     -396.2916           174.02%
+*   105    36      integral     0      534.7800     -396.2916      189  174.10%
+*   150+   51                          534.0380     -396.1313           174.18%
+*   180+   57                          533.7900     -396.0222           174.19%
+*   190+   63                          531.3340     -395.9838           174.53%
+*   360+   83                          531.2340     -394.8426           174.33%
