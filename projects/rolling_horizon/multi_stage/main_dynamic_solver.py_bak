@@ -1,0 +1,99 @@
+#Author: Zhicheng Zhu
+#Email: zhicheng.zhu@ttu.edu, yisha.xiang@ttu.edu
+#copyright @ 2019: Zhicheng Zhu. All right reserved.
+
+#Info:
+#main file to solve deterministic equivalent form of TBM model by back-tracking
+#use enumeration
+#Last update: 05/20/2019
+#!/usr/bin/python
+
+from __future__ import print_function
+import sys
+import cplex
+import itertools
+import time
+from scipy.stats import gamma
+
+
+def main(sysInfo):
+
+	start_time = time.clock();
+	
+	## stage 1
+	#generate first stage solution:
+	bestObj0 = float("inf");
+	bestSol0 = 0;
+	for solX0 in itertools.product([0,1], repeat = sysInfo.nComponents):
+		solXL_0 = list(solX0);
+		flag1 = False;
+		ageAfterMx_0 = [0]*sysInfo.nComponents;
+		for i in range(sysInfo.nComponents):
+			ageAfterMx_0[i] = sysInfo.comInfoAll[i].initAge*(1 - solXL_0[i]);
+			if sysInfo.comInfoAll[i].initFail > solXL_0[i]:
+				flag1 = True;
+		if flag1 == True:
+			continue;
+		tmpObj0 = 0;
+		
+	##stage 2
+		#generate failure states at the second stage:
+		for kesi1 in itertools.product([0,1], repeat = sysInfo.nComponents):
+			#generate solution at the second stage:
+			bestObj1 = float("inf");	#the best obj value for the current node
+			for solX1 in itertools.product([0,1], repeat = sysInfo.nComponents):
+				solXL_1 = list(solX1);
+				flag1 = False;
+				ageAfterMx_1 = [0]*sysInfo.nComponents;
+				for i in range(sysInfo.nComponents):
+					ageAfterMx_1[i] = ageAfterMx_1[i] + 1;
+					ageAfterMx_1[i] = ageAfterMx_1[i]*(1 - solXL_1[i]);				
+					if kesi1[i] > solXL_1[i]:
+						flag1 = True;
+				if flag1 == True:
+					continue;			
+				tmpObj1 = 0;	
+				#generate failure states at the third (last) stage:
+	## stage 3
+				for kesi2 in itertools.product([0,1], repeat = sysInfo.nComponents):
+					tmpCost = 0;
+					for i in range(sysInfo.nComponents):
+						tmpCost += sysInfo.comInfoAll[i].cCM*kesi2[i];
+					if tmpCost > 0:
+						tmpCost += sysInfo.cS;
+						tmpProb = 1;
+						for i in range(sysInfo.nComponents):
+							tmp = sysInfo.comInfoAll[i].cond_fail_prob(ageAfterMx_1[i],ageAfterMx_1[i]+1);
+							tmpProb = tmpProb*(tmp*kesi2[i] + (1 - tmp)*(1-kesi2[i]));
+						tmpObj1 += tmpProb*tmpCost;
+				if tmpObj1 < bestObj1:
+					bestObj1 = tmpObj1;
+					
+			tmpProb = 1;
+			for i in range(sysInfo.nComponents):
+				tmp = sysInfo.comInfoAll[i].cond_fail_prob(ageAfterMx_0[i],ageAfterMx_0[i]+1);
+				tmpProb = tmpProb*(tmp*kesi1[i] + (1 - tmp)*(1-kesi1[i]));
+			tmpObj0 += tmpProb * bestObj1;
+		if tmpObj0 < bestObj0:
+			bestObj0 = tmpObj0;
+			bestSol0 = solXL_0;
+
+	end_time = time.clock();
+
+	time_elapsed = end_time - start_time;
+	sysInfo.time = time_elapsed;
+
+
+	#print ("\n===============================main_2stage_solver, (m, n, t)=(%d,%d,%d)============" 
+	#		%(sysInfo.comInfoAll[0].nStates, sysInfo.nComponents, sysInfo.nStages));
+
+	print ("calculation time is %f"  %time_elapsed);
+
+
+	sysInfo.objValue = bestObj0;
+	print ("optimal objValue");
+	print (bestObj0);
+	print ("optimal solution");
+	print (bestSol0);
+		
+		
