@@ -224,7 +224,7 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 					#init cost
 					j = pole_i
 					first_key = pole_i
-					if node_dict.has_key(pole_i) == False:
+					if pole_i in node_dict == False:
 						node_data = []
 						for i in range(pole_i+1, I):	#component that trying to move.
 							#com_i = B[i][1]
@@ -235,14 +235,14 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 								node_data.append([i,B[j][0]])
 							else:
 								node_dict[j] = Node(node_data,i)
-								if node_dict.has_key(i) == True:
+								if i in node_dict == True:
 									break
 								else:
 									if i < I-1:	#i cannot be the last one
 										j = i
 										node_data = []
 							if i == I - 1: #last element
-								if node_dict.has_key(j) == False:
+								if j in node_dict == False:
 									node_dict[j] = Node(node_data,-1)
 								node_dict[j].pnext = -1				
 					D_tenta[0] = 1
@@ -250,7 +250,7 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 					#if t_tenta[B[0][1]] <= T:
 					A_tenta[B[0][1]][B[0][0]] = 1
 					k = first_key
-					while (node_dict.has_key(k) == True):
+					while (k in node_dict == True):
 						if B[k][0] > T:
 							break
 						#replace k first
@@ -369,7 +369,7 @@ def main(wScaleBound, setUpCost, crBound, ranSeed ):
 	T = 20			#a fixed endClock
 	TRoll = 20
 	R = T + 2		#number of individuals
-	w = 1000			#number of scenarios
+	w = 10			#number of scenarios
 	#dependent variables
 	d = setUpCost		#setup cost
 	#print ("d=%d" %d)
