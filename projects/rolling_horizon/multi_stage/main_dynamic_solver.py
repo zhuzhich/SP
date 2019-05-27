@@ -47,16 +47,33 @@ def node_iter(sysInfo, curT, age, failState):
 				tmpObj += (sysInfo.comInfoAll[i].cCR - sysInfo.comInfoAll[i].cPR)*failState[i];
 			if tmpObj > 0:
 				tmpObj += sysInfo.cS;
-				
+			#print ("======t:===========");
+			#print (curT);
+			#print ("node:");
+			#print (failState);
+			#print ("solution:");
+			#print (solX);
+			
 			#calculate expected cost at the next stage given solution solXL
 			for kesi in itertools.product([0,1], repeat = sysInfo.nComponents):
 				ageNext = [ageAfter[i]+1 for i in range(sysInfo.nComponents)];
 				tmpCost = node_iter(sysInfo, curT+1, ageNext, kesi);
-				tmpProb = 1;			
+				tmpProb = 1;
+				#print ("-------t:-------");
+				#print (curT+1);
+				#print ("node:");
+				#print (kesi);
+				#print ("cost:");
+				#print (tmpCost);
+
 				for i in range(sysInfo.nComponents):
 					tmp = sysInfo.comInfoAll[i].cond_fail_prob(ageAfter[i],ageAfter[i]+1);
 					tmpProb = tmpProb*(tmp*kesi[i] + (1 - tmp)*(1-kesi[i]));
+				#print ("probability:");	
+				#print (tmpProb);
 				tmpObj += tmpProb*tmpCost;
+				#print ("objective:");
+				#print (tmpObj);				
 			if tmpObj < bestObj:
 				bestObj = tmpObj;
 				bestSol = solXL;

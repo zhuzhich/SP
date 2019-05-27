@@ -25,7 +25,7 @@ import numpy as np
 nComponents = 3;		#fix component numbers	
 cS = 5;				#fix setup cost
 intvl = 1;		#don't change this
-nStages = 7;			
+nStages = 5;			
 
 sysInfo = class_info.system_info(nComponents, nStages, intvl, cS);
 
@@ -50,12 +50,12 @@ for i in range(nComponents):
 	temp = random.uniform(6,16);
 	cCR[i] = round(temp,1);			
 	#shape
-	random.seed(i*10)   
+	random.seed(i*20)   
 	temp = random.uniform(4,7)
 	w_shape[i] = round(temp,1);			
 	#scale
 	random.seed(i*10)   
-	temp = random.uniform(1,4)#(4,11)
+	temp = random.uniform(1,8)#(4,11)
 	w_scale[i] = round(temp,1);		
 	comInfo = class_info.component_info(i, w_shape[i], w_scale[i], age[i], kesi[i], intvl, cCR[i], cPR[i], cS);
 	sysInfo.add_com(comInfo);

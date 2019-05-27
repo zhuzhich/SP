@@ -6,7 +6,7 @@ import math
 class component_info():
 	def weibull_cdf(self, t):
 		tmp = float(t)/self.w_scale;
-		tmp1 = tmp ** self.w_scale;
+		tmp1 = tmp ** self.w_shape;
 		return 1 - math.exp(-tmp1);
 		
 	def cond_fail_prob(self, ageFrom, ageTo):
@@ -15,7 +15,11 @@ class component_info():
 		else:
 			tmp = self.weibull_cdf(ageTo) -  self.weibull_cdf(ageFrom);
 			tmp1 = 1 -  self.weibull_cdf(ageFrom);
-			prob = float(tmp)/tmp1;	
+			#print (ageFrom)
+			if tmp1 == 0:
+				prob = 1;
+			else:
+				prob = float(tmp)/tmp1;	
 		return prob;
 	
 	def __init__(self, idx, w_shape, w_scale, initAge,initFail, intvl, cCM, cPM, cS):
