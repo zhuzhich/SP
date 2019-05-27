@@ -41,6 +41,7 @@ model.sR 		= RangeSet(1,model.pR)
 model.sR_End	= RangeSet(1,model.pR-1)
 model.sR_0		= RangeSet(2,model.pR)
 model.pd		= Param(default=5)						#set-up cost
+model.iter  	= Param()
 
 #For the large number of components
 #generate parameters.
@@ -52,7 +53,7 @@ model.pCPR		= Param(model.sI, initialize=pCPR_init)  #PR cost
 
 #CR cost
 def pCCR_init(model, i):
-	random.seed(i*30)
+	random.seed((i-1)*30)
 	temp = random.uniform(6,16)
 	return round(temp,1)				
 model.pCCR		= Param(model.sI, initialize=pCCR_init)	 #CR cost
@@ -67,21 +68,21 @@ model.pKesi		= Param(model.sI, initialize=pKesi_init)  #failure state
 
 #weibull shape parameter
 def w_shape_init(model, i):
-	random.seed(i*10) ###control the seed     
+	random.seed((i-1)*20) ###control the seed     
 	temp = random.uniform(4,7)
 	return round(temp,1)
 model.w_shape		= Param(model.sI, initialize=w_shape_init) #weibull shape
 
 #weibull scale parameter
 def w_scale_init(model, i):
-	random.seed(i*20) ###control the seed     
+	random.seed((i-1)*10) ###control the seed     
 	temp = random.uniform(1,8)#(4,11)
 	return round(temp,1)
 model.w_scale		= Param(model.sI, initialize=w_scale_init) #weibull scale
 
 #random life time
 def pLT_init(model, i, r, w):
-	random.seed(i+r+w)
+	random.seed(i+r+w+model.iter)
 	if r == 1:
 		if model.pKesi[i]==1:
 			return 0
