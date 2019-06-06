@@ -82,25 +82,33 @@ model.w_scale		= Param(model.sI, initialize=w_scale_init) #weibull scale
 
 #random life time
 def pLT_init(model, i, r, w):
-	random.seed(i+r+w+model.iter)
+	random.seed(i-1+r-1+w-1+model.iter)
 	if r == 1:
 		if model.pKesi[i]==1:
 			return 0
 	#return i #for test only..
 		else:
 			ran_num = random.uniform(0,1)
+			part1 = math.log(ran_num)
+			s_inv = 1.0/model.w_shape[i]
+			surv_time = model.ps	
+			part2 = (surv_time/model.w_scale[i])**model.w_shape[i];
+			part3 = part2 - part1;
+			LT1 = round((part3**s_inv)*model.w_scale[i]) - surv_time;
+			'''
 			ran_num_log = -math.log(ran_num)
 			s_inv = 1.0/model.w_shape[i]	
-			LT1 = int((ran_num_log**s_inv)*model.w_scale[i]) - model.ps					
-			LT = max(1,LT1)
+			LT1 = int((ran_num_log**s_inv)*model.w_scale[i]) - model.ps	
+			'''
+			LT = int(max(1,LT1))
 			return LT
 	else:	
 		ran_num = random.uniform(0,1)
 		ran_num_log = -math.log(ran_num)
 		s_inv = 1.0/model.w_shape[i]	
-		LT1 = int((ran_num_log**s_inv)*model.w_scale[i])				
-		LT = max(1,LT1)
-		return max(1,LT)
+		LT1 = round((ran_num_log**s_inv)*model.w_scale[i])				
+		LT = int(max(1,LT1))
+		return LT
 model.pLT		= Param(model.sI, model.sR, model.Scen, initialize=pLT_init)
 
 #set of constraint f

@@ -27,7 +27,7 @@ def create_files(iter):
 
 	W = 50;
 	I = 3;
-	T = 7;
+	T = 7;		# t = 0, 1, 2, ..., T
 	T_ex = 50;
 	d = 5;
 	f.write("param NUMSCEN := " + str(W)+";\n\n")
