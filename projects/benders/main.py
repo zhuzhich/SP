@@ -18,7 +18,7 @@ import genFile
 import os
 
 comp_list = [10]
-time_list = [10]
+time_list = [10]		#t=0,1,...,T
 scen_list = [100]
 counter = 0
 directory = "C:\\Users\\zzhu3\\Documents\\codes\\SP\\projects\\benders" 
