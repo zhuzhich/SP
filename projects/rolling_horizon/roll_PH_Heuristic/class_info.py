@@ -26,6 +26,7 @@ class heuristic_info():
 		iIdx = self.currentWin[i][1];
 		rIdx = self.workingInd[iIdx];
 		LT = sysInfo.comInfoAll[iIdx].LT[scen][rIdx];
+		repTime = int(repTime);
 		if LT == 0:	#fail
 			self.sol[iIdx][repTime] = 2;
 		else:
@@ -90,12 +91,12 @@ class component_info():
 		#		
 		if len(self.LT) > 0:
 			LT_in_arr = np.array(self.LT);
-			LT_arr = LT_in_arr[:,range(self.nIndividuals)];
+			LT_arr = LT_in_arr[:,range(int(self.initAge==1), self.nIndividuals+ int(self.initAge==1)) ];
 			for idx_w in range(self.nScenarios):
 				if self.initFail == 1:
 					LT_arr[idx_w,0] = 0;	#force to replace the first individual	
 				else:
-					random.seed(self.idx+idx_w, ranSeed); ###control the seed  				
+					random.seed(self.idx+idx_w+ranSeed); ###control the seed  				
 					ran_num = random.uniform(0,1);
 					part1 = math.log(ran_num);
 					s_inv = 1.0/self.w_shape;
@@ -104,7 +105,7 @@ class component_info():
 					part3 = part2 - part1;
 					tmp = round((part3**s_inv)*self.w_scale) - surv_time;					
 					LT_arr[idx_w,0] = int(max(1,tmp));
-			self.LT = list(LT_arr);
+			self.LT = LT_arr.tolist();
 		
 		######for the first time######################
 		else:
@@ -113,15 +114,27 @@ class component_info():
 				for idx2 in range(self.nIndividuals):
 					random.seed(self.idx + idx2+idx_w+ranSeed);###control the seed  
 					ran_num = random.uniform(0,1);
-					ran_num_log = -math.log(ran_num);
-					s_inv = 1.0/self.w_shape;
-					LT1 = round((ran_num_log**s_inv)*self.w_scale);			
-					##assign variable LT
-					tmp[idx2] = int(max(1,LT1));
-				if self.initFail == 1:
-					tmp[0]  = 0	#force to replace the first individual	
+					if idx2 == 0:
+						if self.initFail == 1:
+							tmp[0]  = 0	#force to replace the first individual	
+						else:
+							part1 = math.log(ran_num);
+							s_inv = 1.0/self.w_shape;
+							surv_time = self.initAge;
+							part2 = (surv_time/self.w_scale)**self.w_shape;
+							part3 = part2 - part1;
+							tmp[idx2] = max(1,round((part3**s_inv)*self.w_scale) - surv_time);	
+							tmp[idx2] = int(tmp[idx2]);
+					else:
+						ran_num_log = -math.log(ran_num)
+						s_inv = 1.0/self.w_shape
+						LT1 = round((ran_num_log**s_inv)*self.w_scale)
+						tmp[idx2] = int(max(1,LT1))	
 				#LT_tmp <- tmp
 				self.LT.append(tmp);
+		
+		#print ("LT", self.LT);
+
 
 	def __init__(self, idx, w_shape, w_scale, initAge,initFail, \
 				intvl, cCM, cPM, cS, nScenarios, nIndividuals):

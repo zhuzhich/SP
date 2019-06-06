@@ -224,7 +224,7 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 					#init cost
 					j = pole_i
 					first_key = pole_i
-					if pole_i in node_dict == False:
+					if (pole_i in node_dict) == False:
 						node_data = []
 						for i in range(pole_i+1, I):	#component that trying to move.
 							#com_i = B[i][1]
@@ -235,14 +235,14 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 								node_data.append([i,B[j][0]])
 							else:
 								node_dict[j] = Node(node_data,i)
-								if i in node_dict == True:
+								if (i in node_dict) == True:
 									break
 								else:
 									if i < I-1:	#i cannot be the last one
 										j = i
 										node_data = []
 							if i == I - 1: #last element
-								if j in node_dict == False:
+								if (j in node_dict) == False:
 									node_dict[j] = Node(node_data,-1)
 								node_dict[j].pnext = -1				
 					D_tenta[0] = 1
@@ -250,7 +250,7 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 					#if t_tenta[B[0][1]] <= T:
 					A_tenta[B[0][1]][B[0][0]] = 1
 					k = first_key
-					while (k in node_dict == True):
+					while ((k in node_dict) == True):
 						if B[k][0] > T:
 							break
 						#replace k first
@@ -306,7 +306,7 @@ def PH_alg(LT):
 	global R
 	global w
 	
-	rho = 50.0
+	rho = 20.0
 	max_iter = 10
 	w_pr = np.zeros((max_iter, w, I))#array type	
 	x_agr = np.zeros(I)  #array type
@@ -365,11 +365,11 @@ def main(wScaleBound, setUpCost, crBound, ranSeed ):
 	
 
 	#independent variables
-	I = 10			#number of components
-	T = 20			#a fixed endClock
-	TRoll = 20
+	I = 2			#number of components
+	T = 4			#a fixed endClock
+	TRoll = 5
 	R = T + 2		#number of individuals
-	w = 10			#number of scenarios
+	w = 1200			#number of scenarios
 	#dependent variables
 	d = setUpCost		#setup cost
 	#print ("d=%d" %d)
@@ -479,10 +479,10 @@ global w_scale
 wScaleH = [9, 20]
 wScaleL = [1, 8]
 wScaleVector = [wScaleL]#[wScaleH, wScaleL]
-dVector = [100]#[100, 5]
+dVector = [5]#[100, 5]
 cCrH = [17, 27]
 cCrL = [6, 16]
-cCrVector = [cCrH]#[cCrH, cCrL]
+cCrVector = [cCrL]#[cCrH, cCrL]
 
 counter = 0
 print ("=============Heuristic=====================")
@@ -497,7 +497,7 @@ for wScale in wScaleVector:
 			counter1 = 0
 			cost = []
 			start_time = time.clock()	
-			for resLifeSeed in range(5):
+			for resLifeSeed in range(1):
 				counter1 += 1
 				ranSeed = resLifeSeed
 				#

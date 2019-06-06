@@ -21,20 +21,7 @@ def cond_fail_prob(w_shape, w_scale, age):
 	tmp1 = 1 -  weibull_cdf(w_shape, w_scale,age);
 	prob = float(tmp)/tmp1;	
 	return prob;
-
-#build up a linkedlist for accelerate the alg.
-class Node:
-	def __init__(self, data, pnext):
-		#data:
-		#	is replacement decisions [(a1,b1),(a2,b2)...]
-		#	(a1,b1) means index (in B) a1 replaced at time b1
-		#pnext:
-		#	next j in B.
-		self.data = data
-		self.pnext = pnext
-
-
-		
+	
 def cost_f(A, sysInfo, w_pr, x_agr, rho):
 	cost = 0;
 	x = [];		#first stage solution, only shows replacement or not
@@ -49,6 +36,8 @@ def cost_f(A, sysInfo, w_pr, x_agr, rho):
 	for j in range(sysInfo.nStages):			
 		if sum(A[ii][j] for ii in range(sysInfo.nComponents)) >0:
 			cost += sysInfo.cS;
+	if rho == -1:
+		return cost;
 		
 	#first-stage variables
 	for i in range(len(x)):
@@ -107,8 +96,8 @@ def heurstic_alg(sysInfo, scen, w_pr, x_agr, rho):
 				cost_pole = float("inf");
 				#in current window, replace the first one first
 				repTime = heuInfo.currentWin[0][0];
-				if t2 == 1:
-					aa = 1;
+				#if t2 == 1:
+				#	aa = 1;
 				heuInfo.update_i(sysInfo, scen,0, t1,repTime);
 				heuInfoProto = copy.deepcopy(heuInfo);
 				for pole_i in range(I-1):			#the smallest opportunity.
@@ -119,10 +108,9 @@ def heurstic_alg(sysInfo, scen, w_pr, x_agr, rho):
 					for i in range(j + 1, I):
 						if heuInfoTenta.currentWin[i][0] -\
 							heuInfoTenta.currentWin[j][0] <=t2\
-								and heuInfoTenta.lastIndTime\
-								[heuInfoTenta.currentWin[i][1]] < \
-								heuInfoTenta.currentWin[j][0]\
-								and heuInfoTenta.currentWin[j][0] <= T - 1:
+							and heuInfoTenta.lastIndTime[heuInfoTenta.currentWin[i][1]]\
+								 < heuInfoTenta.currentWin[j][0]\
+							and heuInfoTenta.currentWin[j][0] <= T - 1:
 						
 							repTime = heuInfoTenta.currentWin[j][0];
 							heuInfoTenta.update_i(sysInfo, scen, i, t1, repTime);
@@ -143,9 +131,12 @@ def heurstic_alg(sysInfo, scen, w_pr, x_agr, rho):
 						heuInfo.shadowWin = \
 						copy.deepcopy(heuInfo.currentWin);
 			if  heuInfo.cost < cost_opt:
+				#opt_t1 = t1;
+				#opt_t2 = t2;
 				cost_opt = heuInfo.cost;
 				A_opt = heuInfo.sol;
-								
+	#print ("opt_t1,opt_t2");
+	#print (opt_t1, opt_t2);
 	return A_opt
 
 
@@ -161,19 +152,21 @@ def PH_alg(sysInfo):
 	eps = 1.0e-4
 	for iter_ in range(max_iter):
 		x = []
-		#cost_opt_v = []
+		cost_opt_v = []
 		for idxW1 in range(sysInfo.nScenarios):	
 			#print ("iter_=%d,scen=%d" %(iter_,idxW1+1))
 			if iter_ == 0:
 				A = heurstic_alg(sysInfo,idxW1,0,0,-1) #-1 means the first iteration
 			else:
 				A = heurstic_alg(sysInfo, idxW1,w_pr[idxW1],x_agr,rho)
+			#print ("A = ", A);
 			x.append(A_to_X(A))
 			#print ("x="),
 			#print (A_to_X(A))
 			#cost_opt = cost_f(A, 0, 0, -1)
-			#cost_opt_v.append(cost_opt)
-		#cost_avg = averge_cost(cost_opt_v)
+			cost_opt = cost_f(A,sysInfo, 0, 0, -1);
+			cost_opt_v.append(cost_opt)
+		cost_avg = np.average(cost_opt_v)
 		x_array = np.array(x)  #convert to array
 		#get a new aggregated x
 		x_agr = (1.0/sysInfo.nScenarios)*\
@@ -189,7 +182,9 @@ def PH_alg(sysInfo):
 					for i in range(sysInfo.nScenarios));
 			if tmp <= eps or iter_ == max_iter-1:
 				print ("converge at iter_ = %d" %iter_)
+				print ("cost_avg = %f" %cost_avg)
 				return list(x_agr)
+				
 				
 		#get price w_pr
 		for idxW1 in range(sysInfo.nScenarios):
@@ -202,11 +197,11 @@ def PH_alg(sysInfo):
 
 def main(wScaleBound, setUpCost, crBound, ranSeed ):
 
-	nComponents = 3			#number of components
-	nStages = 5;
+	nComponents = 2			#number of components
+	nStages = 5
 	T = nStages;			#remaining time horizon
-	R = T + 2;				#number of individuals
-	nScenarios = 10;		#number of scenarios
+	R = T + 1;				#number of individuals
+	nScenarios = 8;		#number of scenarios
 	cS = setUpCost			#setup cost	
 	intvl = 1;
 	
@@ -244,27 +239,23 @@ def main(wScaleBound, setUpCost, crBound, ranSeed ):
 											# LT is initialized to be empty.
 		sysInfo.add_com(comInfo);
 		sysInfo.comInfoAll[i].create_LifeTime(sysInfo.ranSeed);
-	
+		print (sysInfo.comInfoAll[i].LT);
 	retCost = 0;
-	
+
 	for t in range(1):
-		T = nStages - t;
-		R = T + 2;
-		sysInfo.nStages = T;
-		for i in range(sysInfo.nComponents):
-			sysInfo.comInfoAll[i].nIndividuals = R;
+
 		if t == nStages - 1:
 			tmp = 0;
 			for i in range(sysInfo.nComponents):
 				tmp += sysInfo.comInfoAll[i].cCR*\
-                    sysInfo.comInfoAll[i].failState[i];
+                    sysInfo.comInfoAll[i].initFail;
 			if tmp > 0:
 				tmp += sysInfo.cS;	
 			retCost += tmp;
 		else:
 			## solve current stage problem
 			x = PH_alg(sysInfo);		
-			
+			print ("x=",x);
 			#calculate cost at current stage
 			tmp = 0;
 			for i in range(sysInfo.nComponents):
@@ -286,10 +277,12 @@ def main(wScaleBound, setUpCost, crBound, ranSeed ):
 			failState =  [int(randProb[i]<failProb[i]) for i in range(sysInfo.nComponents)];
 			ageAfterMx = [ageAfterMx[i]+1 for i in range(sysInfo.nComponents)];
 			
-
+			T = nStages - t - 1;
+			R = T + 1;
+			sysInfo.nStages = T;
 			for i in range(sysInfo.nComponents):
 				sysInfo.comInfoAll[i].initAge = ageAfterMx[i];
-				sysInfo.comInfoAll[i].failState = failState[i];
+				sysInfo.comInfoAll[i].initFail = failState[i];
 				sysInfo.comInfoAll[i].nIndividuals = R;
 				sysInfo.comInfoAll[i].create_LifeTime(sysInfo.ranSeed + t + 1);
 							
@@ -319,14 +312,14 @@ for wScale in wScaleVector:
 			#print (cCr)
 			counter1 = 0
 			cost = []
-			start_time = time.clock()	
+			start_time = time.clock()
 			for resLifeSeed in range(1):
 				counter1 += 1
 				ranSeed = resLifeSeed
 				#
 				#ranSeed = resLifeSeed + counter
 				tmp = main(wScale, d, cCr, ranSeed)
-				print ("cost[%d] = %d" %(counter1, tmp))
+				print ("cost[%d] = %f" %(counter1, tmp))
 				cost.append(tmp)
 			end_time = time.clock()
 			time_ = end_time-start_time			
