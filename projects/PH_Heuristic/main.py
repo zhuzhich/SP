@@ -47,25 +47,25 @@ def create_LifeTime(LT_in):
 	for idx_w in range(0,w_Lo):
 		tmp = [[0]*R_Lo for row in range(I_Lo)]
 		for idx1 in range(0,I_Lo):
-			i = idx1 + 1
+			i = idx1
 			for idx2 in range(0,R_Lo):
-				r = idx2 + 1
-				random.seed(i+r+idx_w+1) ###control the seed
-				if r == 1:
+				r = idx2
+				random.seed(i+r+idx_w) ###control the seed
+				if r == 0:
 					if pKesi_Lo[idx1] == 1:
 						LT = 0
 					else:    
 						ran_num = random.uniform(0,1)
 						ran_num_log = -math.log(ran_num)
 						s_inv = 1.0/w_shape_Lo[idx1]	
-						LT1 = int((ran_num_log**s_inv)*w_scale_Lo[idx1]) - s_Lo					
-						LT = max(1,LT1)
+						LT1 = round((ran_num_log**s_inv)*w_scale_Lo[idx1]) - s_Lo					
+						LT = int(max(1,LT1))
 				else:
 					ran_num = random.uniform(0,1)
 					ran_num_log = -math.log(ran_num)
 					s_inv = 1.0/w_shape_Lo[idx1]
-					LT1 = int((ran_num_log**s_inv)*w_scale_Lo[idx1])
-					LT = max(1,LT1)
+					LT1 = round((ran_num_log**s_inv)*w_scale_Lo[idx1])
+					LT = int(max(1,LT1))
 				##assign variable LT
 				tmp[idx1][idx2] = LT
 		#LT_tmp <- tmp
@@ -90,7 +90,7 @@ def pCPR_init(pCPR):
 def pCCR_init(pCCR):
 	global I
 	for i in range(0, I):
-		random.seed((i+1)*30) ###control the seed     
+		random.seed(i*30) ###control the seed     
 		temp = random.uniform(6,16)
 		pCCR.append(round(temp,1))
 #kesi. Only the first component fails at current time
@@ -104,7 +104,7 @@ def pKesi_init(pKesi):
 def w_shape_init(w_shape):
 	global I
 	for i in range(0, I):
-		random.seed((i+1)*10) ###control the seed     
+		random.seed(i*20) ###control the seed     
 		temp = random.uniform(4,7)
 		w_shape.append(round(temp,1))
 #weibull scale parameter: w_scale[i]=i, i=1...I
@@ -112,7 +112,7 @@ def w_shape_init(w_shape):
 def w_scale_init(w_scale):
 	global I
 	for i in range(0, I):
-		random.seed((i+1)*20) ###control the seed     
+		random.seed(i*10) ###control the seed     
 		temp = random.uniform(1,8)#(4,11)(1,8)
 		w_scale.append(round(temp,1))
 		
@@ -194,7 +194,7 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 	global I
 	global T
 	t1_v = [0,1]
-	t2_v = range(0,8)
+	t2_v = range(10)
 	A_opt = []
 	cost_opt = 10000000;
 	for t1 in t1_v:
@@ -206,7 +206,7 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 			t = [-1]*I
 			D = [0]*I
 			for idxI in range(I):
-				B[idxI][0] = max(LT[idxI][0] - t1, 0)
+				B[idxI][0] = int(max(LT[idxI][0] - t1, 0))
 				B[idxI][1] = idxI
 			B = sort_B(B)	
 		#main loop
@@ -229,9 +229,9 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 					#init cost
 					j = pole_i
 					first_key = pole_i
-					if node_dict.has_key(pole_i) == False:
+					if (pole_i in node_dict) == False:
 						node_data = []
-						for i in range(pole_i+1, I):	#component that trying to move.
+						for i in range(j+1, I):	#component that trying to move.
 							#com_i = B[i][1]
 							#com_j = B[j][1]
 							if B[i][0] - B[j][0] <= t2 and \
@@ -240,14 +240,14 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 								node_data.append([i,B[j][0]])
 							else:
 								node_dict[j] = Node(node_data,i)
-								if node_dict.has_key(i) == True:
+								if i in node_dict == True:
 									break
 								else:
 									if i < I-1:	#i cannot be the last one
 										j = i
 										node_data = []
 							if i == I - 1: #last element
-								if node_dict.has_key(j) == False:
+								if (j in node_dict) == False:
 									node_dict[j] = Node(node_data,-1)
 								node_dict[j].pnext = -1				
 					D_tenta[0] = 1
@@ -255,7 +255,7 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 					#if t_tenta[B[0][1]] <= T:
 					A_tenta[B[0][1]][B[0][0]] = 1
 					k = first_key
-					while (node_dict.has_key(k) == True):
+					while ((k in node_dict) == True):
 						if B[k][0] > T:
 							break
 						#replace k first
@@ -292,7 +292,7 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 					if D[i] == 1:
 						com = B[i][1]
 						next_ind = sum(A[com][ii] for ii in range(T+1))
-						B[i][0] = max(LT[com][next_ind]-t1, 1) + t[com]
+						B[i][0] = int(max(LT[com][next_ind]-t1, 1) + t[com])
 				B = sort_B(B)
 			
 			cost = cost_f(A, LT, w_pr, x_agr, rho)
@@ -301,7 +301,7 @@ def heurstic_alg(LT, w_pr, x_agr, rho):
 				cost_opt = cost
 				t1_opt = t1
 				t2_opt = t2
-	print ("optimal (t1,t2,cost)=(%d,%d,%d)" %(t1_opt, t2_opt,cost_opt))
+	#print ("optimal (t1,t2,cost)=(%d,%d,%d)" %(t1_opt, t2_opt,cost_opt))
 	return A_opt
 
 
@@ -312,8 +312,8 @@ def PH_alg(LT):
 	global R
 	global w
 	
-	rho = 50.0
-	max_iter = 20
+	rho = 20.0
+	max_iter = 10
 	w_pr = np.zeros((max_iter, w, I))#array type	
 	x_agr = np.zeros(I)  #array type
 	eps = 1.0e-4
@@ -321,14 +321,15 @@ def PH_alg(LT):
 		x = []
 		cost_opt_v = []
 		for idxW1 in range(w):	
-			print ("iter_=%d,scen=%d" %(iter_,idxW1+1))
+			#print ("iter_=%d,scen=%d" %(iter_,idxW1+1))
 			if iter_ == 0:
 				A = heurstic_alg(LT[idxW1],0,0,-1) #-1 means the first iteration
 			else:
 				A = heurstic_alg(LT[idxW1],w_pr[iter_-1][idxW1],x_agr,rho)
+			#print ("A=", A);
 			x.append(A_to_X(A))
-			print ("x="),
-			print (A_to_X(A))
+			#print ("x="),
+			#print (A_to_X(A))
 			cost_opt = cost_f(A,LT[idxW1], 0, 0, -1)
 			cost_opt_v.append(cost_opt)
 		cost_avg = averge_cost(cost_opt_v)
@@ -337,15 +338,17 @@ def PH_alg(LT):
 		x_agr = 1.0/w*sum(x_array[i] for i in range(w))
 		#print ("x_array = ")
 		#print (x_array)
-		print ("x_agr = ")
-		print (x_agr)
-		print ("average cost= %f" %cost_avg)
+		#print ("x_agr = ")
+		#print (x_agr)
+		#print ("average cost= %f" %cost_avg)
 		if iter_ > 0:
 			tmp = 1.0/w*sum(np.linalg.norm(x_array[i]-x_agr) for i in range(w))
-			print ("converge distance = %f" %tmp)
+			#print ("converge distance = %f" %tmp)
 			if tmp <= eps:
 				print ("converge at iter_ = %d" %iter_)
-				break
+				print ("x = ", x_agr)
+				print ("average cost= %f" %cost_avg)
+				return
 				
 		#get price w_pr
 		for idxW1 in range(w):
@@ -370,9 +373,9 @@ global w_scale
 global x
 global directory
 
-comp_list = [4,6,8,10]#[4,6,8]
-time_list = [10,20,30]
-scen_list = [1000]
+comp_list = [2]#[4,6,8]
+time_list = [4]# t = 0, 1, 2, ..., T
+scen_list = [8]
 counter = 0
 for idxI in comp_list:
 	for idxT in time_list:
@@ -382,7 +385,7 @@ for idxI in comp_list:
 			T = idxT			#time horizon
 			w = idxW			#number of scenarios
 			#dependent variables
-			T_ex = T + 40	#extended time horizon
+			#T_ex = T + 40	#extended time horizon
 			s = 2			#starting time
 			R = T + 2		#number of individuals
 			d = 5		#setup cost
@@ -408,6 +411,7 @@ for idxI in comp_list:
 			LT = []
 			create_LifeTime(LT)
 			
+			#print ("LT", LT);
 			start_time = time.clock()
 			
 			PH_alg(LT)

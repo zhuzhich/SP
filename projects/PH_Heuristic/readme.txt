@@ -3,8 +3,8 @@ Which is the Algorithm 4 in paper:
 xxxxxxxxx
 
 Code author: Zhicheng Zhu
-Email: zzhu3@lamar.edu, zhich.zhu@gmail.com
-Last Update: 03/21/2018
+Email: zhicheng.zhu@ttu.edu, zhich.zhu@gmail.com
+Last Update: 06/06/2019
 
 
 Code structure:
@@ -29,4 +29,6 @@ Code structure:
 Notice:
 =======
 1. see paper for more detail.
- 
+2. there is another version of PH heuristic in rolling horizon folder. That one is written 
+better, easier to debug. So far, these two versions behave the same, and have the same results.
+I'll leave this one as a benchmark. 
