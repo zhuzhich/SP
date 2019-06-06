@@ -37,14 +37,13 @@ lazy_cut = 0
 user_cut = 0
 class BendersLazyConsCallback(LazyConstraintCallback):
 
-    def __call__(self):
-
-		x = self.params.x
+	def __call__(self):
+		x = self.params.x;		
 		sita = self.params.sita
 		scen = self.params.numScen
 		subLP = self.subLP
 		subIP = self.subIP
-        # Get the current x solution
+		# Get the current x solution
 		solX = self.get_values(x)
 		#print ("lazy cut!!!solX="),
 		#print (solX)
@@ -95,7 +94,7 @@ class BendersLazyConsCallback(LazyConstraintCallback):
 #
 class BendersUserCutCallback(UserCutCallback):
 
-    def __call__(self):
+	def __call__(self):
 		x = self.params.x
 		sita = self.params.sita
 		scen = self.params.numScen
@@ -135,7 +134,7 @@ class BendersUserCutCallback(UserCutCallback):
 #provide integer L-shaped cut to lazy constraint.
 class subproblemIP:
     #
-    def __init__(self, params):
+	def __init__(self, params):
 		self.numScen = params.numScen
 		self.mstX = params.x
 		self.mstSita = params.sita
@@ -156,7 +155,7 @@ class subproblemIP:
     # This method separates integer L-shaped cuts violated by the current x solution.
     # Violated cuts are found by solving the integer sub-problems
     #
-    def separate(self, xSol):
+	def separate(self, xSol):
 		sub_insts = self.instance
 		for instance in sub_insts:
 			for i in instance.sI:
@@ -199,7 +198,7 @@ class subproblemIP:
 		
 class subproblemLP:
     #
-    def __init__(self, params):
+	def __init__(self, params):
 		self.numScen = params.numScen
 		self.mstX = params.x
 		self.mstSita = params.sita
@@ -220,7 +219,7 @@ class subproblemLP:
     # This method separates Benders' cuts violated by the current x solution.
     # Violated cuts are found by solving the worker LP
     #
-    def separate(self, xSol):
+	def separate(self, xSol):
 		sub_insts = self.instance
 		for instance in sub_insts:
 			for i in instance.sI:
@@ -420,12 +419,12 @@ def usage():
 	print("Usage:     don't use it!!")
 
 #############################################################	
-comp_list = [10]
-time_list = [10,20,30]#[10,20,30]
-scen_list = [50]#[20,50,100]
+comp_list = [2]
+time_list = [4]#[10,20,30] , t = 0,1,2, ..., T
+scen_list = [10]#[20,50,100]
 d = 5 #setup cost
 counter = 0
-directory = "C:\\Users\\zzhu3\\Documents\\codes\\SP\\projects\\ILshape" 
+directory = "C:\\Users\\Zhicheng\\OneDrive - Texas Tech University\\codes\\SP\\projects\\ILshape" 
 for I in comp_list:
 	for T in time_list:
 		for w in scen_list:

@@ -137,22 +137,32 @@ def create_subDataFile():
 			f.write("\n["+str(i)+",*]\n")
 			for idx2 in range(0,R_Lo):
 				r = idx2 + 1
-				random.seed(i+r+idx_w+1) ###control the seed
+				random.seed(i-1+r-1+idx_w) ###control the seed
 				if r == 1:
 					if pKesi_Lo[idx1] == 1:
 						LT = 0
-					else:    
+					else:   
+						ran_num = random.uniform(0,1)
+						part1 = math.log(ran_num)
+						s_inv = 1.0/w_shape_Lo[idx1]
+						surv_time = s_Lo	
+						part2 = (surv_time/w_scale_Lo[idx1])**w_shape_Lo[idx1];
+						part3 = part2 - part1;
+						LT1 = round((part3**s_inv)*w_scale_Lo[idx1]) - surv_time;
+						LT = int(max(1,LT1))							
+						'''
 						ran_num = random.uniform(0,1)
 						ran_num_log = -math.log(ran_num)
 						s_inv = 1.0/w_shape_Lo[idx1]	
 						LT1 = int((ran_num_log**s_inv)*w_scale_Lo[idx1]) - s_Lo					
 						LT = max(1,LT1)
+						'''
 				else:
 					ran_num = random.uniform(0,1)
 					ran_num_log = -math.log(ran_num)
 					s_inv = 1.0/w_shape_Lo[idx1]
-					LT1 = int((ran_num_log**s_inv)*w_scale_Lo[idx1])
-					LT = max(1,LT1)
+					LT1 = round((ran_num_log**s_inv)*w_scale_Lo[idx1])
+					LT = int(max(1,LT1))
 				f.write(str(r)+ " " + " "*(2-len(str(r))) + str(LT)+ "    ")
 				#f.write(str(r)+ " " + str(LT)+ "   ")
 				if r%10 == 0:
@@ -170,7 +180,7 @@ def pCPR_init(pCPR):
 def pCCR_init(pCCR):
 	global I
 	for i in range(0, I):
-		random.seed((i+1)*30) ###control the seed     
+		random.seed(i*30) ###control the seed     
 		temp = random.uniform(6,16)
 		pCCR.append(round(temp,1))
 		#pCCR.append((i+1)*2)
@@ -187,7 +197,7 @@ def pKesi_init(pKesi):
 def w_shape_init(w_shape):
 	global I
 	for i in range(0, I):
-		random.seed((i+1)*10) ###control the seed     
+		random.seed(i*20) ###control the seed     
 		temp = random.uniform(4,7)
 		w_shape.append(round(temp,1))
 #weibull scale parameter: w_scale[i]=i, i=1...I
@@ -195,7 +205,7 @@ def w_shape_init(w_shape):
 def w_scale_init(w_scale):
 	global I
 	for i in range(0, I):
-		random.seed((i+1)*20) ###control the seed     
+		random.seed(i*10) ###control the seed     
 		temp = random.uniform(1,8)
 		w_scale.append(round(temp,1))
 def x_init(x):
@@ -257,7 +267,7 @@ def create_allFiles(I_in, T_in, w_in, d_in, dir_, PR_in, CR_in, kesi_in):
 	T = T_in			#time horizon
 	w = w_in			#number of scenarios
 
-	T_ex = T + 40	#extended time horizon
+	T_ex = T + 50	#extended time horizon
 	s = 2			#starting time
 	R = T + 2		#number of individuals
 	d = d_in		#setup cost usually be 5
