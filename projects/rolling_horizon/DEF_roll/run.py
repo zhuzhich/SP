@@ -28,12 +28,15 @@ class system_info():
 		return 1 - math.exp(-tmp1);
 		
 	def cond_fail_prob(self, i, ageFrom, ageTo):
-		if ageTo - ageFrom != 1:
+		if (ageTo - ageFrom) != 1:
 			prob = 0;
 		else:
 			tmp = self.weibull_cdf(i, ageTo) -  self.weibull_cdf(i, ageFrom);
 			tmp1 = 1 -  self.weibull_cdf(i, ageFrom);
-			prob = float(tmp)/tmp1;	
+			if tmp1 == 0:
+				prob = 1;
+			else:
+				prob = float(tmp)/tmp1;	
 		return prob;
 
 
@@ -60,7 +63,7 @@ def create_files(randSeed, sysInfo):
 	f = open(file_name,"w")
 
 
-	W = 50;
+	W = 100;
 	T_ex = 50;
 
 	f.write("param NUMSCEN := " + str(W)+";\n\n");
@@ -147,12 +150,14 @@ def create_files(randSeed, sysInfo):
 ##
 #start from here!
 nComponents = 3;
-nStages = 7;
+nStages = 6;		#total stages - 1, t=0, 1, 2, ..., T
 inspInterval = 1;
 cS = 5;
 
 failState = [0]*nComponents;
+initFailSate = [0]*nComponents;
 age = [0]*nComponents;
+initAge = [0]*nComponents;
 cPR = [0]*nComponents;
 cCR = [0]*nComponents;
 w_shape = [0]*nComponents;
@@ -162,8 +167,10 @@ for i in range(nComponents):
 	#kesi
 	if i==0:
 		failState[i] = 1;
+		initFailSate[i] = 1;
 	#age
 	age[i] = 2;
+	initAge[i] = 2;
 	#cPR
 	cPR[i] = 1;
 	#cCR
@@ -185,13 +192,24 @@ sysInfo = system_info(nComponents, nStages, inspInterval, cS, age,\
 				failState, cPR, cCR, w_shape, w_scale);
 
 
-rep = 1;
+rep = 100;
 cost = []	
 
 for randSeed in range(rep):	
 	cost_rep = 0;
-	for t in range(1):
-		if t == nStages - 1:
+	sysInfo.nStages = nStages;
+	for i in range(sysInfo.nComponents):
+		sysInfo.age[i] = initAge[i];
+		sysInfo.failState[i] = initFailSate[i];
+	print ("rep");
+	print ("=====")
+	print (randSeed);
+	for t in range(nStages+1):
+		#print ("t, age, failState, stages");
+		#print (t, sysInfo.age, sysInfo.failState, sysInfo.nStages);
+		#print ("current cost");
+		#print (cost_rep);
+		if t == nStages:
 			tmp = 0;
 			for i in range(sysInfo.nComponents):
 				tmp += sysInfo.cCR[i] * sysInfo.failState[i];
@@ -200,7 +218,6 @@ for randSeed in range(rep):
 			cost_rep += tmp;
 		else:
 			create_files(randSeed, sysInfo);
-		
 			# initialize the instances.
 			ef_mdl = import_file("ef.py").model
 			ef_insts=[]
@@ -218,8 +235,10 @@ for randSeed in range(rep):
 			if tmp > 0:
 				tmp += sysInfo.cS;
 			cost_rep += tmp;
+			#print ("solution");
+			#print (x);
 			#prepare next stage:
-			age = [sysInfo.age[i]*(x[i]) for i in range(sysInfo.nComponents)];	#age after maintenance
+			age = [sysInfo.age[i]*(1-x[i]) for i in range(sysInfo.nComponents)];	#age after maintenance
 			failProb = [sysInfo.cond_fail_prob(i, age[i], age[i]+1) for i in range(sysInfo.nComponents)];
 
 			randProb = [random.uniform(0,1) for i in range(sysInfo.nComponents)];
@@ -236,13 +255,15 @@ print ("mean cost");
 print (np.mean(cost));
 print ("variance cost");
 print (np.var(cost));	
-print ("objective value=%f" %ef_insts[0].objCost())
+print ("max and min");
+print (max(cost), min(cost));
+#print ("objective value=%f" %ef_insts[0].objCost())
 	
-print ("====debug===");
+#print ("====debug===");
 #print (ef_insts[0].w_shape());	
-for i in ef_insts[0].sI:
-	print("w_shape["+str(i)+"]="+str(round(ef_insts[0].w_shape[i], 4)))	
-	print("x["+str(i)+"]="+str(round(ef_insts[0].x[i](), 4)))	
+#for i in ef_insts[0].sI:
+#	print("w_shape["+str(i)+"]="+str(round(ef_insts[0].w_shape[i], 4)))	
+#	print("x["+str(i)+"]="+str(round(ef_insts[0].x[i](), 4)))	
 			
 			
 			

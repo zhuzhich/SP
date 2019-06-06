@@ -1,22 +1,24 @@
-param NUMSCEN := 50;
+param NUMSCEN := 100;
 
-param prob := 0.02;
+param prob := 0.01;
 
 param pI := 3;
 
-param pT := 7;
+param pT := 4;
 
 param pT_ex := 50;
 
 param pd := 5;
 
-param pR := 9;
+param pR := 6;
 
 param randSeed := 0;
 
-param ps := 1 2 2 2 3 2 ;
 
-param pKesi := 1 1 2 0 3 0 ;
+
+param ps := 1 3.0 2 3.0 3 3.0 ;
+
+param pKesi := 1 0 2 0 3 0 ;
 
 param pCCR := 1 14.4 2 11.4 3 9.1 ;
 
