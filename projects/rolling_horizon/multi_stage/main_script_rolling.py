@@ -22,10 +22,10 @@ import numpy as np
 #start from here
 ##########################
 # some fixed parameters
-nComponents = 3;		#fix component numbers	
+nComponents = 2;		#fix component numbers	
 cS = 5;				#fix setup cost
 intvl = 1;		#don't change this
-nStages = 5;			
+nStages = 7;			
 
 sysInfo = class_info.system_info(nComponents, nStages, intvl, cS);
 
