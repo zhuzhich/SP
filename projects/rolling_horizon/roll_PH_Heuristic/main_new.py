@@ -145,7 +145,7 @@ def heurstic_alg(sysInfo, scen, w_pr, x_agr, rho):
 def PH_alg(sysInfo):
 
 	
-	rho = 20.0;
+	rho = 1.0;
 	max_iter = 10;
 	w_pr = np.zeros((sysInfo.nScenarios, sysInfo.nComponents));#array type	
 	x_agr = np.zeros(sysInfo.nComponents);  #array type
@@ -181,8 +181,8 @@ def PH_alg(sysInfo):
 					*sum(np.linalg.norm(x_array[i]-x_agr) \
 					for i in range(sysInfo.nScenarios));
 			if tmp <= eps or iter_ == max_iter-1:
-				print ("converge at iter_ = %d" %iter_)
-				print ("cost_avg = %f" %cost_avg)
+				#print ("converge at iter_ = %d" %iter_)
+				#print ("cost_avg = %f" %cost_avg)
 				return list(x_agr)
 				
 				
@@ -197,11 +197,11 @@ def PH_alg(sysInfo):
 
 def main(wScaleBound, setUpCost, crBound, ranSeed ):
 
-	nComponents = 2			#number of components
-	nStages = 5
+	nComponents = 2		#number of components
+	nStages = 10				# t = 1, 2, ..., T
 	T = nStages;			#remaining time horizon
 	R = T + 1;				#number of individuals
-	nScenarios = 8;		#number of scenarios
+	nScenarios = 10;		#number of scenarios
 	cS = setUpCost			#setup cost	
 	intvl = 1;
 	
@@ -217,9 +217,9 @@ def main(wScaleBound, setUpCost, crBound, ranSeed ):
 	for i in range(nComponents):
 		#kesi
 		if i==0:
-			kesi[i] = 1;
+			kesi[i] = 0;
 		#age
-		age[i] = 2;
+		age[i] = 0;
 		#cPR
 		cPR[i] = 1;
 		#cCR
@@ -239,29 +239,36 @@ def main(wScaleBound, setUpCost, crBound, ranSeed ):
 											# LT is initialized to be empty.
 		sysInfo.add_com(comInfo);
 		sysInfo.comInfoAll[i].create_LifeTime(sysInfo.ranSeed);
-		print (sysInfo.comInfoAll[i].LT);
+		#print (sysInfo.comInfoAll[i].LT);
 	retCost = 0;
 
-	for t in range(1):
-
+	for t in range(nStages):
+		#print ("t=",t);
+		#sTime = time.clock();
 		if t == nStages - 1:
 			tmp = 0;
 			for i in range(sysInfo.nComponents):
 				tmp += sysInfo.comInfoAll[i].cCR*\
                     sysInfo.comInfoAll[i].initFail;
+				#print (i, sysInfo.comInfoAll[i].initFail);
+				
 			if tmp > 0:
 				tmp += sysInfo.cS;	
 			retCost += tmp;
 		else:
 			## solve current stage problem
-			x = PH_alg(sysInfo);		
-			print ("x=",x);
+			x = PH_alg(sysInfo);	
+			x = [round(x[i]) for i in range(len(x))];	
+			
+			#print ("x=",x);
 			#calculate cost at current stage
 			tmp = 0;
 			for i in range(sysInfo.nComponents):
 				tmp += sysInfo.comInfoAll[i].cPR*x[i];
 				tmp += (sysInfo.comInfoAll[i].cCR - sysInfo.comInfoAll[i].cPR)*\
 					sysInfo.comInfoAll[i].initFail;
+				#if (x[i] == 1):
+					#print (sysInfo.comInfoAll[i].initFail);
 			if tmp > 0:
 				tmp += sysInfo.cS;
 			retCost += tmp;
@@ -270,12 +277,19 @@ def main(wScaleBound, setUpCost, crBound, ranSeed ):
 			#generate the failure
 			ageAfterMx = [sysInfo.comInfoAll[i].initAge*(1-x[i]) \
 							for i in range(sysInfo.nComponents)];
+			#print ("ageAfterMX0", ageAfterMx)
 			failProb = [sysInfo.comInfoAll[i].cond_fail_prob(ageAfterMx[i],ageAfterMx[i]+1) \
 						for i in range(sysInfo.nComponents)];
+			#print ("failProb", failProb);
 			randProb = [random.uniform(0,1) for i in range(sysInfo.nComponents)];
-			
+			#print ("randProb", randProb);
+
 			failState =  [int(randProb[i]<failProb[i]) for i in range(sysInfo.nComponents)];
+			#print ("failState", failState);
+
 			ageAfterMx = [ageAfterMx[i]+1 for i in range(sysInfo.nComponents)];
+			#print ("ageAfterMX1", ageAfterMx)
+
 			
 			T = nStages - t - 1;
 			R = T + 1;
@@ -285,6 +299,8 @@ def main(wScaleBound, setUpCost, crBound, ranSeed ):
 				sysInfo.comInfoAll[i].initFail = failState[i];
 				sysInfo.comInfoAll[i].nIndividuals = R;
 				sysInfo.comInfoAll[i].create_LifeTime(sysInfo.ranSeed + t + 1);
+		#eTime = time.clock();
+		#print ("time=", eTime-sTime);
 							
 	return retCost
 				
@@ -292,13 +308,13 @@ def main(wScaleBound, setUpCost, crBound, ranSeed ):
 ################
 ## start
 ################
-wScaleH = [9, 20]
-wScaleL = [1, 8]
-wScaleVector = [wScaleL]#[wScaleH, wScaleL]
+wScaleH = [5, 10]
+wScaleL = [1, 5]#1,8
+wScaleVector = [wScaleH]#[wScaleH, wScaleL]
 dVector = [5]#[100, 5]
 cCrH = [17, 27]
 cCrL = [6, 16]
-cCrVector = [cCrL]#[cCrH, cCrL]
+cCrVector = [cCrH]#[cCrH, cCrL]
 
 counter = 0
 print ("=============Heuristic=====================")
@@ -307,15 +323,15 @@ for wScale in wScaleVector:
 		for cCr in cCrVector:
 			counter += 1
 			print ("==============scale, d, ccr==================")
-			#print (wScale),
-			#print (d),
-			#print (cCr)
+			print (wScale),
+			print (d),
+			print (cCr)
 			counter1 = 0
 			cost = []
 			start_time = time.clock()
-			for resLifeSeed in range(1):
+			for resLifeSeed in range(100):
 				counter1 += 1
-				ranSeed = resLifeSeed
+				ranSeed = resLifeSeed;#+counter1;
 				#
 				#ranSeed = resLifeSeed + counter
 				tmp = main(wScale, d, cCr, ranSeed)
@@ -325,9 +341,11 @@ for wScale in wScaleVector:
 			time_ = end_time-start_time			
 			print ("time             = %d" %time_)
 			print ("cost")
-			print (cost)
+			#print (cost)
 			print ("average cost")
 			print (float(sum(cost))/len(cost))
+			print ("variance of cost")
+			print (np.var(cost));
 			print ("=============================================")
 				
 
