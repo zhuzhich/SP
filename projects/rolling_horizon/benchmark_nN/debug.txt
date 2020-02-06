@@ -1,0 +1,492 @@
+counter 1
+I 1
+cs 200
+csLevel 2
+costSys -1
+lastCostSys -1
+index 0
+ind 4
+state 7
+cs 0
+costRep [10000000, 300, 310, 320, 330, 340, 350]
+costOp [15, 25, 35, 45, 55, 65, 10000000]
+V [0, 200]
+transition matrix [[0.9, 0.1, 0, 0, 0, 0, 0], [0, 0.8, 0.2, 0, 0, 0, 0], [0, 0, 0.8, 0.1, 0.1, 0, 0], [0, 0, 0, 0.7, 0.2, 0.1, 0], [0, 0, 0, 0, 0.6, 0.2, 0.2], [0, 0, 0, 0, 0, 0.5, 0.5], [0, 0, 0, 0, 0, 0, 1]]
+rule, [3, 3]
+pVec [[1, 0], [1, 0]]
+theta 0
+phiRep 0
+phiK 0
+value 0
+g 0
+lastpVec []
+lastRule []
+lastPhiRep -1
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 3 rows and 3 columns.
+Aggregator did 4 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 1 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+counter 2
+I 1
+cs 200
+csLevel 2
+costSys 152.09875000000002
+lastCostSys 152.09875000000002
+index 0
+ind 4
+state 7
+cs 0
+costRep [10000000, 300, 310, 320, 330, 340, 350]
+costOp [15, 25, 35, 45, 55, 65, 10000000]
+V [0, 200]
+transition matrix [[0.9, 0.1, 0, 0, 0, 0, 0], [0, 0.8, 0.2, 0, 0, 0, 0], [0, 0, 0.8, 0.1, 0.1, 0, 0], [0, 0, 0, 0.7, 0.2, 0.1, 0], [0, 0, 0, 0, 0.6, 0.2, 0.2], [0, 0, 0, 0, 0, 0.5, 0.5], [0, 0, 0, 0, 0, 0, 1]]
+rule, [3, 1]
+pVec [[0.8573749999999999, 0.1426250000000001], [0.8573749999999999, 0.1426250000000001]]
+theta [0.4499999999999998, 0.25, 0.25000000000000006, 0.02500000000000001, 0.02500000000000001, 0.0, 0.0]
+phiRep 0.05000000000000002
+phiK [0.05000000000000002, 0.05000000000000002]
+value [[0.0, 0.0], [223.2375, 223.2375], [284.85625000000005, 284.85625000000005], [320, 120], [330, 130], [340, 140], [350, 150]]
+g 37.323750000000004
+lastpVec [[0.8573749999999999, 0.1426250000000001], [0.8573749999999999, 0.1426250000000001]]
+lastRule [3, 1]
+lastPhiRep 0.05000000000000002
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 3 rows and 3 columns.
+Aggregator did 4 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 1 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+counter 3
+I 1
+cs 200
+csLevel 2
+costSys 123.01597628792315
+lastCostSys 123.01597628792315
+index 0
+ind 4
+state 7
+cs 0
+costRep [10000000, 300, 310, 320, 330, 340, 350]
+costOp [15, 25, 35, 45, 55, 65, 10000000]
+V [0, 200]
+transition matrix [[0.9, 0.1, 0, 0, 0, 0, 0], [0, 0.8, 0.2, 0, 0, 0, 0], [0, 0, 0.8, 0.1, 0.1, 0, 0], [0, 0, 0, 0.7, 0.2, 0.1, 0], [0, 0, 0, 0, 0.6, 0.2, 0.2], [0, 0, 0, 0, 0, 0.5, 0.5], [0, 0, 0, 0, 0, 0, 1]]
+rule, [3, 1]
+pVec [[0.9384313706907315, 0.06156862930926854], [0.2535406522993454, 0.7464593477006546]]
+theta [0.6329205562707206, 0.22389209249379904, 0.12222826030045904, 0.010479545467510606, 0.010479545467510606, 0.0, 0.0]
+phiRep 0.07032450625230231
+phiK [0.020959090935021213, 0.3670794437292793]
+value [[0.0, 0.0], [146.9483604499221, 100], [185.1674065704237, 110], [320, 120], [330, 130], [340, 140], [350, 150]]
+g 29.4057814248703
+lastpVec [[0.9384313706907315, 0.06156862930926854], [0.2535406522993454, 0.7464593477006546]]
+lastRule [3, 1]
+lastPhiRep 0.07032450625230231
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 3 rows and 3 columns.
+Aggregator did 4 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 1 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+counter 4
+I 1
+cs 200
+csLevel 2
+costSys 116.24186729465721
+lastCostSys 116.24186729465721
+index 0
+ind 4
+state 7
+cs 0
+costRep [10000000, 300, 310, 320, 330, 340, 350]
+costOp [15, 25, 35, 45, 55, 65, 10000000]
+V [0, 200]
+transition matrix [[0.9, 0.1, 0, 0, 0, 0, 0], [0, 0.8, 0.2, 0, 0, 0, 0], [0, 0, 0.8, 0.1, 0.1, 0, 0], [0, 0, 0, 0.7, 0.2, 0.1, 0], [0, 0, 0, 0, 0.6, 0.2, 0.2], [0, 0, 0, 0, 0, 0.5, 0.5], [0, 0, 0, 0, 0, 0, 1]]
+rule, [3, 1]
+pVec [[0.9009909834723184, 0.09900901652768157], [0.1593713529628098, 0.8406286470371902]]
+theta [0.5421715856783487, 0.24168546521815326, 0.18198656817882644, 0.017078190462335836, 0.017078190462335836, 0.0, 0.0]
+phiRep 0.060241287297594356
+phiK [0.03415638092467167, 0.45782841432165133]
+value [[0.0, 0.0], [133.93190575428727, 100], [168.44268783939006, 110], [320, 120], [330, 130], [340, 140], [350, 150]]
+g 28.057234113664528
+lastpVec [[0.9009909834723184, 0.09900901652768157], [0.1593713529628098, 0.8406286470371902]]
+lastRule [3, 1]
+lastPhiRep 0.060241287297594356
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 3 rows and 3 columns.
+Aggregator did 4 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 1 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+counter 5
+I 1
+cs 200
+csLevel 2
+costSys 119.38182099797943
+lastCostSys 119.38182099797943
+index 0
+ind 4
+state 7
+cs 0
+costRep [10000000, 300, 310, 320, 330, 340, 350]
+costOp [15, 25, 35, 45, 55, 65, 10000000]
+V [0, 200]
+transition matrix [[0.9, 0.1, 0, 0, 0, 0, 0], [0, 0.8, 0.2, 0, 0, 0, 0], [0, 0, 0.8, 0.1, 0.1, 0, 0], [0, 0, 0, 0.7, 0.2, 0.1, 0], [0, 0, 0, 0, 0.6, 0.2, 0.2], [0, 0, 0, 0, 0, 0.5, 0.5], [0, 0, 0, 0, 0, 0, 1]]
+rule, [3, 1]
+pVec [[0.9205790608903268, 0.07942093910967318], [0.20315824829647644, 0.7968417517035236]]
+theta [0.5878657431538667, 0.23394243706023443, 0.15098465688643148, 0.013603581449733646, 0.013603581449733646, 0.0, 0.0]
+phiRep 0.06531841590598518
+phiK [0.027207162899467292, 0.41213425684613325]
+value [[0.0, 0.0], [139.9123618057722, 100], [176.22257196263686, 110], [320, 120], [330, 130], [340, 140], [350, 150]]
+g 28.674248454907275
+lastpVec [[0.9205790608903268, 0.07942093910967318], [0.20315824829647644, 0.7968417517035236]]
+lastRule [3, 1]
+lastPhiRep 0.06531841590598518
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 3 rows and 3 columns.
+Aggregator did 4 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 1 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+counter 6
+I 1
+cs 200
+csLevel 2
+costSys 117.73491956246977
+lastCostSys 117.73491956246977
+index 0
+ind 4
+state 7
+cs 0
+costRep [10000000, 300, 310, 320, 330, 340, 350]
+costOp [15, 25, 35, 45, 55, 65, 10000000]
+V [0, 200]
+transition matrix [[0.9, 0.1, 0, 0, 0, 0, 0], [0, 0.8, 0.2, 0, 0, 0, 0], [0, 0, 0.8, 0.1, 0.1, 0, 0], [0, 0, 0, 0.7, 0.2, 0.1, 0], [0, 0, 0, 0, 0.6, 0.2, 0.2], [0, 0, 0, 0, 0, 0.5, 0.5], [0, 0, 0, 0, 0, 0, 1]]
+rule, [3, 1]
+pVec [[0.9108882336482236, 0.08911176635177642], [0.18021215997807524, 0.8197878400219247]]
+theta [0.5648433637666709, 0.2381465713802034, 0.1663773617639181, 0.015316351544603792, 0.015316351544603792, 0.0, 0.0]
+phiRep 0.06276037375185237
+phiK [0.030632703089207583, 0.4351566362333291]
+value [[0.0, 0.0], [136.7621960459973, 100], [172.14714030114445, 110], [320, 120], [330, 130], [340, 140], [350, 150]]
+g 28.34862518213682
+lastpVec [[0.9108882336482236, 0.08911176635177642], [0.18021215997807524, 0.8197878400219247]]
+lastRule [3, 1]
+lastPhiRep 0.06276037375185237
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 3 rows and 3 columns.
+Aggregator did 4 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 1 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+counter 7
+I 1
+cs 200
+csLevel 2
+costSys 118.54939536183156
+lastCostSys 118.54939536183156
+index 0
+ind 4
+state 7
+cs 0
+costRep [10000000, 300, 310, 320, 330, 340, 350]
+costOp [15, 25, 35, 45, 55, 65, 10000000]
+V [0, 200]
+transition matrix [[0.9, 0.1, 0, 0, 0, 0, 0], [0, 0.8, 0.2, 0, 0, 0, 0], [0, 0, 0.8, 0.1, 0.1, 0, 0], [0, 0, 0, 0.7, 0.2, 0.1, 0], [0, 0, 0, 0, 0.6, 0.2, 0.2], [0, 0, 0, 0, 0, 0.5, 0.5], [0, 0, 0, 0, 0, 0, 1]]
+rule, [3, 1]
+pVec [[0.9158269987192829, 0.08417300128071714], [0.19156768998573534, 0.8084323100142646]]
+theta [0.5764665173741156, 0.23610149226341903, 0.15854807513995375, 0.01444195761125583, 0.01444195761125583, 0.0, 0.0]
+phiRep 0.06405183526379066
+phiK [0.02888391522251166, 0.4235334826258844]
+value [[0.0, 0.0], [138.31668434073993, 100], [174.1642283024925, 110], [320, 120], [330, 130], [340, 140], [350, 150]]
+g 28.5091454020654
+lastpVec [[0.9158269987192829, 0.08417300128071714], [0.19156768998573534, 0.8084323100142646]]
+lastRule [3, 1]
+lastPhiRep 0.06405183526379066
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 3 rows and 3 columns.
+Aggregator did 4 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 1 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+counter 8
+I 1
+cs 200
+csLevel 2
+costSys 118.13413160814599
+lastCostSys 118.13413160814599
+index 0
+ind 4
+state 7
+cs 0
+costRep [10000000, 300, 310, 320, 330, 340, 350]
+costOp [15, 25, 35, 45, 55, 65, 10000000]
+V [0, 200]
+transition matrix [[0.9, 0.1, 0, 0, 0, 0, 0], [0, 0.8, 0.2, 0, 0, 0, 0], [0, 0, 0.8, 0.1, 0.1, 0, 0], [0, 0, 0, 0.7, 0.2, 0.1, 0], [0, 0, 0, 0, 0.6, 0.2, 0.2], [0, 0, 0, 0, 0, 0.5, 0.5], [0, 0, 0, 0, 0, 0, 1]]
+rule, [3, 1]
+pVec [[0.9133464600362253, 0.08665353996377467], [0.18577966549827477, 0.8142203345017253]]
+theta [0.5706012589461829, 0.23715313490291096, 0.16248413467172498, 0.014880735739590568, 0.014880735739590568, 0.0, 0.0]
+phiRep 0.06340013988290927
+phiK [0.029761471479181137, 0.42939874105381715]
+value [[0.0, 0.0], [137.52324989899057, 100], [173.13617656943, 110], [320, 120], [330, 130], [340, 140], [350, 150]]
+g 28.42717274642977
+lastpVec [[0.9133464600362253, 0.08665353996377467], [0.18577966549827477, 0.8142203345017253]]
+lastRule [3, 1]
+lastPhiRep 0.06340013988290927
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 3 rows and 3 columns.
+Aggregator did 4 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 1 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+counter 9
+I 1
+cs 200
+csLevel 2
+costSys 118.34266856882103
+lastCostSys 118.34266856882103
+index 0
+ind 4
+state 7
+cs 0
+costRep [10000000, 300, 310, 320, 330, 340, 350]
+costOp [15, 25, 35, 45, 55, 65, 10000000]
+V [0, 200]
+transition matrix [[0.9, 0.1, 0, 0, 0, 0, 0], [0, 0.8, 0.2, 0, 0, 0, 0], [0, 0, 0.8, 0.1, 0.1, 0, 0], [0, 0, 0, 0.7, 0.2, 0.1, 0], [0, 0, 0, 0, 0.6, 0.2, 0.2], [0, 0, 0, 0, 0, 0.5, 0.5], [0, 0, 0, 0, 0, 0, 1]]
+rule, [3, 1]
+pVec [[0.9146016557798438, 0.08539834422015624], [0.1886867484698841, 0.8113132515301159]]
+theta [0.5735621273279522, 0.23662726547268326, 0.1604933927701927, 0.014658607214585903, 0.014658607214585903, 0.0, 0.0]
+phiRep 0.06372912525866135
+phiK [0.029317214429171807, 0.42643787267204775]
+value [[0.0, 0.0], [137.92147406236418, 100], [173.65254158380515, 110], [320, 120], [330, 130], [340, 140], [350, 150]]
+g 28.468304296705067
+lastpVec [[0.9146016557798438, 0.08539834422015624], [0.1886867484698841, 0.8113132515301159]]
+lastRule [3, 1]
+lastPhiRep 0.06372912525866135
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 3 rows and 3 columns.
+Aggregator did 4 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 1 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+counter 10
+I 1
+cs 200
+csLevel 2
+costSys 118.23713514966553
+lastCostSys 118.23713514966553
+index 0
+ind 4
+state 7
+cs 0
+costRep [10000000, 300, 310, 320, 330, 340, 350]
+costOp [15, 25, 35, 45, 55, 65, 10000000]
+V [0, 200]
+transition matrix [[0.9, 0.1, 0, 0, 0, 0, 0], [0, 0.8, 0.2, 0, 0, 0, 0], [0, 0, 0.8, 0.1, 0.1, 0, 0], [0, 0, 0, 0.7, 0.2, 0.1, 0], [0, 0, 0, 0, 0.6, 0.2, 0.2], [0, 0, 0, 0, 0, 0.5, 0.5], [0, 0, 0, 0, 0, 0, 1]]
+rule, [3, 1]
+pVec [[0.9139688743685099, 0.08603112563149007], [0.18721568454189078, 0.8127843154581093]]
+theta [0.5720676771907693, 0.23689396630449638, 0.16149722975684136, 0.014770563373946497, 0.014770563373946497, 0.0, 0.0]
+phiRep 0.06356307524341887
+phiK [0.029541126747892995, 0.42793232280923077]
+value [[0.0, 0.0], [137.71988979704994, 100], [173.39125143444485, 110], [320, 120], [330, 130], [340, 140], [350, 150]]
+g 28.447480521911398
+lastpVec [[0.9139688743685099, 0.08603112563149007], [0.18721568454189078, 0.8127843154581093]]
+lastRule [3, 1]
+lastPhiRep 0.06356307524341887
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 3 rows and 3 columns.
+Aggregator did 4 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 1 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+counter 11
+I 1
+cs 200
+csLevel 2
+costSys 118.29033532233888
+lastCostSys 118.29033532233888
+index 0
+ind 4
+state 7
+cs 0
+costRep [10000000, 300, 310, 320, 330, 340, 350]
+costOp [15, 25, 35, 45, 55, 65, 10000000]
+V [0, 200]
+transition matrix [[0.9, 0.1, 0, 0, 0, 0, 0], [0, 0.8, 0.2, 0, 0, 0, 0], [0, 0, 0.8, 0.1, 0.1, 0, 0], [0, 0, 0, 0.7, 0.2, 0.1, 0], [0, 0, 0, 0, 0.6, 0.2, 0.2], [0, 0, 0, 0, 0, 0.5, 0.5], [0, 0, 0, 0, 0, 0, 1]]
+rule, [3, 1]
+pVec [[0.9142884827104758, 0.0857115172895242], [0.18795728766079142, 0.8120427123392085]]
+theta [0.572822044584255, 0.23675966669414145, 0.1609902696198552, 0.014714009550874197, 0.014714009550874197, 0.0, 0.0]
+phiRep 0.06364689384269501
+phiK [0.029428019101748394, 0.42717795541574505]
+value [[0.0, 0.0], [137.82149547338594, 100], [173.52297604038625, 110], [320, 120], [330, 130], [340, 140], [350, 150]]
+g 28.457975771020315
+lastpVec [[0.9142884827104758, 0.0857115172895242], [0.18795728766079142, 0.8120427123392085]]
+lastRule [3, 1]
+lastPhiRep 0.06364689384269501
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 3 rows and 3 columns.
+Aggregator did 4 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 1 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+counter 12
+I 1
+cs 200
+csLevel 2
+costSys 118.26346409013095
+lastCostSys 118.26346409013095
+index 0
+ind 4
+state 7
+cs 0
+costRep [10000000, 300, 310, 320, 330, 340, 350]
+costOp [15, 25, 35, 45, 55, 65, 10000000]
+V [0, 200]
+transition matrix [[0.9, 0.1, 0, 0, 0, 0, 0], [0, 0.8, 0.2, 0, 0, 0, 0], [0, 0, 0.8, 0.1, 0.1, 0, 0], [0, 0, 0, 0.7, 0.2, 0.1, 0], [0, 0, 0, 0, 0.6, 0.2, 0.2], [0, 0, 0, 0, 0, 0.5, 0.5], [0, 0, 0, 0, 0, 0, 1]]
+rule, [3, 1]
+pVec [[0.914127207271923, 0.08587279272807702], [0.1875827136678914, 0.8124172863321086]]
+theta [0.5724412720270827, 0.2368275383218872, 0.161246099347879, 0.014742545151575494, 0.014742545151575494, 0.0, 0.0]
+phiRep 0.06360458578078694
+phiK [0.02948509030315099, 0.42755872797291716]
+value [[0.0, 0.0], [137.77017110309865, 100], [173.45644397600125, 110], [320, 120], [330, 130], [340, 140], [350, 150]]
+g 28.452674102865828
+lastpVec [[0.914127207271923, 0.08587279272807702], [0.1875827136678914, 0.8124172863321086]]
+lastRule [3, 1]
+lastPhiRep 0.06360458578078694
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 3 rows and 3 columns.
+Aggregator did 4 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 1 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+counter 13
+I 1
+cs 200
+csLevel 2
+costSys 118.27702324741371
+lastCostSys 118.27702324741371
+index 0
+ind 4
+state 7
+cs 0
+costRep [10000000, 300, 310, 320, 330, 340, 350]
+costOp [15, 25, 35, 45, 55, 65, 10000000]
+V [0, 200]
+transition matrix [[0.9, 0.1, 0, 0, 0, 0, 0], [0, 0.8, 0.2, 0, 0, 0, 0], [0, 0, 0.8, 0.1, 0.1, 0, 0], [0, 0, 0, 0.7, 0.2, 0.1, 0], [0, 0, 0, 0, 0.6, 0.2, 0.2], [0, 0, 0, 0, 0, 0.5, 0.5], [0, 0, 0, 0, 0, 0, 1]]
+rule, [3, 1]
+pVec [[0.9142086266250282, 0.08579137337497178], [0.18777172464882017, 0.8122282753511798]]
+theta [0.5726334741123403, 0.2367932999694824, 0.16111694865461412, 0.014728138631781624, 0.014728138631781624, 0.0, 0.0]
+phiRep 0.06362594156803789
+phiK [0.029456277263563247, 0.4273665258876598]
+value [[0.0, 0.0], [137.79606831635778, 100], [173.4900163001467, 110], [320, 120], [330, 130], [340, 140], [350, 150]]
+g 28.45534917073232
+lastpVec [[0.9142086266250282, 0.08579137337497178], [0.18777172464882017, 0.8122282753511798]]
+lastRule [3, 1]
+lastPhiRep 0.06362594156803789
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 3 rows and 3 columns.
+Aggregator did 4 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 0 rows and 1 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+counter 13
+I 1
+cs 200
+csLevel 2
+costSys 118.27017791296817
+lastCostSys 118.27017791296817
+index 0
+ind 4
+state 7
+cs 0
+costRep [10000000, 300, 310, 320, 330, 340, 350]
+costOp [15, 25, 35, 45, 55, 65, 10000000]
+V [0, 200]
+transition matrix [[0.9, 0.1, 0, 0, 0, 0, 0], [0, 0.8, 0.2, 0, 0, 0, 0], [0, 0, 0.8, 0.1, 0.1, 0, 0], [0, 0, 0, 0.7, 0.2, 0.1, 0], [0, 0, 0, 0, 0.6, 0.2, 0.2], [0, 0, 0, 0, 0, 0.5, 0.5], [0, 0, 0, 0, 0, 0, 1]]
+rule, [3, 1]
+pVec [[0.9141675323363441, 0.08583246766365593], [0.1876763030156279, 0.8123236969843721]]
+theta [0.5725364575887869, 0.2368105876087822, 0.1611821351246684, 0.014735409838881282, 0.014735409838881282, 0.0, 0.0]
+phiRep 0.06361516195430965
+phiK [0.029470819677762564, 0.42746354241121315]
+value [[0.0, 0.0], [137.7829938811811, 100], [173.47306743149792, 110], [320, 120], [330, 130], [340, 140], [350, 150]]
+g 28.453998628063854
+lastpVec [[0.9141675323363441, 0.08583246766365593], [0.1876763030156279, 0.8123236969843721]]
+lastRule [3, 1]
+lastPhiRep 0.06361516195430965
