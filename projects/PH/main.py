@@ -277,9 +277,9 @@ directory = "C:\\Users\\Yisha\\Desktop\\ZZC\\PH"
 # ./main.ph
 # ./models
 # ./nodedata
-comp_list = [2]
-time_list = [4]
-scen_list = [8]
+comp_list = [3]
+time_list = [7]
+scen_list = [910]
 counter = 0
 for I in comp_list:
 	for T in time_list:
@@ -323,7 +323,7 @@ for I in comp_list:
 			############################# 
 			#res_filename = str(counter) + "_" + str(I) + "_" + str(T) + "_" + str(w) + ".txt"
 			res_filename = str(I) + "_" + str(T) + "_" + str(w) + ".txt"
-			excmd = "runph --model-directory=models --instance-directory=nodedata --default-rho=1.0 --solver=cplex > " + res_filename
+			excmd = "runph --model-directory=models --instance-directory=nodedata --max-iterations=10 --default-rho=20.0 --solver=cplex >" + res_filename
 			os.system(excmd)
 			#cd C:\Users\zzhu3\Documents\codes\SP\projects\PH
 			#runef --model-directory=models --instance-directory=nodedata --solve --solver=cplex --traceback

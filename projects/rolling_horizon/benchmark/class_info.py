@@ -12,15 +12,12 @@ import numpy as np
 from scipy.integrate import quad
 class system_parameter():
 	
-	def set_TInt(self,t):
-		self.TInt = t
-		
 	# weibull parameters
 	def w_shape_init(self):
 		I = self.I
 		bound = self.wShapeBound
 		for i in range(0, I):
-			random.seed((i+1)*10) ###control the seed     
+			random.seed(i*20) ###control the seed     
 			temp = random.uniform(bound[0], bound[1])
 			self.wShape.append(round(temp,1))
 
@@ -28,7 +25,7 @@ class system_parameter():
 		I = self.I
 		bound = self.wScaleBound
 		for i in range(0, I):
-			random.seed((i+1)*20) ###control the seed     
+			random.seed(i*10) ###control the seed     
 			temp = random.uniform(bound[0], bound[1])
 			self.wScale.append(round(temp,1))	
 	
@@ -37,7 +34,7 @@ class system_parameter():
 		I = self.I
 		bound = self.cCrBound
 		for i in range(0, I):
-			random.seed((i+1)*30) ###control the seed     
+			random.seed(i*30) ###control the seed     
 			temp = random.uniform(bound[0], bound[1])
 			self.cCr.append(round(temp,1))
 			
@@ -49,6 +46,7 @@ class system_parameter():
 			random.seed((i+1)*40) ###control the seed     
 			temp = random.uniform(bound[0], bound[1])
 			self.cPr.append(round(temp,1))
+			#self.cPr.append(1.0);
 	
 	#some setting function
 	def set_wShapeBound(self, bound):
@@ -61,16 +59,14 @@ class system_parameter():
 		self.cPrBound = bound
 	def set_ranSeed(self, rs):
 		self.ranSeed = rs
-	def __init__(self,I, TInt, TRoll, d):
+	def __init__(self,I, T, d):
 		#system parameters.
 		#I, TInt, TRoll, W, d can be changed for "for" loop
 		#Others are fixed
 		
 		#not fixed parameters
 		self.I = I				#number of components
-		self.TInt = TInt		#time interval. 
-		self.T = TInt			#time horizon. currentTime + TInt = T
-		self.TRoll = TRoll		#time points for rolling
+		self.T = T			#time horizon length, 0,1,2,...T-1 
 		self.d = d				#setup cost
 
 		#bounds
@@ -130,7 +126,7 @@ class component_parameters():
 	def func_h1(self, d_t):
 		t = self.optInterval
 		T = self.T
-		if (t+d_t) > T or (t-d_t) < 0:
+		if (t+d_t) > T-1 or (t-d_t) < 0:
 			return np.inf
 		result = self.cost(t+d_t) + self.cost(t-d_t) - 2*self.cost(t)
 		return result
@@ -163,9 +159,9 @@ class component_parameters():
 	def cal_deltaT(self):
 		bound = 30
 		for d_t in range(bound):
-			if self.func_h1(d_t) - self.d >= 0:
+			if self.func_h1(d_t) - self.d > 0:
 				break
-		result = d_t
+		result = max(d_t-1,0);
 		return result
 #######	
 	def __init__(self, i, sysInfo):
@@ -205,23 +201,46 @@ class component_running():
 			bound = [currentTime, currentTime]
 			self.set_nextMxTime(currentTime)
 		else:
-			if self.mxSch > T:
+			if self.mxSch > T-1:
 				bound = [self.mxSch, self.mxSch]
 			else:
 				ub = self.nextMxTime + min(self.params.deltaT, self.params.optInterval - 1)
-				ub = min(T, ub)
+				ub = min(T-1, ub)
 				lb = max(self.nextMxTime - self.params.deltaT, currentTime, self.lastRepTime + 1)
 				if ub < lb:
-					bound = [self.nextMxTime, self.nextMxTime]
+					#bound = [self.nextMxTime, self.nextMxTime]
+					bound = [self.currentTime, self.currentTime]
+					print ("error!!!!upper bound < lower bound")
 				else:
 					bound = [lb, ub]
 		self.movingWindow = bound
 	def generate_residualLife(self, currentTime):
 		wShape = self.params.wShape
 		wScale = self.params.wScale
-		extraSeed = self.params.ranSeed
-		ranSeed = currentTime+self.index + (extraSeed + 1)**2
+		
+		age = currentTime - max(0,self.lastRepTime)		
+		tmp = 1 - self.params.weibull_cdf(max(age-1,0))
+		#if abs(tmp) < 0.000001 :
+			#tmp = 0.000000000001;
+		failProb  = float(self.params.weibull_cdf(age) - self.params.weibull_cdf(max(age-1,0)))\
+					/tmp;
+					
+		#ranSeed = currentTime+self.index + (self.params.ranSeed + 1)**2
+		ranSeed = self.params.ranSeed + currentTime*100 + self.index;
 		random.seed(ranSeed)
+		prob = random.uniform(0,1);
+		#print (failProb);
+		#print (prob);
+		if prob < failProb:	#fail, residual life = 0
+			res = 0;
+		else:
+			res = 2;	#a number > 0
+		
+		'''
+		#extraSeed = self.params.ranSeed
+		#ranSeed = currentTime+self.index + (extraSeed + 1)**2
+		ranSeed = self.params.ranSeed + currentTime*100 + self.index;
+		#random.seed(ranSeed)
 		ran_num = random.uniform(0,1)
 		part1 = math.log(ran_num)
 		s_inv = 1.0/wShape
@@ -229,7 +248,8 @@ class component_running():
 		part2 = (surv_time/wScale)**wShape
 		part3 = part2 - part1
 		LT = round((part3**s_inv)*wScale) - surv_time					
-		res = max(0,LT)
+		res = int(max(0,LT))
+		'''
 		self.residualLife.append(res)
 	def	replace(self):
 		#replace itself
@@ -287,10 +307,8 @@ class system_running():
 		self.comRunningNum += -1
 	def set_startClock(self,t):
 		self.startClock = t
-	def set_time(self, currentTime, TInt):
-		self.clock = currentTime
-		self.TInt = TInt
-		self.endClock = currentTime + TInt
+	def set_time(self, currentTime):
+		self.currentTime = currentTime
 	def sort_running_component(self):
 		#sort all running components based on nextMxTime. ascending.
 		self.comRunning.sort(key=lambda component_running: component_running.nextMxTime)
@@ -337,20 +355,29 @@ class system_running():
 		First = [-1]*self.comRunningNum
 		FirstTime = [-1]*self.comRunningNum
 		for j in range(self.comRunningNum):
-			ij = range(j+1)
-			ij.reverse()
-			ji = ij
+			#ij = range(j+1)
+			#ij.reverse()
+			#ij = reversed(range(j+1));
+			ji = reversed(range(j+1));
+
+		#	ji = ij
 			First[j] = j
 			FirstTime[j] = self.comRunning[j].nextMxTime
 			for i in ji:
 				result_ij = self.group(i,j)						#result_ij = [saving, time]
 				TotalSaving[i][j] = result_ij[0]						#
 				time_tmp = result_ij[1]
+				'''
 				if TotalSaving[i][j] + TotalSaving[0][max(i-1,0)] > TotalSaving[self.comRunningNum][j]:
 					TotalSaving[self.comRunningNum][j] = TotalSaving[i][j] + TotalSaving[0][max(i-1,0)]
 					First[j] = i
 					FirstTime[j] = time_tmp
-		self.TotalSaving[self.clock] = TotalSaving
+				'''
+				if TotalSaving[i][j] + TotalSaving[self.comRunningNum][max(i-1,0)] > TotalSaving[self.comRunningNum][j]:
+					TotalSaving[self.comRunningNum][j] = TotalSaving[i][j] + TotalSaving[self.comRunningNum][max(i-1,0)]
+					First[j] = i
+					FirstTime[j] = time_tmp				
+		self.TotalSaving[self.currentTime] = TotalSaving
 		
 		idxJ = self.comRunningNum - 1
 		if idxJ < 0:
@@ -367,9 +394,10 @@ class system_running():
 	def mx(self):
 		self.needSchedule = False	#need reschedule or not
 		self.newOpp	= False			#is there any new opportunity or not		
-		currentTime = self.clock	
+		currentTime = self.currentTime	
 		for i in range(self.comRunningNum):
-			if self.comRunning[i].nextMxTime == currentTime:
+			if self.comRunning[i].nextMxTime == currentTime\
+				and currentTime < self.T-1:
 				#scheduled mx
 				self.comRunning[i].replace()
 				self.needSchedule = True
@@ -377,14 +405,18 @@ class system_running():
 					self.groupResult[i][currentTime] = 2
 				else:
 					self.groupResult[i][currentTime] = 1
-			elif self.comRunning[i].residualLife == 0:
-				self.newOpp = True
+			elif self.comRunning[i].residualLife[-1] == 0:
+				#self.newOpp = True
+				self.comRunning[i].nextMxTime = currentTime
+				self.comRunning[i].replace();
+				self.groupResult[i][currentTime] = 2;
+
 	
 	def	cal_TotalCost(self):
 		numCom = self.comRunningNum
-		TRoll = self.TRoll
+		T = self.T
 		cost = 0
-		for j in range(TRoll):
+		for j in range(T):
 			if sum(self.groupResult[u][j] for u in range(numCom)) >0:
 				cost += self.comRunning[0].params.d
 			for k in range(numCom):
@@ -401,35 +433,32 @@ class system_running():
 			print ("=========info of comRunning[%d]=========" %i)
 			self.comRunning[i].print_data()	
 	def print_data(self):
-		print ("startClock  = " + str(self.startClock))
-		print ("TimeInterval= " + str(self.TInt))
-		print ("clock       = " + str(self.clock))
-		print ("endClock    = " + str(self.endClock))
-		print ("TotalSaving = " ),
-		print (self.TotalSaving)
-		print ("needSchedule= " ),
-		print (self.needSchedule)
-		print ("newOpp      = " ),
-		print (self.newOpp)		
+		#print ("startClock  = " + str(self.startClock))
+		#print ("TimeInterval= " + str(self.TInt))
+		#print ("clock       = " + str(self.clock))
+		#print ("endClock    = " + str(self.endClock))
+		#print ("TotalSaving = " ),
+		#print (self.TotalSaving)
+		#print ("needSchedule= " ),
+		#print (self.needSchedule)
+		#print ("newOpp      = " ),
+		#print (self.newOpp)		
 		print ("groupResult = " )		
 		for row in range(len(self.com)):
 			print (self.groupResult[row][:])
 		print ("TotalCost   = " ),		
 		print (self.TotalCost)		
-	def __init__(self, TInt, TRoll, I):
+	def __init__(self, T, I):
 		#absolute time 
-		self.startClock = 0			#rolling starting time point
-		self.clock = 0				#current running time
-		self.TInt = TInt			#
-		self.TRoll = TRoll			#
-		self.endClock = TInt 		#maximum running time allowed
-		
+		self.currentTime = 0				#current running time
+		self.T = T						#planning horizon
+
 		#
 		self.com = []				#component info
 		self.comRunning = []		#component running set
 		self.comRunningNum = 0
 		#
-		self.groupResult = [[0]*(TRoll+1) for row in range(I)]		#time set
+		self.groupResult = [[0]*T for row in range(I)]		#time set
 		self.TotalSaving = {}		#total saving dic
 		self.TotalCost = 0
 		

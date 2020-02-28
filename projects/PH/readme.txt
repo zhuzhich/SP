@@ -3,8 +3,8 @@ Which is the Algorithm 3 in paper:
 xxxxxxxxx
 
 Code author: Zhicheng Zhu
-Email: zhicheng.zhu@ttu.edu, zhich.zhu@gmail.com
-Last Update: 06/06/2019
+Email: zzhu3@lamar.edu, zhich.zhu@gmail.com
+Last Update: 03/21/2018
 
 
 Code structure:

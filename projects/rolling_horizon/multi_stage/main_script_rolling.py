@@ -22,10 +22,12 @@ import numpy as np
 #start from here
 ##########################
 # some fixed parameters
-nComponents = 2;		#fix component numbers	
-cS = 5;				#fix setup cost
+nComponents = 3;		#fix component numbers	
+high = 100;
+low = 5;
+cS = high;				#fix setup cost
 intvl = 1;		#don't change this
-nStages = 7;			
+nStages = 6;			
 
 sysInfo = class_info.system_info(nComponents, nStages, intvl, cS);
 
@@ -40,23 +42,42 @@ w_scale = [0]*nComponents;
 for i in range(nComponents):
 	#kesi
 	if i==0:
-		kesi[i] = 1;
+		kesi[i] = 0;
 	#age
-	age[i] = 2;
+	age[i] = 0;
 	#cPR
 	cPR[i] = 1;
-	#cCR
-	random.seed(i*30);
-	temp = random.uniform(6,16);
-	cCR[i] = round(temp,1);			
+	
 	#shape
 	random.seed(i*20)   
-	temp = random.uniform(4,7)
-	w_shape[i] = round(temp,1);			
+	high = [4, 7];
+	low = [1, 3];
+	tmp = high;
+	temp = random.uniform(tmp[0],tmp[1]);
+	w_shape[i] = round(temp,1);		
+
+	
 	#scale
 	random.seed(i*10)   
-	temp = random.uniform(1,8)#(4,11)
-	w_scale[i] = round(temp,1);		
+	high = [5, 10];
+	low = [1, 5];
+	tmp = high;  
+	temp = random.uniform(tmp[0],tmp[1])#(1,5)
+	w_scale[i] = round(temp,1);	
+	
+	#high = 100;
+	#low = 5;
+	#cS = low;				#fix setup cost
+
+	#cCR
+	random.seed(i*30);
+	high = [17, 27];
+	low = [6, 16];
+	tmp = high
+	temp = random.uniform(tmp[0],tmp[1]);#(6,16) (17,27)
+	cCR[i] = round(temp,1);		
+
+	
 	comInfo = class_info.component_info(i, w_shape[i], w_scale[i], age[i], kesi[i], intvl, cCR[i], cPR[i], cS);
 	sysInfo.add_com(comInfo);
 

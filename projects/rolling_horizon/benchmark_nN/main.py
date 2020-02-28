@@ -9,7 +9,9 @@
 
 
 import class_info as myClass
+import numpy as np
 import time
+import random
 
 
 #
@@ -25,14 +27,28 @@ import time
 #######
 #Step 0: define sysInfo
 #######
+##parameter needs to change
+wShapeHigh = [4,7];
+wShapeLow = [1,3];
+wScaleHigh = [5,10];
+wScaleLow = [1,5];
+sysCsHigh = 100;
+sysCsLow = 5;
+cCrHigh = [17,27];
+cCrLow = [6,16];
+#
+wShape = wShapeLow;#wShapeHigh, wShapeLow,
+wScale = wScaleLow;#wScaleHigh, wScaleLow
+sysCs = sysCsHigh;#sysCsHigh, sysCsLow
+cCr = cCrLow;#cCrHigh,cCrLow
+aaaa = 100;
 #overall system parameters
-numCom = 1;					#types of components
-sysCs = 200;					#system level cs
-csLevel = 2;				
+numCom = 8;					#types of components
+csLevel = 2;				#Don't change it!
 #component information
-numInd = [4];			#number of individuals for each type
-numStates = [7];			#number of states for each type
-comCs = [0];			#component level cs
+numInd = [1]*numCom;			#number of individuals for each type
+numStates = [0]*numCom;			#number of states for each type. Just initialization
+cPr = [1]*numCom;				#pr cost 
 
 #init system information
 sysInfo = myClass.system_information();
@@ -45,14 +61,15 @@ for i in range(sysInfo.I):
 	comInfo.index = i;
 	comInfo.ind = numInd[i];
 	comInfo.state = numStates[i];
-	comInfo.cs = comCs[i];
-	comInfo.q = [[0.9, 0.1, 0,  0,  0,  0,  0],\
-				 [0,   0.8, 0.2,0,  0,  0,  0],\
-				 [0,   0,   0.8,0.1,0.1,0,  0],\
-				 [0,   0,   0,  0.7,0.2,0.1,0],\
-				 [0,   0,   0,  0,  0.6,0.2,0.2],\
-				 [0,   0,   0,  0,  0,  0.5,0.5],\
-				 [0,   0,   0,  0,  0,  0,  1]];
+	comInfo.cs = sysCs;
+	comInfo.costPr = cPr[i];
+	#comInfo.q = [[0.9, 0.1, 0,  0,  0,  0,  0],\
+	#			 [0,   0.8, 0.2,0,  0,  0,  0],\
+	#			 [0,   0,   0.8,0.1,0.1,0,  0],\
+	#			 [0,   0,   0,  0.7,0.2,0.1,0],\
+	#			 [0,   0,   0,  0,  0.6,0.2,0.2],\
+	#			 [0,   0,   0,  0,  0,  0.5,0.5],\
+	#			 [0,   0,   0,  0,  0,  0,  1]];
 	#step 1. initialization of upper control limit & rule
 	pi1 = 3;				#just a random number for testing
 	comInfo.rule = [pi1]*sysInfo.csLevel;
@@ -62,7 +79,12 @@ for i in range(sysInfo.I):
 	if sysInfo.csLevel == 2:	#if it is 2, do not over write it.
 		comInfo.V = [0]*sysInfo.csLevel;
 		comInfo.V[1] = sysInfo.cs;
-	
+	comInfo.wShapeBound = wShape;
+	comInfo.wScaleBound = wScale;
+	comInfo.cCrBound = cCr;
+	comInfo.init_parameters();	#sample shape, scale, and cr cost parameters.
+	comInfo.init_q();			#get # of states, and transition probability.
+	comInfo.init_rule();		#get the initial rule
 	comInfo.repair_cost();		#initialize repair cost
 	comInfo.operational_cost();	#initialize operational cost
 	sysInfo.comInfoAll.append(comInfo);
@@ -73,10 +95,12 @@ counter = 0;
 convergeFlag = False;					#loop it until converge 
 while (convergeFlag == False and counter <20):
 	counter += 1;
-	print("counter", counter);
-	sysInfo.print_data();
-	sysInfo.comInfoAll[0].print_data1();
-	sysInfo.comInfoAll[0].print_data2();
+	#print("=======counter==========", counter);
+	#sysInfo.print_data();
+	#for i in range(sysInfo.I):
+		#print("--------i=--------",i);
+		#sysInfo.comInfoAll[i].print_data1();
+		#sysInfo.comInfoAll[i].print_data2();
 	sysInfo.calAggInfo();		#theta,phiRep,phiK 
 	
 	#step 2. probability vector 
@@ -92,7 +116,67 @@ while (convergeFlag == False and counter <20):
 	convergeFlag = sysInfo.checkConverge();
 
 
-print("counter", counter);
+print("=======counter==========", counter);
 sysInfo.print_data();
-sysInfo.comInfoAll[0].print_data1();
-sysInfo.comInfoAll[0].print_data2();
+#for i in range(sysInfo.I):
+	#print("--------i=--------",i);
+	#sysInfo.comInfoAll[i].print_data1();
+	#sysInfo.comInfoAll[i].print_data2();
+	
+
+
+T = 20;
+costAll = [];
+for rep in range(aaaa,aaaa+5):
+	age = [0]*sysInfo.I;
+	failProb = [0]*sysInfo.I;
+	cost = 0;
+	for t in range(T):
+		costTmp = 0;
+		if t == T-1:
+			for i in range(sysInfo.I):
+				if age[i] == sysInfo.comInfoAll[i].state-1:
+					costTmp += sysInfo.comInfoAll[i].costCr;
+			if costTmp > 0:
+				costTmp += sysInfo.cs;
+			cost += costTmp
+		else:
+			mx = [0]*sysInfo.I;
+			#1.take action
+			for i in range(sysInfo.I):
+				if age[i] >= sysInfo.comInfoAll[i].rule[0]:
+					if age[i] == sysInfo.comInfoAll[i].state-1:
+						costTmp += sysInfo.comInfoAll[i].costCr;
+					else:
+						costTmp += sysInfo.comInfoAll[i].costPr;
+					mx[i] = 1;
+			if costTmp > 0:
+				costTmp += sysInfo.cs;
+				for i in range(sysInfo.I):
+					if age[i] >= sysInfo.comInfoAll[i].rule[1] and\
+						age[i] < sysInfo.comInfoAll[i].rule[0]:
+						costTmp += sysInfo.comInfoAll[i].costPr;
+						mx[i] = 1;
+			cost += costTmp;
+			#2.cal the age at t+1:
+			for i in range(sysInfo.I):
+				if mx[i] == 1:
+					age[i] = 0;
+				failProb = sysInfo.comInfoAll[i].q[age[i]][-1];
+				random.seed(rep+t*100+i);
+				randProb = random.uniform(0,1);
+				if randProb < failProb:
+					#failed
+					age[i] = sysInfo.comInfoAll[i].state-1;
+				else:
+					age[i] += 1;
+	costAll.append(cost);
+print("costAll", costAll);
+print("mean", np.mean(costAll));
+print("variance", np.var(costAll));
+				
+
+
+
+
+

@@ -17,11 +17,11 @@ import time
 import genFile
 import os
 
-comp_list = [10]
-time_list = [10]		#t=0,1,...,T
-scen_list = [100]
+comp_list = [4]
+time_list = [9]
+scen_list = [1080]
 counter = 0
-directory = "C:\\Users\\zzhu3\\Documents\\codes\\SP\\projects\\benders" 
+directory = "C:\\Users\Yisha\\Desktop\\ZZC\\benders" 
 for I in comp_list:
 	for T in time_list:
 		for w in scen_list:
@@ -81,7 +81,7 @@ for I in comp_list:
 								Lbound, 6)
 					newgap = abs(newgap)
 
-					if newgap <= 0.00001:
+					if newgap <= 0.01:
 						#flag_sita == 1 means convergence for this scenario, no benders cut is needed
 						flag_sita[s-1] = 1								
 						continue

@@ -419,12 +419,12 @@ def usage():
 	print("Usage:     don't use it!!")
 
 #############################################################	
-comp_list = [2]
-time_list = [4]#[10,20,30] , t = 0,1,2, ..., T
-scen_list = [10]#[20,50,100]
+comp_list = [3]
+time_list = [7]#[10,20,30]
+scen_list = [910]#[20,50,100]
 d = 5 #setup cost
 counter = 0
-directory = "C:\\Users\\Zhicheng\\OneDrive - Texas Tech University\\codes\\SP\\projects\\ILshape" 
+directory = "C:\\Users\\Yisha\\Desktop\\ZZC\\ILshape" 
 for I in comp_list:
 	for T in time_list:
 		for w in scen_list:

@@ -9,11 +9,12 @@
 
 import class_info as myClass
 import time
+import numpy as np
 
 #decide component next MX time.
 def arrange_mx(sysRunning):
-	currentTime = sysRunning.clock
-	endTime = sysRunning.endClock
+	currentTime = sysRunning.currentTime
+	endTime = sysRunning.T
 	#step 1: find out available moving window. t1 = 0	
 	for i in range(sysRunning.comRunningNum):
 		#reset nextMxTime to scheduled time point
@@ -43,15 +44,13 @@ def main(wScaleBound, setUpCost, crBound, ranSeed ):
 	#######
 	#Step 1: define sysParams: static system info
 	#######
-	I = 10				#number of components
-	TRoll = 20			#maximum current time
-	TInt = 20        	#time interval from currentTime to 
-	T = 0+20			#time horizon.End_clock(abs_time) 
+	I = 8				#number of components
+	T = 20			#maximum current time
 	d = setUpCost		#setup cost#######################2#########
 
-	sysParams = myClass.system_parameter(I, TInt, TRoll, d)
+	sysParams = myClass.system_parameter(I, T, d)
 	#define bounds
-	sysParams.set_wShapeBound([4,7])
+	sysParams.set_wShapeBound([1,3])
 	sysParams.set_wScaleBound(wScaleBound)###############1##########
 	sysParams.set_cCrBound(crBound)			#############3##########
 	sysParams.set_cPrBound([1,1])
@@ -61,11 +60,13 @@ def main(wScaleBound, setUpCost, crBound, ranSeed ):
 	sysParams.cCr_init()	
 	sysParams.cPr_init()
 	sysParams.set_ranSeed(ranSeed)
+	#print (sysParams.cCr);
+	#print (sysParams.wScale);
 
 	########
 	#Step 2: define sysRunning: system grouping info
 	########
-	sysRunning = myClass.system_running(sysParams.TInt, sysParams.TRoll, sysParams.I)
+	sysRunning = myClass.system_running(sysParams.T, sysParams.I)
 
 	########
 	#Step 3: 
@@ -82,22 +83,21 @@ def main(wScaleBound, setUpCost, crBound, ranSeed ):
 	#Step 4: begin rolling horizon
 	######	
 
-	arrange_mx(sysRunning)
+	
 
-	for currentTime in range(1, sysParams.TRoll+1):
-		TInt += -1						#####
-		sysParams.set_TInt(TInt)
-		sysRunning.set_time(currentTime, TInt)
+	for currentTime in range(sysParams.T):
+		sysRunning.set_time(currentTime)
 		#print (currentTime)
 		#step 1: get residual life
 		for i in range(sysRunning.comRunningNum):
 			#use currentTime and index i to generate residual life
 			sysRunning.comRunning[i].generate_residualLife(currentTime)	
 
+		arrange_mx(sysRunning)
 		
 		#step 2: check whether there is any component needs to be mx at current time
 		sysRunning.mx()
-
+		'''
 		#Step 3: reschedule the mx plan	
 		if sysRunning.needSchedule == True or \
 			sysRunning.newOpp == True:
@@ -112,7 +112,7 @@ def main(wScaleBound, setUpCost, crBound, ranSeed ):
 			#it shouldn't be any new opp any more
 			if sysRunning.newOpp == False:
 				print ("biggggg error!!!")
-
+		'''
 	####		
 	sysRunning.cal_TotalCost()
 	#sysRunning.print_data()
@@ -122,15 +122,15 @@ def main(wScaleBound, setUpCost, crBound, ranSeed ):
 
 
 
-wScaleH = [9, 20]
-wScaleL = [1, 8]
+wScaleH = [5, 10]
+wScaleL = [1, 5]
 wScaleVector = [wScaleL]#[wScaleH, wScaleL]
-dVector = [100, 5]
+dVector = [100];#100,5
 cCrH = [17, 27]
 cCrL = [6, 16]
-cCrVector = [cCrH, cCrL]
+cCrVector = [cCrL]
 
-counter = 0
+counter = 100
 print ("=============Benchmark=====================")
 
 for wScale in wScaleVector:
@@ -141,16 +141,16 @@ for wScale in wScaleVector:
 			print (wScale),
 			print (d),
 			print (cCr)
-			counter1 = 0
+			counter1 = 10
 			cost = []
 			start_time = time.clock()
-			for resLifeSeed in range(5):
+			for rep in range(counter,counter+10):
 				counter1 += 1
-				ranSeed = resLifeSeed
+				ranSeed = rep;
 				#
-				#ranSeed = resLifeSeed + counter
+				#ranSeed = rep + counter
 				tmp = main(wScale, d, cCr, ranSeed)
-				print ("cost[%d] = %d" %(counter1, tmp))
+				#print ("cost[%d] = %f" %(counter1, tmp))
 				cost.append(tmp)
 			end_time = time.clock()
 			time_ = end_time-start_time			
@@ -159,6 +159,7 @@ for wScale in wScaleVector:
 			print (cost)
 			print ("average cost")
 			print (float(sum(cost))/len(cost))
+			print ("variance", np.var(cost));
 			print ("=============================================")
 				
 

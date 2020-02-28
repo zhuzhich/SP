@@ -2,6 +2,7 @@
 import math
 import random
 import numpy as np
+import copy
 #####################################
 #class info
 #####################################
@@ -43,7 +44,6 @@ class heuristic_info():
 		self.lastIndTime[iIdx] = repTime;
 		self.workingInd[iIdx] += 1;
 		rIdx = self.workingInd[iIdx];
-
 		LT = sysInfo.comInfoAll[iIdx].LT[scen][rIdx];
 		self.shadowWin[i][0] = repTime + \
 										max(1, LT-t1);	
@@ -90,8 +90,11 @@ class component_info():
 		# e.g., fail -> 0 else -> 1 or more
 		#		
 		if len(self.LT) > 0:
-			LT_in_arr = np.array(self.LT);
-			LT_arr = LT_in_arr[:,range(int(self.initFail==1), self.nIndividuals+ int(self.initFail==1)) ];
+			LT_in_arr = copy.deepcopy(np.array(self.LT));
+			if LT_in_arr[0][0] == 0:
+				LT_arr = copy.deepcopy(LT_in_arr[:,range(1, len(LT_in_arr[0]))]);
+			else:
+				LT_arr = copy.deepcopy(LT_in_arr);
 			for idx_w in range(self.nScenarios):
 				if self.initFail == 1:
 					LT_arr[idx_w,0] = 0;	#force to replace the first individual	
@@ -103,11 +106,8 @@ class component_info():
 					surv_time = self.initAge;
 					part2 = (surv_time/self.w_scale)**self.w_shape;
 					part3 = part2 - part1;
-					tmp = int((part3**s_inv)*self.w_scale) - surv_time;	
-					##############
-					#round - > int
-					##############					
-					LT_arr[idx_w,0] = int(max(0,tmp));
+					tmp = round((part3**s_inv)*self.w_scale) - surv_time;					
+					LT_arr[idx_w,0] = int(max(1,tmp));
 			self.LT = LT_arr.tolist();
 		
 		######for the first time######################
@@ -126,15 +126,12 @@ class component_info():
 							surv_time = self.initAge;
 							part2 = (surv_time/self.w_scale)**self.w_shape;
 							part3 = part2 - part1;
-							tmp[idx2] = max(0,round((part3**s_inv)*self.w_scale) - surv_time);	
+							tmp[idx2] = max(1,round((part3**s_inv)*self.w_scale) - surv_time);	
 							tmp[idx2] = int(tmp[idx2]);
 					else:
 						ran_num_log = -math.log(ran_num)
 						s_inv = 1.0/self.w_shape
-						LT1 = int((ran_num_log**s_inv)*self.w_scale)
-						##############
-						#round - > int
-						##############
+						LT1 = round((ran_num_log**s_inv)*self.w_scale)
 						tmp[idx2] = int(max(1,LT1))	
 				#LT_tmp <- tmp
 				self.LT.append(tmp);

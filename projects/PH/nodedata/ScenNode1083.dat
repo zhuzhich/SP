@@ -1,0 +1,10 @@
+#pLT is two-dimensional [i,r]=[component, individual]
+#[i,*] means all data in row i.
+
+param pLT := 
+[1,*]
+1  0    2  4    3  7    4  6    5  7    6  6    
+
+[2,*]
+1  1    2  5    3  4    4  5    5  4    6  5    
+;

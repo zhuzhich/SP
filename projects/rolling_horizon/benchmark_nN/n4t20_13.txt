@@ -1,0 +1,681 @@
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 2 rows and 2 columns.
+Aggregator did 8 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 2 rows and 2 columns.
+Aggregator did 6 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 9 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 9 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 9 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 9 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 9 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 9 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 9 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 9 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 9 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 9 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 9 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 9 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 9 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 1 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.01 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 3 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 7 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+CPXPARAM_Read_DataCheck                          1
+Tried aggregator 1 time.
+LP Presolve eliminated 1 rows and 2 columns.
+Aggregator did 5 substitutions.
+All rows and columns eliminated.
+Presolve time = 0.00 sec. (0.00 ticks)
+=======counter========== 14
+I 4
+cs 100
+csLevel 2
+costSys 85.58163984636107
+lastCostSys 85.58163984636107
+costAll [1400.2, 1270.6000000000001, 1315.6, 1094.6, 1300.6000000000001, 1397.8999999999999, 1264.3, 1447.5, 1079.6, 1092.3000000000002, 1300.7, 1119.1000000000001, 1177.6, 1394.8000000000002, 1304.8999999999999, 1037.9, 1189.9, 1140.7, 1308.5, 1376.9, 1147.5, 1345.0, 1180.0, 950.5, 1037.2, 1294.2, 1028.5, 1175.3000000000002, 1060.8, 953.5, 910.6999999999999, 942.1999999999999, 881.4, 923.4000000000001, 1211.3000000000002, 1174.2, 1467.0, 1359.8999999999999, 958.0, 1017.0, 906.5, 991.0, 1273.3, 1228.6, 1092.7, 1031.9, 1256.8, 1303.7000000000003, 1269.6, 1567.4999999999998]
+mean 1179.068
+variance 28140.141376

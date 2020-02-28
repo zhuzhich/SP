@@ -1,0 +1,5 @@
+calculation time is 5024.585540
+optimal objValue
+105.38669238071721
+optimal solution
+[0, 0]

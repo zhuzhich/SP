@@ -22,10 +22,10 @@ import numpy as np
 #start from here
 ##########################
 # some fixed parameters
-nComponents = 3;		#fix component numbers	
+nComponents = 2;		#fix component numbers	
 cS = 5;				#fix setup cost
 intvl = 1;		#don't change this
-nStages = 5;			
+nStages = 10;			
 
 sysInfo = class_info.system_info(nComponents, nStages, intvl, cS);
 
@@ -60,13 +60,13 @@ for i in range(nComponents):
 	comInfo = class_info.component_info(i, w_shape[i], w_scale[i], age[i], kesi[i], intvl, cCR[i], cPR[i], cS);
 	sysInfo.add_com(comInfo);
 	
-rep = 100;
+rep = 10;
 overAllCost = [];
 sysInfo.nStages = 2;	#two-stage two-period rolling horizon
 for repIdx in range(rep):	
 	#initilization at the beginning of each replication
 	age = [2]*sysInfo.nComponents;
-	kesi = [1,0,0,0,0,0];
+	kesi = [1,0,0,0];
 	for i in  range(sysInfo.nComponents):
 		sysInfo.comInfoAll[i].initAge = age[i];
 		sysInfo.comInfoAll[i].initFail = kesi[i];
@@ -106,6 +106,8 @@ for repIdx in range(rep):
 				sysInfo.comInfoAll[i].initAge = age[i] + 1;
 
 	overAllCost.append(totalCost);
+print ("all costs");
+print (overAllCost);
 print ("expected cost");	
 print (np.mean(overAllCost));
 print ("variance");	

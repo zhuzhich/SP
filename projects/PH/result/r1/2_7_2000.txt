@@ -1,0 +1,114 @@
+Initializing PH
+
+Starting PH
+
+Initiating PH iteration=0
+Number of discrete variables fixed=0 (total=3)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=     20.0445 Max-Min=    1.00
+Converger=Normalized term diff value is         0.2370 - threshold reached=False
+Cumulative run-time=949.02 seconds
+
+Initiating PH iteration=1
+Number of discrete variables fixed=0 (total=3)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=     20.3815 Max-Min=    1.00
+Converger=Normalized term diff value is         0.0123 - threshold reached=False
+Cumulative run-time=1911.12 seconds
+
+Initiating PH iteration=2
+Number of discrete variables fixed=0 (total=3)
+Number of continuous variables fixed=0 (total=0)
+First stage cost avg=     20.4000 Max-Min=    0.00
+Converger=Normalized term diff value is         0.0000 - threshold reached=True
+Cumulative run-time=2866.53 seconds
+
+Number of discrete variables fixed before final plugin calls=0 (total=3)
+Number of continuous variables fixed before final plugin calls=0 (total=0)
+PH complete
+
+Convergence history:
+Converger=Normalized term diff
+Iteration    Metric Value
+     0               0.2370
+     1               0.0123
+     2               0.0000
+
+
+Final number of discrete variables fixed=0 (total=3)
+Final number of continuous variables fixed=0 (total=0)
+
+Computing objective inner bound at xhat solution
+ERROR: Solver (cplex) returned non-zero return code (-1073741510)
+ERROR: Solver log:
+
+    Welcome to IBM(R) ILOG(R) CPLEX(R) Interactive Optimizer 12.8.0.0
+      with Simplex, Mixed Integer & Barrier Optimizers
+    5725-A06 5725-A29 5724-Y48 5724-Y49 5724-Y54 5724-Y55 5655-Y21 Copyright
+    IBM Corp. 1988, 2017.  All Rights Reserved.
+
+    Type 'help' for a list of available commands. Type 'help' followed by a
+    command name for more information on commands.
+
+    CPLEX> Logfile 'cplex.log' closed. Logfile
+    'C:\Users\Yisha\Desktop\ZZC\PH\tmpkxhbwj.cplex.log' open. CPLEX> Problem
+    'C:\Users\Yisha\Desktop\ZZC\PH\tmphahoqi.pyomo.lp' read. Read time = 0.02
+    sec. (0.21 ticks) CPLEX> MIP start file
+    'C:\Users\Yisha\Desktop\ZZC\PH\tmp9q1jp5.cplex.mst' read. CPLEX> Problem
+    name         : C:\Users\Yisha\Desktop\ZZC\PH\tmphahoqi.pyomo.lp Objective
+    sense      : Minimize Variables            :    1488  [Nneg: 1,  Binary:
+    1487] Objective nonzeros   :     284 Linear constraints   :    3155
+    [Less: 1943,  Greater: 2,  Equal: 1210]
+      Nonzeros           :    4709 RHS nonzeros       :    1666
+
+    Variables            : Min LB: 0.0000000        Max UB: 1.000000 Objective
+    nonzeros   : Min   : 5.000000         Max   : 14.40000 Linear constraints
+    :
+      Nonzeros           : Min   : 1.000000         Max   : 1.000000 RHS
+      nonzeros       : Min   : 1.000000         Max   : 2.000000
+    CPLEX> 1 of 1 MIP starts provided solutions. MIP start 'm1' defined
+    initial solution with objective 26.4000. Tried aggregator 3 times. MIP
+    Presolve eliminated 2914 rows and 1260 columns. MIP Presolve modified 67
+    coefficients. Aggregator did 116 substitutions. Reduced MIP has 125 rows,
+    112 columns, and 422 nonzeros. Reduced MIP has 112 binaries, 0 generals, 0
+    SOSs, and 0 indicators. Presolve time = 0.00 sec. (2.92 ticks) Probing
+    time = 0.02 sec. (0.40 ticks) Tried aggregator 2 times. MIP Presolve
+    eliminated 0 rows and 1 columns. Aggregator did 1 substitutions. Reduced
+    MIP has 124 rows, 110 columns, and 418 nonzeros. Reduced MIP has 110
+    binaries, 0 generals, 0 SOSs, and 0 indicators. Presolve time = 0.00 sec.
+    (0.43 ticks) Probing time = 0.00 sec. (0.39 ticks) Clique table members:
+    342. MIP emphasis: balance optimality and feasibility. MIP search method:
+    dynamic search. Parallel mode: deterministic, using up to 16 threads. Root
+    relaxation solution time = 0.00 sec. (0.45 ticks)
+
+            Nodes                                         Cuts/
+       Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt
+       Gap
+
+    *     0+    0                           26.4000     -435.3000
+        ---
+          0     0      -46.5000    24       26.4000      -46.5000       90
+          276.14% 0     0      -16.0000    14       26.4000      Cuts: 34
+          109  160.61% 0     0        cutoff             26.4000
+          142    0.00%
+    Elapsed time = 0.08 sec. (12.44 ticks, tree = 0.01 MB, solutions = 1)
+
+    Cover cuts applied:  2 Implied bound cuts applied:  4 Zero-half cuts
+    applied:  14 Lift and project cuts applied:  7 Gomory fractional cuts
+    applied:  13
+
+    Root node processing (before b&c):
+      Real time             =    0.08 sec. (12.48 ticks)
+    Parallel b&c, 16 threads:
+      Real time             =    0.00 sec. (0.00 ticks) Sync time (average)
+      =    0.00 sec. Wait time (average)   =    0.00 sec.
+                              ------------
+    Total (root+branch&cut) =    0.08 sec. (12.48 ticks)
+
+    Solution pool: 1 solution saved.
+
+    MIP - Integer optimal solution:  Objective =  2.6400000000e+01 Solution
+    time =    0.09 sec.  Iterations = 142  Nodes = 0 Deterministic time =
+    12.49 ticks  (134.27 ticks/sec)
+
+    CPLEX>

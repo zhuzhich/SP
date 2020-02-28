@@ -368,8 +368,93 @@ class component_information():
 					self.phiRep = self.phiRep + self.pVec[1][k]*self.theta[i];
 				else:
 					self.phiRep = self.phiRep + self.pVec[0][k]*self.theta[i];
+	def weibull_pdf(self, t):
+		shape = float(self.wShape)
+		scale = float(self.wScale)
+		t = float(t)
+		part1 = shape/scale
+		part2 = (t/scale)**(shape-1)
+		tmp = (t/scale)**shape
+		part3 = math.exp(-tmp)
+		return part1*part2*part3
+
 		
+
+	def weibull_cdf(self, t):
+		tmp = float(t)/self.wScale;
+		tmp1 = tmp ** self.wShape;
+		return 1 - math.exp(-1*tmp1);
+	def weibull_pdf_tr(self,t):
+		return self.weibull_pdf(t)/self.weibull_cdf(self.state-1);
+	def weibull_int(self, t):
+		t = float(t)
+		return t*self.weibull_pdf_tr(t)
+	def weibull_cdf_tr(self, t):
+		return self.weibull_cdf(t)/self.weibull_cdf(self.state - 1);
+	def cost(self, t):
+		fx = self.weibull_cdf_tr(t)
+		result = self.costCr*fx + self.costPr*(1-fx)
+		return result							#return cost
+	def cycle_length(self, t):
+		x = t									#use x here, don't wanna make confusion.
+		rx = 1 - self.weibull_cdf_tr(x)
+		#integrate from 0 to x, tf(t)dt.
+		part1 = quad(self.weibull_int, 0, x)[0]
+		part2 = rx*x
+		result = part1 + part2
+		return result
+	def cost_rate(self, t):
+		cost = self.cost(t)
+		cyc = self.cycle_length(t)
+		result = float(cost)/cyc
+		return result
+	#h() function for component i	
+
+	def init_rule(self):
+		optC = 10000000;
+		optT = -1;
+		for t in range(1,self.state-1):
+			c = self.cost_rate(t);
+			if c < optC:
+				optT = t;
+		self.rule = [t]*2;
+	
+	
+		
+	def init_q(self):
+		#get transition probability matrix
+		#1. get the 80% CDF life.
+		designTime = 0.95;
+		#if the reliability is less than 1-designTime, 
+		#consider it failed.
+		#assume the inspection interval is 1;
+		prob = 0;
+		state = -1;
+		while prob < designTime:
+			state += 1;
+			prob = self.weibull_cdf(state);
+		self.state = state + 1;
+		self.q = [[0]*self.state for i in range(self.state)];
+		for i in range(self.state):
+			if i >= self.state - 2 :
+				self.q[i][-1] = 1;
+				continue;
+			self.q[i][-1] = (self.weibull_cdf_tr(i+1) - self.weibull_cdf_tr(i))/(1-self.weibull_cdf_tr(i));
+			self.q[i][i+1] = 1-self.q[i][-1];
+	def init_parameters(self):
+		#cr, shape, scale
+		random.seed(self.index*30);
+		self.costCr = round(random.uniform(self.cCrBound[0], self.cCrBound[1]), 1);
+		random.seed(self.index*20);
+		self.wShape = round(random.uniform(self.wShapeBound[0], self.wShapeBound[1]), 1);
+		random.seed(self.index*10);
+		self.wScale = round(random.uniform(self.wScaleBound[0], self.wScaleBound[1]), 1);
+	
 	def repair_cost(self):
+		self.costRep = [self.costPr+self.cs]*self.state;
+		self.costRep[-1] = self.costRep[-1] - self.costPr + self.costCr;
+		self.costRep[0] = 1000000;
+		'''
 		self.costRep = [0]*self.state;
 		for i in range(self.state):
 			if i == 0:
@@ -377,14 +462,18 @@ class component_information():
 											#it is not supposed to be used
 			else:
 				self.costRep[i] = 280 + 10*(i+1);
+		'''
+		
 	def operational_cost(self):
 		self.costOp = [0]*self.state;
+		self.costOp[-1] = 1000000;
+		'''
 		for i in range(self.state):
 			if i == self.state - 1:
 				self.costOp[i] = 10000000;
 			else:
 				self.costOp[i] = 5+10*(i+1);
-		
+		'''
 		
 #######	
 	def print_data1(self):
@@ -394,9 +483,12 @@ class component_information():
 		print ("cs", self.cs);
 		print ("costRep", self.costRep);
 		print ("costOp", self.costOp);
-		print ("V", self.V);
-
+		print ("wShape", self.wShape);
+		print ("wScale", self.wScale);
+		print ("costCr", self.costCr);
+		
 	def print_data2(self):
+		print ("V", self.V);
 		print ("transition matrix", self.q);
 		print ("rule,", self.rule);
 		print ("pVec", self.pVec);
@@ -412,7 +504,19 @@ class component_information():
 		self.index = 0		#index
 		self.ind = 0;		#number of individuals
 		self.state = 0;		#number of states
-		self.cs = 0;		#component level setup cost
+		#age parameters;
+		self.wShapeBound = 0;
+		self.wScaleBound = 0;
+		self.cCrBound = 0;
+		self.wShape = 0;
+		self.wScale = 0;
+		#cost
+		self.cs = 0;		#system level setup cost
+		self.costPr = 0;	#pr cost
+		self.costCr = 0;	#cr cost;
+		self.costRep = 0;	#Repairing cost. [1*state]
+		self.costOp = 0;	#Operational cost. [1*state]		
+		#running
 		self.q = [];		#state transition probability matrix.[state*state]
 		self.Ts = [1, 0];	#action = 0 -> 1, action=1 -> 0;
 		self.rule = 0;		#current rule. [1*csLevel]
@@ -420,8 +524,6 @@ class component_information():
 		self.theta = 0;		#prob. of staying at each state given current rule. [1*state]
 		self.phiRep = 0;	#prob. of repairing given current rule.
 		self.phiK = 0;		#prob. of staying above state rule[k]. [1*csLevel];
-		self.costRep = 0;	#Repairing cost. [1*state]
-		self.costOp = 0;	#Operational cost. [1*state]
 		self.value = 0;		#value function. [state*csLevel]
 		self.V = [];		#discounts. [1*csLevel]
 		self.g = 0;			#long-run average cost; A decision variable
